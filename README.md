@@ -20,11 +20,11 @@ Checkout the [Angular version compatibility](https://angular.dev/reference/versi
 
 ## 📚 Mockups
 
-The mockups for the UIK-based design to be implemented are available in [Figma](https://www.figma.com/design/vvyibU3EGUJnYjGwZM7xZn) file.  
+The mockups for the UIK-based design to be implemented are available in [Figma][3] file.  
 
 ## 📚 Documentation
 
-- **UIK AM Documentation**: [https://visiativ-design-system.azurewebsites.net/uik-am/20.x](https://visiativ-design-system.azurewebsites.net/uik-am/20.x)
+- [UIK AM Documentation][1]
 
 ## 🛠 Development
 
@@ -92,7 +92,7 @@ This project uses a centralized theming approach:
 - **Material overrides** are in `src/theme/components/material/`
 - **Application themes** are in `src/theme/components/app/`
 
-See the [Theming guide](./THEMING.md) and README files in each theme directory for detailed instructions.
+See the [Theming guide][2] and README files in each theme directory for detailed instructions.
 
 ## 📊 Mock Data
 
@@ -140,10 +140,15 @@ NG0201: No provider found for HttpClient
 
 ### Getting Help
 
-- Check the [UIK AM Documentation](https://visiativ-design-system.azurewebsites.net/uik-am/20.x)
+- Check the [UIK AM Documentation][1]
 - Review `THEMING.md` for theming guidelines
 - Inspect component README files in `src/theme/components/`
 
 ---
 
 **Happy coding! 🎉**
+
+
+[1]: https://visiativ-design-system.azurewebsites.net/uik-am/20.x
+[2]: /THEMING.md
+[3]: https://www.figma.com/design/vvyibU3EGUJnYjGwZM7xZn
