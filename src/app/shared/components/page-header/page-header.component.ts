@@ -4,7 +4,7 @@ import {UikAmModule, UikLayoutBreakpointObserverService, UikSidenavService} from
 import {MatIcon} from "@angular/material/icon";
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatToolbar} from '@angular/material/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -15,7 +15,6 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatIcon,
     MatToolbar,
     MatBadgeModule,
-    MatButton,
     MatIconButton,
   ],
   templateUrl: './page-header.component.html'
