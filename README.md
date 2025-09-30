@@ -18,6 +18,11 @@ Checkout the [Angular version compatibility](https://angular.dev/reference/versi
 2. **Ask for access to the private npm registry** if you haven't already
 
 
+## 📚 Mockups
+
+The mockups for the UIK-based design to be implemented are available in [Figma](https://www.figma.com/design/vvyibU3EGUJnYjGwZM7xZn) file.  
+Please request access if you do not already have it.
+
 ## 📚 Documentation
 
 - **UIK AM Documentation**: [https://visiativ-design-system.azurewebsites.net/uik-am/20.x](https://visiativ-design-system.azurewebsites.net/uik-am/20.x)
