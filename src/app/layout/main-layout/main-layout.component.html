@@ -1,0 +1,38 @@
+<mat-sidenav-container uikSidenavLayout>
+  <mat-sidenav mode="side" #sidenav
+               [opened]="layoutMatchesSmallViewport() === false"
+               [mode]="layoutMatchesSmallViewport() ? 'over' : 'side'"
+               [fixedInViewport]="layoutMatchesSmallViewport()" fixedTopGap="0">
+    <a routerLink="/">
+      <uik-sidenav-logo></uik-sidenav-logo>
+    </a>
+
+    <mat-nav-list>
+      <a uikSidenavNavigationRoute routerLink="/catalog"
+         routerLinkActive="sidenav-item-selected"
+         routeLabel="Catalog">
+        <mat-icon>shopping_bag</mat-icon>
+      </a>
+      <mat-divider />
+      <a href="https://material.angular.io/" target="_blank"
+         uikSidenavNavigationRoute
+         routeLabel="Angular Material">
+        <mat-icon fontSet="fa-brands" fontIcon="fa-angular"></mat-icon>
+      </a>
+      <a href="https://visiativ-design-system.azurewebsites.net/uik-am/20.x" target="_blank"
+         uikSidenavNavigationRoute
+         routeLabel="UIK Docs">
+        <mat-icon>book_2</mat-icon>
+      </a>
+      <a href="https://www.figma.com/design/vvyibU3EGUJnYjGwZM7xZn" target="_blank"
+         uikSidenavNavigationRoute
+         routeLabel="Figma mockup">
+        <mat-icon fontIcon="fa-figma" fontSet="fa-brands"></mat-icon>
+      </a>
+    </mat-nav-list>
+    <uik-sidenav-layout-toggle></uik-sidenav-layout-toggle>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

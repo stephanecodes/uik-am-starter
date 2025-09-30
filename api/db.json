@@ -1,0 +1,669 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "The Grinder #1",
+      "description": "The Grinder #1, designed to support daily tasks while exceeding all expectations. Featuring unique characteristics that make it easy to use, it also offers high efficiency and safety for the operator. Additionally, the Grinder #1 is easy to transport and maintain thanks to its access doors. It is the ideal tool for arborists, landscapers, foresters, and anyone needing to dispose of small to medium-sized branches and other wood debris.",
+      "brand": "Vermeer",
+      "warranty": "6 months",
+      "category": "Grinder",
+      "tags": ["Grinder", "Vermeer", "Green Range"],
+      "warning": "For this machine, we recommend the use of personal protective equipment.",
+      "offer": "Limited time offer",
+      "discount": "-10%",
+      "price": 16999,
+      "currency": "EUR",
+      "image": "/images/products/grinder1.jpg",
+      "specifications": [
+        { "label": "Hitch", "value": "Ball, push brake." },
+        { "label": "Maximum branch diameter", "value": "200mm" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Mini Excavator ZX17U-6",
+      "description": "Compact and powerful, the ZX17U-6 mini excavator is perfect for tight spaces and urban construction sites. Its advanced hydraulics and easy controls make it ideal for both professionals and beginners.",
+      "brand": "Hitachi",
+      "warranty": "1 year",
+      "category": "Excavator",
+      "tags": ["Excavator", "Hitachi", "Compact"],
+      "warning": "Operator must be trained and certified.",
+      "offer": "Special launch price",
+      "discount": null,
+      "price": 24999,
+      "currency": "EUR",
+      "image": "/images/products/excavator_zx17u6.jpg",
+      "specifications": [
+        { "label": "Hitch", "value": "Standard hitch." },
+        { "label": "Maximum digging depth", "value": "2200mm" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Skid Steer Loader S450",
+      "description": "The S450 skid steer loader offers versatility and maneuverability for landscaping, construction, and agriculture. Its compact size allows access to confined areas while delivering impressive lifting capacity.",
+      "brand": "Bobcat",
+      "warranty": "3 months",
+      "category": "Loader",
+      "tags": ["Loader", "Bobcat", "Versatile"],
+      "warning": "Always check surroundings before operation.",
+      "offer": null,
+      "discount": null,
+      "price": 19999,
+      "currency": "EUR",
+      "image": "/images/products/skidsteer_s450.jpg",
+      "specifications": [
+        { "label": "Hitch", "value": "Universal quick hitch." },
+        { "label": "Maximum lift capacity", "value": "608kg" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Articulated Dump Truck TA300",
+      "description": "The TA300 articulated dump truck is engineered for productivity and reliability on the toughest job sites. Its robust design and advanced suspension ensure smooth operation even in challenging terrain.",
+      "brand": "Terex",
+      "warranty": "6 months",
+      "category": "Dump Truck",
+      "tags": ["Dump Truck", "Terex", "Heavy Duty"],
+      "warning": "Load must be evenly distributed.",
+      "offer": "Seasonal discount",
+      "discount": "-5%",
+      "price": 89999,
+      "currency": "EUR",
+      "image": "/images/products/dumptruck_ta300.jpg",
+      "specifications": [
+        { "label": "Hitch", "value": "Heavy-duty hitch." },
+        { "label": "Maximum payload", "value": "28000kg" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Telescopic Handler MT 1840",
+      "description": "The MT 1840 telescopic handler is designed for high performance in material handling. With its extended reach and robust build, it is perfect for construction and industrial applications.",
+      "brand": "Manitou",
+      "warranty": "1 year",
+      "category": "Telehandler",
+      "tags": ["Telehandler", "Manitou", "High Reach"],
+      "warning": "Do not exceed maximum load.",
+      "offer": null,
+      "discount": null,
+      "price": 74999,
+      "currency": "EUR",
+      "image": "/images/products/telehandler_mt1840.jpg",
+      "specifications": [
+        { "label": "Hitch", "value": "Fork carriage." },
+        { "label": "Maximum lift height", "value": "17.55m" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Wheel Loader L90H",
+      "description": "The L90H wheel loader delivers high productivity and fuel efficiency for material handling and earthmoving tasks. Its advanced hydraulics and comfortable cab make it a favorite on any job site.",
+      "brand": "Volvo",
+      "warranty": "3 months",
+      "category": "Wheel Loader",
+      "tags": ["Loader", "Volvo", "Earthmoving"],
+      "warning": "Always wear a seatbelt during operation.",
+      "offer": null,
+      "discount": null,
+      "price": 79999,
+      "currency": "EUR",
+      "image": "/images/products/wheel_loader_l90h.jpg",
+      "specifications": [
+        { "label": "Bucket capacity", "value": "2.5m³" },
+        { "label": "Operating weight", "value": "15000kg" }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Crawler Dozer D6T",
+      "description": "The D6T crawler dozer is engineered for heavy-duty grading and earthmoving. Its robust undercarriage and advanced controls ensure precise operation in tough conditions.",
+      "brand": "Caterpillar",
+      "warranty": "6 months",
+      "category": "Dozer",
+      "tags": ["Dozer", "Caterpillar", "Heavy Duty"],
+      "warning": "Do not operate on steep slopes without proper training.",
+      "offer": "Introductory offer",
+      "discount": "-7%",
+      "price": 119999,
+      "currency": "EUR",
+      "image": "/images/products/dozer_d6t.jpg",
+      "specifications": [
+        { "label": "Blade width", "value": "3.3m" },
+        { "label": "Engine power", "value": "205hp" }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Backhoe Loader 3CX",
+      "description": "The 3CX backhoe loader combines digging, loading, and lifting capabilities in one versatile machine. Ideal for construction, landscaping, and utility work.",
+      "brand": "JCB",
+      "warranty": "1 year",
+      "category": "Backhoe Loader",
+      "tags": ["Backhoe", "JCB", "Multi-purpose"],
+      "warning": "Ensure stabilizers are deployed before digging.",
+      "offer": null,
+      "discount": null,
+      "price": 65999,
+      "currency": "EUR",
+      "image": "/images/products/backhoe_3cx.jpg",
+      "specifications": [
+        { "label": "Max dig depth", "value": "5.5m" },
+        { "label": "Loader bucket capacity", "value": "1.1m³" }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Rough Terrain Crane RT530E-2",
+      "description": "The RT530E-2 rough terrain crane offers excellent lifting capacity and mobility on uneven ground. Perfect for construction and industrial lifting tasks.",
+      "brand": "Grove",
+      "warranty": "3 months",
+      "category": "Crane",
+      "tags": ["Crane", "Grove", "Rough Terrain"],
+      "warning": "Do not exceed rated load capacity.",
+      "offer": null,
+      "discount": null,
+      "price": 149999,
+      "currency": "EUR",
+      "image": "/images/products/crane_rt530e2.jpg",
+      "specifications": [
+        { "label": "Max lifting capacity", "value": "30t" },
+        { "label": "Max boom length", "value": "29m" }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Compact Track Loader T590",
+      "description": "The T590 compact track loader is designed for superior traction and stability on soft or muddy ground. Its compact size and powerful engine make it ideal for landscaping and construction.",
+      "brand": "Bobcat",
+      "warranty": "6 months",
+      "category": "Track Loader",
+      "tags": ["Loader", "Bobcat", "Compact"],
+      "warning": "Inspect tracks before each use.",
+      "offer": null,
+      "discount": null,
+      "price": 28999,
+      "currency": "EUR",
+      "image": "/images/products/track_loader_t590.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "3765kg" },
+        { "label": "Rated operating capacity", "value": "975kg" }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Hydraulic Breaker HB3100",
+      "description": "The HB3100 hydraulic breaker is built for tough demolition jobs, delivering high impact energy and reliability for breaking concrete and rock.",
+      "brand": "Atlas Copco",
+      "warranty": "1 year",
+      "category": "Breaker",
+      "tags": ["Breaker", "Atlas Copco", "Demolition"],
+      "warning": "Wear hearing and eye protection.",
+      "offer": null,
+      "discount": null,
+      "price": 11999,
+      "currency": "EUR",
+      "image": "/images/products/breaker_hb3100.jpg",
+      "specifications": [
+        { "label": "Impact rate", "value": "450-800 bpm" },
+        { "label": "Service weight", "value": "3100kg" }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Mobile Light Tower LT5000",
+      "description": "The LT5000 mobile light tower provides powerful illumination for night work and emergency situations. Easy to transport and set up on any site.",
+      "brand": "Generac",
+      "warranty": "3 months",
+      "category": "Light Tower",
+      "tags": ["Light Tower", "Generac", "Lighting"],
+      "warning": "Do not operate near flammable materials.",
+      "offer": null,
+      "discount": null,
+      "price": 5999,
+      "currency": "EUR",
+      "image": "/images/products/light_tower_lt5000.jpg",
+      "specifications": [
+        { "label": "Max mast height", "value": "9m" },
+        { "label": "Lamp power", "value": "4x1000W" }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Concrete Mixer CM350",
+      "description": "The CM350 concrete mixer is ideal for small to medium construction projects, offering efficient mixing and easy transport.",
+      "brand": "Altrad",
+      "warranty": "6 months",
+      "category": "Mixer",
+      "tags": ["Mixer", "Altrad", "Concrete"],
+      "warning": "Keep hands clear of moving parts.",
+      "offer": null,
+      "discount": null,
+      "price": 2499,
+      "currency": "EUR",
+      "image": "/images/products/mixer_cm350.jpg",
+      "specifications": [
+        { "label": "Drum capacity", "value": "350L" },
+        { "label": "Power", "value": "2.2kW" }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Vibratory Plate Compactor VP1550",
+      "description": "The VP1550 vibratory plate compactor is perfect for compacting soil, gravel, and asphalt in confined areas.",
+      "brand": "Wacker Neuson",
+      "warranty": "1 year",
+      "category": "Compactor",
+      "tags": ["Compactor", "Wacker Neuson", "Vibratory"],
+      "warning": "Wear gloves and safety boots.",
+      "offer": null,
+      "discount": null,
+      "price": 1799,
+      "currency": "EUR",
+      "image": "/images/products/compactor_vp1550.jpg",
+      "specifications": [
+        { "label": "Plate size", "value": "500x580mm" },
+        { "label": "Centrifugal force", "value": "15kN" }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Articulated Boom Lift HA16 RTJ",
+      "description": "The HA16 RTJ articulated boom lift provides excellent outreach and up-and-over clearance for aerial work.",
+      "brand": "Haulotte",
+      "warranty": "3 months",
+      "category": "Boom Lift",
+      "tags": ["Boom Lift", "Haulotte", "Aerial"],
+      "warning": "Do not use in high winds.",
+      "offer": null,
+      "discount": null,
+      "price": 34999,
+      "currency": "EUR",
+      "image": "/images/products/boom_lift_ha16rtj.jpg",
+      "specifications": [
+        { "label": "Max working height", "value": "16m" },
+        { "label": "Platform capacity", "value": "230kg" }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Electric Scissor Lift GS-1932",
+      "description": "The GS-1932 electric scissor lift is compact and easy to maneuver, ideal for indoor maintenance and installation work.",
+      "brand": "Genie",
+      "warranty": "6 months",
+      "category": "Scissor Lift",
+      "tags": ["Scissor Lift", "Genie", "Electric"],
+      "warning": "Charge batteries before use.",
+      "offer": null,
+      "discount": null,
+      "price": 15999,
+      "currency": "EUR",
+      "image": "/images/products/scissor_lift_gs1932.jpg",
+      "specifications": [
+        { "label": "Max platform height", "value": "7.8m" },
+        { "label": "Lift capacity", "value": "227kg" }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Tracked Dumper C50R-5A",
+      "description": "The C50R-5A tracked dumper is designed for transporting heavy loads over rough terrain, with excellent stability and traction.",
+      "brand": "Yanmar",
+      "warranty": "1 year",
+      "category": "Dumper",
+      "tags": ["Dumper", "Yanmar", "Tracked"],
+      "warning": "Do not overload the skip.",
+      "offer": null,
+      "discount": null,
+      "price": 49999,
+      "currency": "EUR",
+      "image": "/images/products/dumper_c50r5a.jpg",
+      "specifications": [
+        { "label": "Payload", "value": "3800kg" },
+        { "label": "Engine power", "value": "98hp" }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Rotary Telehandler RTH 6.30",
+      "description": "The RTH 6.30 rotary telehandler offers 360° rotation and high lifting capacity for complex material handling tasks.",
+      "brand": "Magni",
+      "warranty": "3 months",
+      "category": "Telehandler",
+      "tags": ["Telehandler", "Magni", "Rotary"],
+      "warning": "Stabilizers must be deployed before lifting.",
+      "offer": null,
+      "discount": null,
+      "price": 124999,
+      "currency": "EUR",
+      "image": "/images/products/telehandler_rth630.jpg",
+      "specifications": [
+        { "label": "Max lift height", "value": "29.9m" },
+        { "label": "Max capacity", "value": "6000kg" }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Tracked Excavator EC220E",
+      "description": "The EC220E tracked excavator delivers high performance and fuel efficiency for demanding earthmoving projects.",
+      "brand": "Volvo",
+      "warranty": "6 months",
+      "category": "Excavator",
+      "tags": ["Excavator", "Volvo", "Tracked"],
+      "warning": "Operator must be certified.",
+      "offer": null,
+      "discount": null,
+      "price": 114999,
+      "currency": "EUR",
+      "image": "/images/products/excavator_ec220e.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "22000kg" },
+        { "label": "Max dig depth", "value": "6700mm" }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Mobile Air Compressor XAS 88",
+      "description": "The XAS 88 mobile air compressor is compact and efficient, providing reliable compressed air for pneumatic tools on site.",
+      "brand": "Atlas Copco",
+      "warranty": "1 year",
+      "category": "Compressor",
+      "tags": ["Compressor", "Atlas Copco", "Mobile"],
+      "warning": "Drain condensate daily.",
+      "offer": null,
+      "discount": null,
+      "price": 7999,
+      "currency": "EUR",
+      "image": "/images/products/compressor_xas88.jpg",
+      "specifications": [
+        { "label": "Free air delivery", "value": "5m³/min" },
+        { "label": "Operating pressure", "value": "7 bar" }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Ride-On Roller BW120AD-5",
+      "description": "The BW120AD-5 ride-on roller is ideal for compacting asphalt and granular materials in road construction and repair.",
+      "brand": "Bomag",
+      "warranty": "3 months",
+      "category": "Roller",
+      "tags": ["Roller", "Bomag", "Ride-On"],
+      "warning": "Use seatbelt at all times.",
+      "offer": null,
+      "discount": null,
+      "price": 21999,
+      "currency": "EUR",
+      "image": "/images/products/roller_bw120ad5.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "2700kg" },
+        { "label": "Drum width", "value": "1200mm" }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Tower Light VT8",
+      "description": "The VT8 tower light provides powerful illumination for large construction sites and events, with easy mast extension and transport.",
+      "brand": "Generac",
+      "warranty": "6 months",
+      "category": "Light Tower",
+      "tags": ["Light Tower", "Generac", "Tower"],
+      "warning": "Do not operate in enclosed spaces.",
+      "offer": null,
+      "discount": null,
+      "price": 6999,
+      "currency": "EUR",
+      "image": "/images/products/tower_light_vt8.jpg",
+      "specifications": [
+        { "label": "Max mast height", "value": "8.5m" },
+        { "label": "Lamp power", "value": "4x1000W" }
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Tracked Skid Steer Loader 299D3",
+      "description": "The 299D3 tracked skid steer loader offers high performance and versatility for demanding construction and landscaping tasks.",
+      "brand": "Caterpillar",
+      "warranty": "1 year",
+      "category": "Track Loader",
+      "tags": ["Loader", "Caterpillar", "Tracked"],
+      "warning": "Check track tension daily.",
+      "offer": null,
+      "discount": null,
+      "price": 39999,
+      "currency": "EUR",
+      "image": "/images/products/skidsteer_299d3.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "4810kg" },
+        { "label": "Rated operating capacity", "value": "1550kg" }
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Mobile Generator G70",
+      "description": "The G70 mobile generator provides reliable power for construction sites and events, with easy transport and robust build.",
+      "brand": "Doosan",
+      "warranty": "3 months",
+      "category": "Generator",
+      "tags": ["Generator", "Doosan", "Mobile"],
+      "warning": "Do not overload the generator.",
+      "offer": null,
+      "discount": null,
+      "price": 12999,
+      "currency": "EUR",
+      "image": "/images/products/generator_g70.jpg",
+      "specifications": [
+        { "label": "Prime power", "value": "56kW" },
+        { "label": "Fuel tank capacity", "value": "250L" }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Mini Dumper MD500",
+      "description": "The MD500 mini dumper is compact and easy to maneuver, ideal for transporting materials in tight spaces.",
+      "brand": "Altrad",
+      "warranty": "6 months",
+      "category": "Dumper",
+      "tags": ["Dumper", "Altrad", "Mini"],
+      "warning": "Do not overload the skip.",
+      "offer": null,
+      "discount": null,
+      "price": 3499,
+      "currency": "EUR",
+      "image": "/images/products/mini_dumper_md500.jpg",
+      "specifications": [
+        { "label": "Payload", "value": "500kg" },
+        { "label": "Drive type", "value": "Tracked" }
+      ]
+    },
+    {
+      "id": 26,
+      "name": "Electric Mini Excavator E10e",
+      "description": "The E10e electric mini excavator is emission-free and ideal for indoor demolition and urban construction.",
+      "brand": "Bobcat",
+      "warranty": "1 year",
+      "category": "Excavator",
+      "tags": ["Excavator", "Bobcat", "Electric"],
+      "warning": "Charge batteries before use.",
+      "offer": null,
+      "discount": null,
+      "price": 29999,
+      "currency": "EUR",
+      "image": "/images/products/excavator_e10e.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "1176kg" },
+        { "label": "Max dig depth", "value": "1820mm" }
+      ]
+    },
+    {
+      "id": 27,
+      "name": "Mobile Concrete Pump M42-5",
+      "description": "The M42-5 mobile concrete pump offers high reach and output for large construction projects.",
+      "brand": "Putzmeister",
+      "warranty": "3 months",
+      "category": "Concrete Pump",
+      "tags": ["Concrete Pump", "Putzmeister", "Mobile"],
+      "warning": "Do not operate without proper training.",
+      "offer": null,
+      "discount": null,
+      "price": 189999,
+      "currency": "EUR",
+      "image": "/images/products/concrete_pump_m425.jpg",
+      "specifications": [
+        { "label": "Max vertical reach", "value": "41.6m" },
+        { "label": "Output", "value": "160m³/h" }
+      ]
+    },
+    {
+      "id": 28,
+      "name": "Crawler Crane CKE800G-2",
+      "description": "The CKE800G-2 crawler crane is designed for heavy lifting and precision placement on large construction sites.",
+      "brand": "Kobelco",
+      "warranty": "6 months",
+      "category": "Crane",
+      "tags": ["Crane", "Kobelco", "Crawler"],
+      "warning": "Do not exceed rated load.",
+      "offer": null,
+      "discount": null,
+      "price": 299999,
+      "currency": "EUR",
+      "image": "/images/products/crane_cke800g2.jpg",
+      "specifications": [
+        { "label": "Max lifting capacity", "value": "80t" },
+        { "label": "Max boom length", "value": "54.9m" }
+      ]
+    },
+    {
+      "id": 29,
+      "name": "Self-Propelled Scissor Lift S3219E",
+      "description": "The S3219E self-propelled scissor lift is compact and easy to maneuver, ideal for indoor and outdoor maintenance.",
+      "brand": "JLG",
+      "warranty": "1 year",
+      "category": "Scissor Lift",
+      "tags": ["Scissor Lift", "JLG", "Self-Propelled"],
+      "warning": "Do not use on uneven ground.",
+      "offer": null,
+      "discount": null,
+      "price": 13999,
+      "currency": "EUR",
+      "image": "/images/products/scissor_lift_s3219e.jpg",
+      "specifications": [
+        { "label": "Max platform height", "value": "5.8m" },
+        { "label": "Lift capacity", "value": "230kg" }
+      ]
+    },
+    {
+      "id": 30,
+      "name": "Wheel Excavator EW160E",
+      "description": "The EW160E wheel excavator offers excellent mobility and versatility for urban construction and roadwork. Its advanced hydraulics and comfortable cab make it ideal for a wide range of tasks.",
+      "brand": "Volvo",
+      "warranty": "3 months",
+      "category": "Excavator",
+      "tags": ["Excavator", "Volvo", "Wheeled"],
+      "warning": "Operator must be certified.",
+      "offer": null,
+      "discount": null,
+      "price": 139999,
+      "currency": "EUR",
+      "image": "/images/products/excavator_ew160e.jpg",
+      "specifications": [
+        { "label": "Operating weight", "value": "17000kg" },
+        { "label": "Max dig depth", "value": "5500mm" }
+      ]
+    },
+    {
+      "id": 31,
+      "name": "Mobile Screening Plant MS953",
+      "description": "The MS953 mobile screening plant is ideal for separating materials on construction and mining sites.",
+      "brand": "Kleemann",
+      "warranty": "6 months",
+      "category": "Screening Plant",
+      "tags": ["Screening", "Kleemann", "Mobile"],
+      "warning": "Do not operate without guards in place.",
+      "offer": null,
+      "discount": null,
+      "price": 159999,
+      "currency": "EUR",
+      "image": "/images/products/screening_plant_ms953.jpg",
+      "specifications": [
+        { "label": "Screening area", "value": "9.5m²" },
+        { "label": "Feed capacity", "value": "500t/h" }
+      ]
+    },
+    {
+      "id": 32,
+      "name": "Mobile Tower Crane MK 88-4.1",
+      "description": "The MK 88-4.1 mobile tower crane combines mobility and high lifting capacity for urban construction sites.",
+      "brand": "Liebherr",
+      "warranty": "1 year",
+      "category": "Tower Crane",
+      "tags": ["Crane", "Liebherr", "Mobile"],
+      "warning": "Do not operate in high winds.",
+      "offer": null,
+      "discount": null,
+      "price": 349999,
+      "currency": "EUR",
+      "image": "/images/products/tower_crane_mk8841.jpg",
+      "specifications": [
+        { "label": "Max lifting capacity", "value": "8t" },
+        { "label": "Max hook height", "value": "59.1m" }
+      ]
+    },
+    {
+      "id": 33,
+      "name": "Mobile Concrete Batching Plant MB-60M",
+      "description": "The MB-60M mobile concrete batching plant is designed for high efficiency and quick setup on construction sites.",
+      "brand": "MEKA",
+      "warranty": "3 months",
+      "category": "Batching Plant",
+      "tags": ["Batching Plant", "MEKA", "Mobile"],
+      "warning": "Do not operate without proper training.",
+      "offer": null,
+      "discount": null,
+      "price": 99999,
+      "currency": "EUR",
+      "image": "/images/products/batching_plant_mb60m.jpg",
+      "specifications": [
+        { "label": "Capacity", "value": "60m³/h" },
+        { "label": "Mixer type", "value": "Twin shaft" }
+      ]
+    },
+    {
+      "id": 34,
+      "name": "Mobile Asphalt Paver SUPER 1800-3i",
+      "description": "The SUPER 1800-3i mobile asphalt paver delivers high-quality paving for roads and highways.",
+      "brand": "Vögele",
+      "warranty": "6 months",
+      "category": "Paver",
+      "tags": ["Paver", "Vögele", "Mobile"],
+      "warning": "Do not stand on screed during operation.",
+      "offer": null,
+      "discount": null,
+      "price": 219999,
+      "currency": "EUR",
+      "image": "/images/products/paver_super18003i.jpg",
+      "specifications": [
+        { "label": "Paving width", "value": "3-10m" },
+        { "label": "Max paving speed", "value": "25m/min" }
+      ]
+    },
+    {
+      "id": 35,
+      "name": "Mobile Cold Planer W 210 Fi",
+      "description": "The W 210 Fi mobile cold planer is designed for efficient milling of asphalt and concrete surfaces.",
+      "brand": "Wirtgen",
+      "warranty": "1 year",
+      "category": "Cold Planer",
+      "tags": ["Cold Planer", "Wirtgen", "Mobile"],
+      "warning": "Keep clear of milling drum.",
+      "offer": null,
+      "discount": null,
+      "price": 299999,
+      "currency": "EUR",
+      "image": "/images/products/cold_planer_w210fi.jpg",
+      "specifications": [
+        { "label": "Milling width", "value": "2.2m" },
+        { "label": "Engine power", "value": "563kW" }
+      ]
+    }
+  ]
+}

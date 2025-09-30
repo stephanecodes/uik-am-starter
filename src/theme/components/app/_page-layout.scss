@@ -1,0 +1,15 @@
+@use "@visiativ/uik-core/theme/variables/colors" as colors;
+
+.app-page-layout {
+
+  .app-doc-page-layout-header {
+    .mat-toolbar {
+      uik-toolbar-app-context .mat-h3 {
+        font-size: 2.5rem;
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,7 @@
+@use "@visiativ/uik-core/theme/variables/colors" as colors;
+
+.app-main-layout {
+  .mat-drawer-container {
+    --mat-sidenav-content-background-color: colors.$white-bg;
+  }
+}
