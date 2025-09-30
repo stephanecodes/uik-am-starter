@@ -93,7 +93,7 @@ This project uses a centralized theming approach:
 - **Material overrides** are in `src/theme/components/material/`
 - **Application themes** are in `src/theme/components/app/`
 
-See the README files in each theme directory for detailed instructions.
+See the [Theming guide](./THEMING.md) and README files in each theme directory for detailed instructions.
 
 ## 📊 Mock Data
 
