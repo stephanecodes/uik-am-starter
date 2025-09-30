@@ -40,6 +40,7 @@ Chaque carte produit doit inclure les actions suivantes :
   - Ajouter les éléments sélectionnés au panier
   - Mettre les éléments sélectionnés en favoris
 
+>Note: Le mode multi-sélection est un composant qui n'existe pas encore dans UIK, vous devrez en implémenter un.
 ---
 
 ## 2. Détails du produit (modal)
