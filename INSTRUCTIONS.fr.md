@@ -78,6 +78,13 @@ Affiche :
 
 ---
 
+# ☝ Règles à respecter
+
+- Créer une branche dédiée pour le développement, pas de push direct sur `main`
+- Créer une PR (Pull Request) vers `main` à la fin du développement
+
+---
+
 # ✅ Critères d’évaluation
 - Respect des maquettes et du scénario
 - Qualité de l’intégration (**HTML / SCSS**)
