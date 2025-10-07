@@ -9,6 +9,14 @@ Les mockups de la maquette sont disponibles dans [ce fichier Figma][1].
 
 ---
 
+# 📚 Développement
+
+Se référer au [README][2] du projet pour les prérequis, l'installation et le démarrage de l'environnement de développement.
+
+---
+
+
+
 # 📐 Contexte
 L’interface doit permettre :
 - La navigation via une **sidenav** et un **header**
@@ -104,3 +112,4 @@ Affiche :
 
 
 [1]: /figma/mockups.fig
+[2]: /README.md
