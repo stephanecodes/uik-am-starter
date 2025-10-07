@@ -15,7 +15,7 @@ Checkout the [Angular version compatibility](https://angular.dev/reference/versi
 
 1. This starter was built by following the [UIK Getting Started Guide](https://visiativ-design-system.azurewebsites.net/uik-am/20.x/guides/getting-started), ensuring a streamlined setup and best practices for new projects.
 
-2. **Ask for access to the private NPM registry and Figma** if you haven't already
+2. **Ask for access to the private NPM registry** if you haven't already
 
 
 ## 📚 Mockups
