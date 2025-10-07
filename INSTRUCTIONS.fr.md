@@ -3,6 +3,12 @@ Concevoir et développer une **interface de catalogue produits** à partir de ma
 
 ---
 
+# 📚 Mockups
+
+Les mockups de la maquette sont disponibles dans [ce fichier Figma][1].
+
+---
+
 # 📐 Contexte
 L’interface doit permettre :
 - La navigation via une **sidenav** et un **header**
@@ -94,3 +100,7 @@ Affiche :
 - Gestion correcte des **états** (chargement, vide, erreurs simulées éventuelles)
 - Qualité du code (**clarté, maintenabilité, organisation**)  
 - Commits **clairs et fréquents** (Idéalement, utiliser la convention [Conventional Commits](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3))
+
+
+
+[1]: /figma/mockups.fig

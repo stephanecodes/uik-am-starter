@@ -151,4 +151,4 @@ NG0201: No provider found for HttpClient
 
 [1]: https://visiativ-design-system.azurewebsites.net/uik-am/20.x
 [2]: /THEMING.md
-[3]: https://www.figma.com/design/vvyibU3EGUJnYjGwZM7xZn
+[3]: /figma/mockups.fig
