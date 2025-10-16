@@ -1,9 +1,10 @@
 import {Component, HostBinding, inject, OnInit} from '@angular/core';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {UikAmModule, UikSidenavLayout, UikSidenavService} from "@visiativ/uik-am";
-import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
+import {UikAmModule, UikSidenavService} from "@visiativ/uik-am";
+import {toSignal} from "@angular/core/rxjs-interop";
 import {MatBadgeModule} from '@angular/material/badge';
 import {PageHeaderComponent} from '../../shared/components/page-header/page-header.component';
+import {SidenavPersistenceService} from '../../shared/services/sidenav-persistence.service';
 
 @Component({
   selector: 'app-page-layout',
@@ -17,21 +18,17 @@ import {PageHeaderComponent} from '../../shared/components/page-header/page-head
 })
 export class PageLayoutComponent implements OnInit {
   private readonly uikSidenavService = inject(UikSidenavService);
+  private readonly sidenavPersistence = inject(SidenavPersistenceService);
 
-  @HostBinding('class') class = 'app-main-layout';
+  @HostBinding('class') class = 'app-page-layout';
 
   sidenavLayout = toSignal(this.uikSidenavService.sidenavLayout$);
 
   constructor() {
-    this.uikSidenavService.sidenavLayout$
-      .pipe(takeUntilDestroyed())
-      .subscribe((layout) => {
-        localStorage.setItem('sidenavLayout', layout);
-      });
+    this.sidenavPersistence.initializePersistence();
   }
 
   ngOnInit(): void {
-    const layout: UikSidenavLayout = localStorage.getItem('sidenavLayout') as UikSidenavLayout ?? 'initial';
-    this.uikSidenavService.changeSidenavLayout(layout);
+    this.sidenavPersistence.restoreLayout();
   }
 }

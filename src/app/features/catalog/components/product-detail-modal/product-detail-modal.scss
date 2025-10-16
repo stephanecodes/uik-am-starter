@@ -1,0 +1,255 @@
+@import "vars";
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  
+  // Animation du backdrop
+  animation: fadeIn 0.3s ease-out;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.modal-container {
+  background: white;
+  border-radius: 12px;
+  max-width: 80vw;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  
+  // Animation du container
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .product-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+  }
+}
+
+
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.product-image-section {
+  display: flex;
+  align-items: stretch;
+  max-height: calc(90vh - 4rem); // Hauteur max = hauteur popup - padding
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    max-height: calc(90vh - 4rem);
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid $border-light;
+  }
+}
+
+.product-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .product-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: $text-primary;
+  }
+
+  .product-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    .tag {
+      background: $info-bg;
+      color: $info-text;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .product-description {
+    p {
+      margin: 0 0 1rem 0;
+      color: $text-primary;
+      line-height: 1.6;
+    }
+
+    .specs-disclaimer {
+      font-size: 14px;
+      color: $text-secondary;
+      font-style: italic;
+    }
+  }
+
+  .product-specifications {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .spec-item {
+      display: flex;
+      gap: 0.5rem;
+
+      .spec-label {
+        font-weight: 600;
+        color: $text-primary;
+      }
+
+      .spec-value {
+        color: $text-primary;
+        flex: 1;
+        
+        &:first-child {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .limited-offer {
+    .offer-badge {
+      background: $error;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: darken($error, 10%);
+      }
+    }
+  }
+
+  .product-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+
+    .discount {
+      color: $error;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: $text-primary;
+    }
+  }
+
+  .purchase-section {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    margin-top: auto;
+
+    .quantity-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+        color: $text-primary;
+      }
+
+      .form-select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid $border-light;
+        border-radius: 6px;
+        background: white;
+        color: $text-primary;
+        min-width: 80px;
+
+        &:focus {
+          border-color: $primary-color;
+          box-shadow: 0 0 0 0.2rem rgba(103, 58, 183, 0.25);
+        }
+      }
+    }
+
+    .btn-add-to-cart {
+      flex: 1;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: 0.5rem; // Réduire le padding du backdrop sur mobile
+  }
+
+  .modal-container {
+    max-width: 95vw; // Prendre presque toute la largeur
+    max-height: 95vh;
+    border-radius: 8px; // Bordures un peu moins arrondies pour gagner de l'espace
+  }
+
+  .modal-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .purchase-section {
+    flex-direction: column;
+    align-items: stretch;
+
+    .btn-add-to-cart {
+      flex: none;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+<app-page-layout>
+  <div class="cart-container">
+    <!-- Panier vide -->
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <i class="material-icons empty-icon">shopping_cart</i>
+      <h2>Votre panier est vide</h2>
+      <p>Ajoutez des produits pour commencer vos achats</p>
+      <app-button variant="primary" (click)="continueShopping()">
+        Continuer mes achats
+      </app-button>
+    </div>
+
+    <!-- Panier avec produits -->
+    <div *ngIf="cartItems.length > 0" class="cart-content">
+      <!-- Liste des produits -->
+      <div class="cart-items">
+        <app-cart-item 
+          *ngFor="let item of cartItems" 
+          [item]="item"
+          (quantityChange)="onQuantityChange($event, item.product.id)"
+          (remove)="removeItem(item.product.id)">
+        </app-cart-item>
+      </div>
+
+      <!-- Récapitulatif -->
+      <div class="cart-summary">
+        <div class="summary-header">
+          <h2 class="summary-title">Récapitulatif</h2>
+          <button class="btn-clear-cart" (click)="clearCart()" title="Vider le panier">
+            <i class="material-icons">delete_outline</i>
+          </button>
+        </div>
+        
+        <div class="summary-details">
+          <div class="summary-row">
+            <span>Sous-total ({{ cartItems.length }} produit{{ cartItems.length > 1 ? 's' : '' }})</span>
+            <span>{{ total | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Livraison</span>
+            <span>Gratuite</span>
+          </div>
+          <hr>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <span class="total-amount">{{ total | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
+          </div>
+        </div>
+
+        <div class="summary-actions">
+          <app-button 
+            variant="primary" 
+            (click)="proceedToCheckout()"
+            class="btn-checkout">
+            Valider la commande
+          </app-button>
+
+          <button class="btn-continue-shopping" (click)="continueShopping()">
+            Continuer mes achats
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-page-layout>
+

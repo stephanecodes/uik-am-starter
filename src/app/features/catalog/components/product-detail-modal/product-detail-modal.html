@@ -1,0 +1,109 @@
+<div
+  *ngIf="isOpen && product"
+  class="modal-backdrop"
+  (click)="onBackdropClick($event)"
+>
+  <div
+    class="modal-container"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'product-modal-title-' + product.id"
+  >
+    <div class="modal-content">
+      <div class="product-image-section">
+        <img
+          [src]="'/api' + product.image"
+          [alt]="product.name"
+          class="product-image"
+        />
+      </div>
+
+      <div class="product-info-section">
+        <div class="product-title-container">
+          <h2 class="product-title" [id]="'product-modal-title-' + product.id">
+            {{ product.name }}
+          </h2>
+          <button
+            class="close-btn"
+            (click)="onClose()"
+            aria-label="Fermer la fenêtre de détails"
+          >
+            <i class="material-icons" aria-hidden="true">close</i>
+          </button>
+        </div>
+
+        <div class="product-tags">
+          <span class="tag">{{ product.category }}</span>
+          <span class="tag">{{ product.brand }}</span>
+          <span class="tag">Green Range</span>
+        </div>
+
+        <div class="product-description">
+          <p>{{ product.description }}</p>
+          <p class="specs-disclaimer">
+            Les spécifications techniques sont données par le constructeur à
+            titre informatif et peuvent être modifiées. Les photos sont non
+            contractuelles.
+          </p>
+        </div>
+
+        <div class="product-specifications">
+          <div class="spec-item">
+            <span class="spec-label">Garantie:</span>
+            <span class="spec-value">{{ product.warranty }}</span>
+          </div>
+
+          <div *ngFor="let spec of product.specifications" class="spec-item">
+            <span class="spec-label">{{ spec.label }}:</span>
+            <span class="spec-value">{{ spec.value }}</span>
+          </div>
+
+          <div *ngIf="product.warning" class="spec-item">
+            <span class="spec-label">Avertissement:</span>
+            <span class="spec-value">{{ product.warning }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="product.offer" class="limited-offer">
+          <button class="offer-badge">Offre limitée</button>
+        </div>
+
+        <div class="product-price">
+          <span *ngIf="product.discount" class="discount"
+            >-{{ product.discount }}</span
+          >
+          <span class="price"
+            >{{ product.price | currency:product.currency:'symbol':'1.0-0':'fr'
+            }}</span
+          >
+        </div>
+
+        <div class="purchase-section">
+          <div class="quantity-selector">
+            <label for="quantity">Quantité:</label>
+            <select
+              id="quantity"
+              class="form-select"
+              [value]="quantity"
+              (change)="onQuantityChange($event)"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <app-button
+            variant="primary"
+            icon="shopping_cart"
+            (click)="onAddToCart()"
+          >
+            Add to cart
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="position-relative">
+  <div class="position-absolute top-0 start-0 m-2" style="z-index: 10">
+    <input
+      class="form-check-input product-checkbox"
+      type="checkbox"
+      [id]="'product-' + product.id"
+      [checked]="isSelected"
+      [attr.aria-label]="'Sélectionner ' + product.name"
+      (change)="onCheckboxChange($event)"
+    />
+  </div>
+
+  <div class="product-image-container position-relative">
+    <img
+      [src]="'/api' + product.image"
+      [alt]="product.name"
+      class="product-image"
+      (click)="onOpenDetails()"
+    />
+
+    <div class="product-watermark">
+      <div class="watermark-logo">
+        <img
+          src="assets/uik-core/images/logo.svg"
+          alt="Visiativ"
+          class="uik-brand-logo"
+        />
+      </div>
+      <div class="watermark-demo">Demo</div>
+    </div>
+  </div>
+
+  <div class="product-content">
+    <h3 class="product-name">{{ product.name }}</h3>
+
+    <p class="product-id">{{ product.id.toString().padStart(9, '0') }}</p>
+
+    <div class="product-actions">
+      <button
+        class="btn-add-cart"
+        [attr.aria-label]="'Ajouter ' + product.name + ' au panier'"
+        (click)="onAddToCart()"
+      >
+        <i class="material-icons" aria-hidden="true">shopping_cart</i>
+        Add to cart
+      </button>
+
+      <button
+        class="btn-icon"
+        [class.is-favorite]="isFavorite"
+        (click)="onToggleFavorite()"
+        [attr.aria-label]="(isFavorite ? 'Retirer ' : 'Ajouter ') + product.name + ' des favoris'"
+        [attr.aria-pressed]="isFavorite"
+        type="button"
+      >
+        <i class="material-icons" aria-hidden="true"
+          >{{ isFavorite ? 'star' : 'star_border' }}</i
+        >
+      </button>
+
+      <button
+        class="btn-icon"
+        (click)="onOpenDetails()"
+        [attr.aria-label]="'Voir les détails de ' + product.name"
+        type="button"
+      >
+        <i class="material-icons" aria-hidden="true">info</i>
+      </button>
+
+      <div class="dropdown">
+        <button
+          class="btn-icon"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          [attr.aria-label]="'Plus d\'options pour ' + product.name"
+        >
+          <i class="material-icons" aria-hidden="true">more_vert</i>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="onOpenDetails(); $event.preventDefault()"
+            >
+              <i class="material-icons me-2">visibility</i>
+              View details
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="onSelect(); $event.preventDefault()"
+            >
+              <i class="material-icons me-2">check_box</i>
+              Select this product
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

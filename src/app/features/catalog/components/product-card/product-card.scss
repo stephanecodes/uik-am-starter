@@ -1,0 +1,194 @@
+@import "vars";
+
+:host {
+  display: block;
+  background: $background-card;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  height: 100%;
+
+  &:hover {
+    box-shadow: 0 4px 12px $shadow-medium;
+  }
+}
+
+// Case à cocher violette
+.product-checkbox {
+  width: 18px;
+  height: 18px;
+  border-color: $primary-color !important;
+  border-radius: 3px;
+  
+  &:checked {
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+  }
+}
+
+// Container de l'image
+.product-image-container {
+  height: 200px;
+  overflow: hidden;
+  background: white;
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  // Watermark Visiativ
+  .product-watermark {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: $watermark-bg;
+    color: $watermark-text;
+    padding: 12px 16px;
+    border-radius: 6px 0 0 6px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    width: 50%;
+
+    .uik-brand-logo {
+			width: 100px;
+			filter: invert(1);
+			top: -14px;
+			position: relative;
+    }
+
+    .watermark-logo {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 4px;
+			height: 20px;
+    }
+
+    .watermark-text {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .watermark-demo {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+  }
+}
+
+// Contenu de la carte
+.product-content {
+  padding: 16px;
+
+  .product-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: $text-primary;
+    line-height: 1.3;
+  }
+
+  .product-id {
+    font-size: 14px;
+    color: $text-secondary;
+    margin: 0 0 16px 0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Actions en bas
+.product-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+
+  .btn-add-cart {
+    color: $primary-color;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-grow: 1;
+    background: none;
+
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: $hover-light;
+        border-color: $border-medium;
+      }
+
+      i {
+        font-size: 24px;
+        color: $text-secondary;
+        transition: color 0.2s ease;
+      }
+
+      &.is-favorite i {
+        color: #FFD700; // Couleur dorée pour l'étoile favorite
+      }
+    }
+
+  .dropdown {
+    .btn-icon {
+      border: none;
+    }
+
+    .dropdown-menu {
+      min-width: 160px;
+      border: 1px solid $border-light;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px $shadow-medium;
+
+      .dropdown-item {
+        padding: 8px 16px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+          background: $hover-light;
+        }
+
+        i {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

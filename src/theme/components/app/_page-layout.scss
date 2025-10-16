@@ -1,7 +1,8 @@
 @use "@visiativ/uik-core/theme/variables/colors" as colors;
 
 .app-page-layout {
-
+  background: transparent;
+  
   .app-doc-page-layout-header {
     .mat-toolbar {
       uik-toolbar-app-context .mat-h3 {

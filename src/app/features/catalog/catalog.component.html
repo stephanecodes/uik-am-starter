@@ -1,5 +1,181 @@
 <app-page-layout>
-  <div class="p-6">
-    <p>Welcome !</p>
+  <div class="container-fluid py-4">
+    <!-- Bandeau par défaut (filtres et vue) -->
+    <div *ngIf="selectedProducts.size === 0" class="default-banner mb-4">
+      <div class="filters-section">
+        <button class="filter-toggle-btn" [class.active]="showFilters" (click)="showFilters = !showFilters">
+          <i class="material-icons" [class.rotated]="showFilters">filter_list</i>
+          Filtres
+        </button>
+        
+        <!-- Barre de recherche -->
+        <div class="search-container">
+          <input 
+            type="text" 
+            class="search-input"
+            placeholder="Rechercher un produit..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="applyFilters()"
+          />
+          <i class="material-icons search-icon">search</i>
+        </div>
+      </div>
+      
+      <div class="right-section">
+        <div class="product-count">
+          {{ filteredProducts.length }} produits
+        </div>
+        
+        <div class="view-toggle">
+          <button class="view-btn active" title="Vue grille">
+            <i class="material-icons">grid_view</i>
+          </button>
+          <button class="view-btn" title="Vue liste">
+            <i class="material-icons">list</i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de filtres -->
+    <div *ngIf="showFilters && selectedProducts.size === 0" class="filters-panel mb-4">
+      <div class="filters-content">
+        <div class="filter-group">
+          <label>Catégorie</label>
+          <select 
+            class="form-select" 
+            [(ngModel)]="selectedCategory"
+            (ngModelChange)="applyFilters()"
+          >
+            <option value="">Toutes les catégories</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Marque</label>
+          <select 
+            class="form-select" 
+            [(ngModel)]="selectedBrand"
+            (ngModelChange)="applyFilters()"
+          >
+            <option value="">Toutes les marques</option>
+            <option *ngFor="let brand of brands" [value]="brand">
+              {{ brand }}
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Trier par prix</label>
+          <select 
+            class="form-select" 
+            [(ngModel)]="sortOrder"
+            (ngModelChange)="applyFilters()"
+          >
+            <option value="">Sans tri</option>
+            <option value="asc">Prix croissant</option>
+            <option value="desc">Prix décroissant</option>
+          </select>
+        </div>
+
+        <button class="clear-filters-btn" (click)="clearFilters()">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Bandeau de sélection -->
+    <div *ngIf="selectedProducts.size > 0" class="selection-banner mb-4">
+      <div class="selection-info">
+        <i class="material-icons selection-icon">remove</i>
+        <span class="selection-count">{{ selectedProducts.size }} selected</span>
+      </div>
+      
+      <app-button variant="primary" icon="add_shopping_cart" (click)="addSelectedToCart()">
+        Add to cart
+      </app-button>
+      
+      <app-button variant="primary" icon="star_border" (click)="addSelectedToFavorites()">
+        Add to favorite
+      </app-button>
+    </div>
+
+    <!-- Grille de skeletons pendant le chargement -->
+    <div *ngIf="isLoading" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
+      <div *ngFor="let item of skeletonItems" class="col">
+        <app-product-skeleton></app-product-skeleton>
+      </div>
+    </div>
+
+    <!-- Grille Bootstrap avec maximum 5 colonnes -->
+    <div *ngIf="!isLoading" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
+      <div *ngFor="let product of paginatedProducts" class="col">
+        <app-product-card
+          [product]="product"
+          [isSelected]="isProductSelected(product)"
+          [isFavorite]="isProductFavorite(product)"
+          (addToCart)="addToCart($event)"
+          (toggleFavorite)="toggleFavorite($event)"
+          (openDetails)="openProductDetails($event)"
+          (select)="selectProduct($event)"
+          (selectionChange)="onProductSelectionChange(product, $event)"
+        ></app-product-card>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!isLoading && totalPages > 1" class="pagination-container mt-4">
+      <div class="pagination-wrapper">
+        <!-- Sélecteur d'éléments par page -->
+        <div class="rows-per-page">
+          <label for="itemsPerPageSelect">Rows per page:</label>
+          <select 
+            id="itemsPerPageSelect"
+            class="form-select" 
+            [value]="itemsPerPage"
+            (change)="onItemsPerPageChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+
+        <!-- Indicateur de page -->
+        <div class="page-indicator">
+          Page {{ currentPage }} of {{ totalPages }}
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-buttons">
+          <button 
+            class="nav-btn"
+            (click)="changePage(currentPage - 1)" 
+            [disabled]="currentPage === 1"
+            title="Page précédente">
+            <i class="material-icons">chevron_left</i>
+          </button>
+          <button 
+            class="nav-btn"
+            (click)="changePage(currentPage + 1)" 
+            [disabled]="currentPage === totalPages"
+            title="Page suivante">
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Modal de détails produit -->
+  <app-product-detail-modal
+    [product]="selectedProduct"
+    [isOpen]="isModalOpen"
+    (close)="closeProductDetails()"
+    (addToCart)="addToCart($event)"
+    (toggleFavorite)="toggleFavorite($event)">
+  </app-product-detail-modal>
 </app-page-layout>
