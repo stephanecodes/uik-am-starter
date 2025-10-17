@@ -1,0 +1,29 @@
+@use "../../vars" as vars;
+
+// Styles pour la page catalogue (pas pour les cartes de produit)
+.app-catalog {
+  background: vars.$background-catalog; // Fond gris clair derrière les cartes
+  min-height: 100vh;
+  
+  .catalog-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .catalog-header {
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 500;
+      margin: 0 0 0.5rem 0;
+    }
+
+    p {
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.6);
+      margin: 0;
+    }
+  }
+}

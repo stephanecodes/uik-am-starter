@@ -1,9 +1,50 @@
 <mat-toolbar class="uik-header-large uik-color-white-bg uik-outlined-bottom">
   @if (layoutMatchesSmallViewport()) {
-    <button mat-icon-button (click)="toggleSidenav()" class="me-1">
-      <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
-    </button>
+  <button mat-icon-button (click)="toggleSidenav()" class="me-1">
+    <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
+  </button>
   }
-  Page title
-</mat-toolbar>
+  <span class="page-title">{{ pageTitle() }}</span>
 
+  <span class="spacer"></span>
+
+  <!-- Icône favoris avec badge -->
+  <button
+    mat-icon-button
+    class="favorites-button"
+    [attr.aria-label]="
+      'Favoris (' +
+      favoritesCount() +
+      ' produit' +
+      (favoritesCount() > 1 ? 's' : '') +
+      ')'
+    "
+  >
+    <mat-icon
+      [matBadge]="favoritesCount()"
+      [matBadgeHidden]="favoritesCount() === 0"
+      matBadgeColor="accent"
+      aria-hidden="false"
+      >star</mat-icon
+    >
+  </button>
+
+  <!-- Icône panier avec badge -->
+  <button
+    mat-icon-button
+    [routerLink]="['/cart']"
+    class="cart-button"
+    [class.bump]="isBumping"
+    [attr.aria-label]="
+      'Panier (' + cartCount() + ' article' + (cartCount() > 1 ? 's' : '') + ')'
+    "
+  >
+    <mat-icon
+      [matBadge]="cartCount()"
+      [matBadgeHidden]="cartCount() === 0"
+      matBadgeColor="warn"
+      aria-hidden="false"
+      >shopping_cart</mat-icon
+    >
+  </button>
+</mat-toolbar>

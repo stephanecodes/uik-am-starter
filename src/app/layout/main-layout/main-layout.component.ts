@@ -4,13 +4,13 @@ import {MatSidenav, MatSidenavModule} from "@angular/material/sidenav";
 import {
   UikAmModule,
   UikLayoutBreakpointObserverService,
-  UikSidenavLayout,
   UikSidenavNavigationRouteComponent,
   UikSidenavService
 } from "@visiativ/uik-am";
 import {MatDivider, MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
-import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
+import {toSignal} from "@angular/core/rxjs-interop";
+import {SidenavPersistenceService} from '../../shared/services/sidenav-persistence.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -31,6 +31,7 @@ import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
 export class MainLayoutComponent implements OnInit {
   private readonly uikLayoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
   private readonly uikSidenavService = inject(UikSidenavService);
+  private readonly sidenavPersistence = inject(SidenavPersistenceService);
 
   @HostBinding('class') class = 'app-main-layout';
 
@@ -38,15 +39,10 @@ export class MainLayoutComponent implements OnInit {
   sidenavLayout = toSignal(this.uikSidenavService.sidenavLayout$);
 
   constructor() {
-    this.uikSidenavService.sidenavLayout$
-      .pipe(takeUntilDestroyed())
-      .subscribe((layout) => {
-        localStorage.setItem('sidenavLayout', layout);
-      });
+    this.sidenavPersistence.initializePersistence();
   }
 
   ngOnInit(): void {
-    const layout: UikSidenavLayout = localStorage.getItem('sidenavLayout') as UikSidenavLayout ?? 'initial';
-    this.uikSidenavService.changeSidenavLayout(layout);
+    this.sidenavPersistence.restoreLayout();
   }
 }

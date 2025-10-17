@@ -1,0 +1,39 @@
+<div class="cart-item">
+  <img 
+    [src]="'/api' + item.product.image" 
+    [alt]="item.product.name"
+    class="item-image"
+  />
+  
+  <div class="item-details">
+    <h3 class="item-name">{{ item.product.name }}</h3>
+    <p class="item-id">{{ item.product.id.toString().padStart(9, '0') }}</p>
+    <p class="item-price">{{ item.product.price | currency:item.product.currency:'symbol':'1.0-0':'fr' }}</p>
+  </div>
+  
+  <div class="item-quantity">
+    <label [for]="'quantity-' + item.product.id">Quantité</label>
+    <select 
+      [id]="'quantity-' + item.product.id"
+      class="form-select"
+      [ngModel]="item.quantity"
+      (ngModelChange)="onQuantityChange($event)"
+    >
+      <option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [value]="n">{{ n }}</option>
+    </select>
+  </div>
+  
+  <div class="item-total">
+    <p class="subtotal-label">Sous-total</p>
+    <p class="subtotal-price">{{ (item.product.price * item.quantity) | currency:item.product.currency:'symbol':'1.0-0':'fr' }}</p>
+  </div>
+  
+  <button 
+    class="btn-remove"
+    (click)="onRemove()"
+    title="Supprimer"
+  >
+    <i class="material-icons">delete_outline</i>
+  </button>
+</div>
+

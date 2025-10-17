@@ -1,0 +1,156 @@
+@import "vars";
+
+:host {
+  display: block;
+  background: $background-catalog;
+  min-height: 100vh;
+}
+
+.payment-container {
+  max-width: 625px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.payment-form {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px $shadow-light;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  
+  &:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  
+  &.single-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  
+  .form-control {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid $border-light;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    
+    &::placeholder {
+      color: $text-secondary;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+    }
+    
+    &.is-invalid {
+      border-color: $error;
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($error, 0.1);
+      }
+    }
+  }
+  
+  .invalid-feedback {
+    color: $error;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// Phone input container
+.phone-input-container {
+  display: flex;
+  gap: 0;
+  
+  .country-select {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid $border-light;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    background: white;
+    cursor: pointer;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+  
+  .phone-input {
+    border-radius: 0 4px 4px 0;
+    flex: 1;
+  }
+}
+
+.phone-example {
+  font-size: 0.8rem;
+  color: $text-secondary;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+// Payment section specific styles
+.expiry-group {
+  flex: 2;
+}
+
+.cvv-group {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .payment-container {
+    padding: 1rem;
+  }
+  
+  .payment-form {
+    padding: 1.5rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    justify-content: stretch;
+    
+    .btn-submit {
+      width: 100%;
+    }
+  }
+}
+

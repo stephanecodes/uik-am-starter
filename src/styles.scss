@@ -1,2 +1,9 @@
+// UIK - @forward DOIT être avant @import
 @forward "@visiativ/uik-core/theme";
 @forward "@visiativ/uik-am/theme";
+
+// Thème de l'application (inclut _catalog.scss)
+@forward "theme";
+
+// Bootstrap - @import pour import global (nécessaire pour Bootstrap)
+@import "bootstrap/scss/bootstrap";

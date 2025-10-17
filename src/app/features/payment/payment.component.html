@@ -1,0 +1,219 @@
+<app-page-layout>
+  <div class="payment-container">
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+      <div class="form-section">
+        <h2 class="section-title">Name</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <input 
+              type="text" 
+              id="fullName" 
+              formControlName="fullName"
+              class="form-control"
+              placeholder="Full name *"
+              [class.is-invalid]="f['fullName'].invalid && f['fullName'].touched"
+              [attr.aria-describedby]="f['fullName'].invalid && f['fullName'].touched ? 'fullName-error' : null"
+              aria-required="true"
+            />
+            <div 
+              id="fullName-error" 
+              class="invalid-feedback" 
+              *ngIf="f['fullName'].invalid && f['fullName'].touched"
+              role="alert"
+            >
+              Full name is required (min. 2 characters)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="phone-input-container">
+              <select 
+                class="country-select" 
+                formControlName="countryCode"
+                aria-label="Code pays"
+              >
+                <option value="+33">🇫🇷 +33</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+49">🇩🇪 +49</option>
+              </select>
+              <input 
+                type="tel" 
+                id="phone" 
+                formControlName="phone"
+                class="form-control phone-input"
+                placeholder="Phone number *"
+                [class.is-invalid]="f['phone'].invalid && f['phone'].touched"
+                [attr.aria-describedby]="f['phone'].invalid && f['phone'].touched ? 'phone-error' : null"
+                aria-required="true"
+              />
+            </div>
+            <div 
+              id="phone-error" 
+              class="invalid-feedback" 
+              *ngIf="f['phone'].invalid && f['phone'].touched"
+              role="alert"
+            >
+              Valid phone number required
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-example">Example: +33605040302 for a French number.</div>
+
+        <div class="form-group">
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            class="form-control"
+            placeholder="email *"
+            [class.is-invalid]="f['email'].invalid && f['email'].touched"
+          />
+          <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
+            Valid email required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="section-title">Delivery Adress</h2>
+        
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="address" 
+            formControlName="address"
+            class="form-control"
+            placeholder="Adress *"
+            [class.is-invalid]="f['address'].invalid && f['address'].touched"
+          />
+          <div class="invalid-feedback" *ngIf="f['address'].invalid && f['address'].touched">
+            Address is required
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <input 
+              type="text" 
+              id="city" 
+              formControlName="city"
+              class="form-control"
+              placeholder="City *"
+              [class.is-invalid]="f['city'].invalid && f['city'].touched"
+            />
+            <div class="invalid-feedback" *ngIf="f['city'].invalid && f['city'].touched">
+              City is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input 
+              type="text" 
+              id="postalCode" 
+              formControlName="postalCode"
+              class="form-control"
+              placeholder="Zip *"
+              [class.is-invalid]="f['postalCode'].invalid && f['postalCode'].touched"
+            />
+            <div class="invalid-feedback" *ngIf="f['postalCode'].invalid && f['postalCode'].touched">
+              Valid zip code required (5 digits)
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="country" 
+            formControlName="country"
+            class="form-control"
+            placeholder="Country *"
+            [class.is-invalid]="f['country'].invalid && f['country'].touched"
+          />
+          <div class="invalid-feedback" *ngIf="f['country'].invalid && f['country'].touched">
+            Country is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="section-title">Payment</h2>
+        
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="cardNumber" 
+            formControlName="cardNumber"
+            class="form-control"
+            placeholder="Card number *"
+            maxlength="16"
+            [class.is-invalid]="f['cardNumber'].invalid && f['cardNumber'].touched"
+          />
+          <div class="invalid-feedback" *ngIf="f['cardNumber'].invalid && f['cardNumber'].touched">
+            Valid card number required (16 digits)
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group expiry-group">
+            <input 
+              type="text" 
+              id="expiryDate" 
+              formControlName="expiryDate"
+              class="form-control"
+              placeholder="MM/YY *"
+              maxlength="5"
+              [class.is-invalid]="f['expiryDate'].invalid && f['expiryDate'].touched"
+            />
+            <div class="invalid-feedback" *ngIf="f['expiryDate'].invalid && f['expiryDate'].touched">
+              Format: MM/YY
+            </div>
+          </div>
+
+          <div class="form-group cvv-group">
+            <input 
+              type="text" 
+              id="cvv" 
+              formControlName="cvv"
+              class="form-control"
+              placeholder="CVV *"
+              maxlength="4"
+              [class.is-invalid]="f['cvv'].invalid && f['cvv'].touched"
+            />
+            <div class="invalid-feedback" *ngIf="f['cvv'].invalid && f['cvv'].touched">
+              Valid CVV required (3-4 digits)
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="cardName" 
+            formControlName="cardName"
+            class="form-control"
+            placeholder="Full name *"
+            [class.is-invalid]="f['cardName'].invalid && f['cardName'].touched"
+          />
+          <div class="invalid-feedback" *ngIf="f['cardName'].invalid && f['cardName'].touched">
+            Full name on card is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <app-button 
+          variant="primary" 
+          type="submit"
+          [disabled]="isProcessing"
+        >
+          Submit Payment
+        </app-button>
+      </div>
+    </form>
+  </div>
+</app-page-layout>
+
