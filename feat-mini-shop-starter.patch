@@ -1,0 +1,4383 @@
+From 78e2d99ecca184e012c3d5b4247f95eb4c67e9c7 Mon Sep 17 00:00:00 2001
+From: mponroy <marc.ponroy@gmail.com>
+Date: Thu, 16 Oct 2025 18:02:13 +0200
+Subject: [PATCH] tracteur shopping first commit
+
+---
+ angular.json                                  |   3 +
+ package-lock.json                             |  31 ++
+ package.json                                  |   1 +
+ src/app/app.config.ts                         |  10 +-
+ src/app/app.routes.ts                         |   4 +
+ src/app/features/cart/cart.component.html     |  66 +++
+ src/app/features/cart/cart.component.scss     | 164 +++++++
+ src/app/features/cart/cart.component.ts       |  75 ++++
+ .../cart-item/cart-item.component.html        |  39 ++
+ .../cart-item/cart-item.component.scss        | 126 ++++++
+ .../cart-item/cart-item.component.ts          |  39 ++
+ .../features/catalog/catalog.component.html   | 180 +++++++-
+ .../features/catalog/catalog.component.scss   | 403 ++++++++++++++++++
+ src/app/features/catalog/catalog.component.ts | 278 +++++++++++-
+ .../components/product-card/product-card.html | 105 +++++
+ .../components/product-card/product-card.scss | 194 +++++++++
+ .../components/product-card/product-card.ts   |  44 ++
+ .../product-detail-modal.html                 | 109 +++++
+ .../product-detail-modal.scss                 | 255 +++++++++++
+ .../product-detail-modal.ts                   |  68 +++
+ .../payment-confirm-dialog.component.ts       |  70 +++
+ .../payment-process-dialog.component.ts       |  58 +++
+ .../features/payment/payment.component.html   | 219 ++++++++++
+ .../features/payment/payment.component.scss   | 156 +++++++
+ src/app/features/payment/payment.component.ts | 106 +++++
+ .../main-layout/main-layout.component.html    |   4 +-
+ .../main-layout/main-layout.component.ts      |  14 +-
+ .../page-layout/page-layout.component.ts      |  17 +-
+ src/app/shared/components/button/button.html  |   8 +
+ src/app/shared/components/button/button.scss  |  54 +++
+ src/app/shared/components/button/button.ts    |  25 ++
+ .../page-header/page-header.component.html    |  51 ++-
+ .../page-header/page-header.component.scss    |  48 +++
+ .../page-header/page-header.component.ts      |  54 ++-
+ .../product-skeleton.component.html           |  25 ++
+ .../product-skeleton.component.scss           | 107 +++++
+ .../product-skeleton.component.ts             |  14 +
+ src/app/shared/models/cart-item.model.ts      |   7 +
+ src/app/shared/models/product.model.ts        |  22 +
+ src/app/shared/services/cart.service.ts       | 158 +++++++
+ src/app/shared/services/favorites.service.ts  | 127 ++++++
+ src/app/shared/services/logger.service.ts     |  77 ++++
+ src/app/shared/services/page-title.service.ts |  16 +
+ src/app/shared/services/products.service.ts   |  28 ++
+ .../services/sidenav-persistence.service.ts   |  51 +++
+ src/index.html                                |   1 +
+ src/styles.scss                               |   7 +
+ src/theme/_vars.scss                          |  43 ++
+ src/theme/components/app/_all.scss            |   1 +
+ src/theme/components/app/_catalog.scss        |  29 ++
+ src/theme/components/app/_main-layout.scss    |   3 +-
+ src/theme/components/app/_page-layout.scss    |   3 +-
+ 52 files changed, 3761 insertions(+), 36 deletions(-)
+ create mode 100644 src/app/features/cart/cart.component.html
+ create mode 100644 src/app/features/cart/cart.component.scss
+ create mode 100644 src/app/features/cart/cart.component.ts
+ create mode 100644 src/app/features/cart/components/cart-item/cart-item.component.html
+ create mode 100644 src/app/features/cart/components/cart-item/cart-item.component.scss
+ create mode 100644 src/app/features/cart/components/cart-item/cart-item.component.ts
+ create mode 100644 src/app/features/catalog/catalog.component.scss
+ create mode 100644 src/app/features/catalog/components/product-card/product-card.html
+ create mode 100644 src/app/features/catalog/components/product-card/product-card.scss
+ create mode 100644 src/app/features/catalog/components/product-card/product-card.ts
+ create mode 100644 src/app/features/catalog/components/product-detail-modal/product-detail-modal.html
+ create mode 100644 src/app/features/catalog/components/product-detail-modal/product-detail-modal.scss
+ create mode 100644 src/app/features/catalog/components/product-detail-modal/product-detail-modal.ts
+ create mode 100644 src/app/features/payment/components/payment-confirm-dialog/payment-confirm-dialog.component.ts
+ create mode 100644 src/app/features/payment/components/payment-process-dialog/payment-process-dialog.component.ts
+ create mode 100644 src/app/features/payment/payment.component.html
+ create mode 100644 src/app/features/payment/payment.component.scss
+ create mode 100644 src/app/features/payment/payment.component.ts
+ create mode 100644 src/app/shared/components/button/button.html
+ create mode 100644 src/app/shared/components/button/button.scss
+ create mode 100644 src/app/shared/components/button/button.ts
+ create mode 100644 src/app/shared/components/page-header/page-header.component.scss
+ create mode 100644 src/app/shared/components/product-skeleton/product-skeleton.component.html
+ create mode 100644 src/app/shared/components/product-skeleton/product-skeleton.component.scss
+ create mode 100644 src/app/shared/components/product-skeleton/product-skeleton.component.ts
+ create mode 100644 src/app/shared/models/cart-item.model.ts
+ create mode 100644 src/app/shared/models/product.model.ts
+ create mode 100644 src/app/shared/services/cart.service.ts
+ create mode 100644 src/app/shared/services/favorites.service.ts
+ create mode 100644 src/app/shared/services/logger.service.ts
+ create mode 100644 src/app/shared/services/page-title.service.ts
+ create mode 100644 src/app/shared/services/products.service.ts
+ create mode 100644 src/app/shared/services/sidenav-persistence.service.ts
+ create mode 100644 src/theme/_vars.scss
+ create mode 100644 src/theme/components/app/_catalog.scss
+
+diff --git a/angular.json b/angular.json
+index 81b6f59..f5ceae7 100644
+--- a/angular.json
++++ b/angular.json
+@@ -115,5 +115,8 @@
+         }
+       }
+     }
++  },
++  "cli": {
++    "analytics": "833dc24c-5074-41fa-99e4-f55936d7b697"
+   }
+ }
+diff --git a/package-lock.json b/package-lock.json
+index d54453f..0a2a47b 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -17,6 +17,7 @@
+         "@angular/platform-browser": "^20.0.0",
+         "@angular/router": "^20.0.0",
+         "@visiativ/uik-am": "^20.0.0",
++        "bootstrap": "^5.3.8",
+         "json-server": "^1.0.0-beta.3",
+         "rxjs": "~7.8.0",
+         "tslib": "^2.3.0",
+@@ -3182,6 +3183,17 @@
+       "integrity": "sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==",
+       "license": "MIT"
+     },
++    "node_modules/@popperjs/core": {
++      "version": "2.11.8",
++      "resolved": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz",
++      "integrity": "sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==",
++      "license": "MIT",
++      "peer": true,
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/popperjs"
++      }
++    },
+     "node_modules/@rolldown/binding-android-arm64": {
+       "version": "1.0.0-beta.32",
+       "resolved": "https://registry.npmjs.org/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-beta.32.tgz",
+@@ -4489,6 +4501,25 @@
+       "dev": true,
+       "license": "ISC"
+     },
++    "node_modules/bootstrap": {
++      "version": "5.3.8",
++      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.8.tgz",
++      "integrity": "sha512-HP1SZDqaLDPwsNiqRqi5NcP0SSXciX2s9E+RyqJIIqGo+vJeN5AJVM98CXmW/Wux0nQ5L7jeWUdplCEf0Ee+tg==",
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/twbs"
++        },
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/bootstrap"
++        }
++      ],
++      "license": "MIT",
++      "peerDependencies": {
++        "@popperjs/core": "^2.11.8"
++      }
++    },
+     "node_modules/brace-expansion": {
+       "version": "1.1.12",
+       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.12.tgz",
+diff --git a/package.json b/package.json
+index 0724cc0..a468159 100644
+--- a/package.json
++++ b/package.json
+@@ -20,6 +20,7 @@
+     "@angular/platform-browser": "^20.0.0",
+     "@angular/router": "^20.0.0",
+     "@visiativ/uik-am": "^20.0.0",
++    "bootstrap": "^5.3.8",
+     "json-server": "^1.0.0-beta.3",
+     "rxjs": "~7.8.0",
+     "tslib": "^2.3.0",
+diff --git a/src/app/app.config.ts b/src/app/app.config.ts
+index d2b53b6..94ef6b1 100644
+--- a/src/app/app.config.ts
++++ b/src/app/app.config.ts
+@@ -1,14 +1,20 @@
+ import {
+   ApplicationConfig,
++  LOCALE_ID,
+   provideBrowserGlobalErrorListeners,
+   provideZoneChangeDetection
+ } from '@angular/core';
+ import {provideRouter} from '@angular/router';
++import {registerLocaleData} from '@angular/common';
++import localeFr from '@angular/common/locales/fr';
+ 
+ import {routes} from './app.routes';
+ import {provideUikCore} from '@visiativ/uik-am';
+ import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+ 
++// Enregistrer les données de locale française
++registerLocaleData(localeFr);
++
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideBrowserGlobalErrorListeners(),
+@@ -18,6 +24,8 @@ export const appConfig: ApplicationConfig = {
+     provideUikCore(),
+     // Registers Angular's HttpClient and enables dependency-injected HTTP interceptors.
+     // This is required for UIK service or component that depends on HttpClient, such as UikBrandingService.
+-    provideHttpClient(withInterceptorsFromDi())
++    provideHttpClient(withInterceptorsFromDi()),
++    // Fournir la locale française
++    { provide: LOCALE_ID, useValue: 'fr-FR' }
+   ]
+ };
+diff --git a/src/app/app.routes.ts b/src/app/app.routes.ts
+index b0507ef..e6e5129 100644
+--- a/src/app/app.routes.ts
++++ b/src/app/app.routes.ts
+@@ -1,12 +1,16 @@
+ import {Routes} from '@angular/router';
+ import {MainLayoutComponent} from './layout/main-layout/main-layout.component';
+ import {CatalogComponent} from './features/catalog/catalog.component';
++import {CartComponent} from './features/cart/cart.component';
++import {PaymentComponent} from './features/payment/payment.component';
+ 
+ export const routes: Routes = [
+   {
+     path: '', component: MainLayoutComponent, children: [
+       {path: '', redirectTo: 'home', pathMatch: 'full'},
+       {path: 'home', component: CatalogComponent},
++      {path: 'cart', component: CartComponent},
++      {path: 'payment', component: PaymentComponent},
+     ]
+   }
+ ];
+diff --git a/src/app/features/cart/cart.component.html b/src/app/features/cart/cart.component.html
+new file mode 100644
+index 0000000..e118478
+--- /dev/null
++++ b/src/app/features/cart/cart.component.html
+@@ -0,0 +1,66 @@
++<app-page-layout>
++  <div class="cart-container">
++    <!-- Panier vide -->
++    <div *ngIf="cartItems.length === 0" class="empty-cart">
++      <i class="material-icons empty-icon">shopping_cart</i>
++      <h2>Votre panier est vide</h2>
++      <p>Ajoutez des produits pour commencer vos achats</p>
++      <app-button variant="primary" (click)="continueShopping()">
++        Continuer mes achats
++      </app-button>
++    </div>
++
++    <!-- Panier avec produits -->
++    <div *ngIf="cartItems.length > 0" class="cart-content">
++      <!-- Liste des produits -->
++      <div class="cart-items">
++        <app-cart-item 
++          *ngFor="let item of cartItems" 
++          [item]="item"
++          (quantityChange)="onQuantityChange($event, item.product.id)"
++          (remove)="removeItem(item.product.id)">
++        </app-cart-item>
++      </div>
++
++      <!-- Récapitulatif -->
++      <div class="cart-summary">
++        <div class="summary-header">
++          <h2 class="summary-title">Récapitulatif</h2>
++          <button class="btn-clear-cart" (click)="clearCart()" title="Vider le panier">
++            <i class="material-icons">delete_outline</i>
++          </button>
++        </div>
++        
++        <div class="summary-details">
++          <div class="summary-row">
++            <span>Sous-total ({{ cartItems.length }} produit{{ cartItems.length > 1 ? 's' : '' }})</span>
++            <span>{{ total | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
++          </div>
++          <div class="summary-row">
++            <span>Livraison</span>
++            <span>Gratuite</span>
++          </div>
++          <hr>
++          <div class="summary-row total-row">
++            <span>Total</span>
++            <span class="total-amount">{{ total | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
++          </div>
++        </div>
++
++        <div class="summary-actions">
++          <app-button 
++            variant="primary" 
++            (click)="proceedToCheckout()"
++            class="btn-checkout">
++            Valider la commande
++          </app-button>
++
++          <button class="btn-continue-shopping" (click)="continueShopping()">
++            Continuer mes achats
++          </button>
++        </div>
++      </div>
++    </div>
++  </div>
++</app-page-layout>
++
+diff --git a/src/app/features/cart/cart.component.scss b/src/app/features/cart/cart.component.scss
+new file mode 100644
+index 0000000..207300c
+--- /dev/null
++++ b/src/app/features/cart/cart.component.scss
+@@ -0,0 +1,164 @@
++@import "vars";
++
++:host {
++  display: block;
++  background: $background-catalog;
++  min-height: 100vh;
++}
++
++.cart-container {
++  max-width: 1200px;
++  margin: 0 auto;
++  padding: 2rem;
++}
++
++
++// Panier vide
++.empty-cart {
++  text-align: center;
++  padding: 4rem 2rem;
++  background: white;
++  border-radius: 12px;
++  
++  .empty-icon {
++    font-size: 80px;
++    color: $text-secondary;
++    margin-bottom: 1rem;
++  }
++  
++  h2 {
++    font-size: 1.5rem;
++    color: $text-primary;
++    margin-bottom: 0.5rem;
++  }
++  
++  p {
++    color: $text-secondary;
++    margin-bottom: 2rem;
++  }
++}
++
++// Panier avec produits
++.cart-content {
++  display: grid;
++  grid-template-columns: 1fr 380px;
++  gap: 2rem;
++}
++
++.cart-items {
++  display: flex;
++  flex-direction: column;
++  gap: 1rem;
++}
++
++// Récapitulatif
++.cart-summary {
++  background: white;
++  border-radius: 8px;
++  padding: 1.5rem;
++  height: fit-content;
++  position: sticky;
++  top: 100px;
++  
++  .summary-header {
++    display: flex;
++    justify-content: space-between;
++    align-items: center;
++    margin-bottom: 1.5rem;
++    
++    .summary-title {
++      font-size: 1.25rem;
++      font-weight: 600;
++      margin: 0;
++      color: $text-primary;
++    }
++    
++    .btn-clear-cart {
++      background: none;
++      border: none;
++      color: $text-secondary;
++      cursor: pointer;
++      padding: 0.5rem;
++      border-radius: 6px;
++      transition: all 0.2s ease;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++      
++      &:hover {
++        background: $hover-light;
++        color: $error;
++      }
++      
++      i {
++        font-size: 24px;
++      }
++    }
++  }
++  
++  .summary-details {
++    margin-bottom: 1.5rem;
++    
++    .summary-row {
++      display: flex;
++      justify-content: space-between;
++      margin-bottom: 1rem;
++      color: $text-primary;
++      
++      &.total-row {
++        font-size: 1.2rem;
++        font-weight: 600;
++        margin-top: 1rem;
++        
++        .total-amount {
++          color: $primary-color;
++        }
++      }
++    }
++    
++    hr {
++      border: none;
++      border-top: 1px solid $border-light;
++      margin: 1rem 0;
++    }
++  }
++  
++  .summary-actions {
++    display: flex;
++    flex-direction: column;
++    align-items: center;
++    gap: 1rem;
++    
++    .btn-checkout {
++      width: auto;
++      min-width: 200px;
++    }
++    
++    .btn-continue-shopping {
++      background: none;
++      border: none;
++      color: $text-secondary;
++      padding: 0;
++      font-size: 14px;
++      cursor: pointer;
++      transition: all 0.2s ease;
++      text-decoration: underline;
++      
++      &:hover {
++        color: $text-primary;
++      }
++    }
++  }
++}
++
++// Responsive
++@media (max-width: 992px) {
++  .cart-content {
++    grid-template-columns: 1fr;
++  }
++  
++  .cart-summary {
++    position: static;
++  }
++}
++
+diff --git a/src/app/features/cart/cart.component.ts b/src/app/features/cart/cart.component.ts
+new file mode 100644
+index 0000000..461e68c
+--- /dev/null
++++ b/src/app/features/cart/cart.component.ts
+@@ -0,0 +1,75 @@
++import {Component, HostBinding, inject, OnInit, OnDestroy} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {Router} from '@angular/router';
++import {Subscription} from 'rxjs';
++import {CartService} from '../../shared/services/cart.service';
++import {PageTitleService} from '../../shared/services/page-title.service';
++import {CartItem} from '../../shared/models/cart-item.model';
++import {PageLayoutComponent} from '../../layout/page-layout/page-layout.component';
++import {Button} from '../../shared/components/button/button';
++import {CartItemComponent} from './components/cart-item/cart-item.component';
++
++@Component({
++  selector: 'app-cart',
++  standalone: true,
++  imports: [CommonModule, PageLayoutComponent, Button, CartItemComponent],
++  templateUrl: './cart.component.html',
++  styleUrl: './cart.component.scss'
++})
++export class CartComponent implements OnInit, OnDestroy {
++  @HostBinding('class') class = 'app-cart';
++
++  private cartService = inject(CartService);
++  private router = inject(Router);
++  private pageTitleService = inject(PageTitleService);
++  private subscription?: Subscription;
++
++  cartItems: CartItem[] = [];
++  total = 0;
++
++  ngOnInit(): void {
++    this.pageTitleService.setTitle('Votre panier');
++    this.loadCart();
++  }
++
++  ngOnDestroy(): void {
++    this.subscription?.unsubscribe();
++  }
++
++  loadCart(): void {
++    this.subscription = this.cartService.getCartItems().subscribe(items => {
++      this.cartItems = items;
++      this.calculateTotal();
++    });
++  }
++
++  calculateTotal(): void {
++    this.total = this.cartItems.reduce(
++      (sum, item) => sum + (item.product.price * item.quantity),
++      0
++    );
++  }
++
++  onQuantityChange(quantity: number, productId: number): void {
++    this.cartService.updateQuantity(productId, quantity);
++  }
++
++  removeItem(productId: number): void {
++    this.cartService.removeFromCart(productId);
++  }
++
++  clearCart(): void {
++    if (confirm('Voulez-vous vraiment vider le panier ?')) {
++      this.cartService.clearCart();
++    }
++  }
++
++  proceedToCheckout(): void {
++    this.router.navigate(['/payment']);
++  }
++
++  continueShopping(): void {
++    this.router.navigate(['/home']);
++  }
++}
++
+diff --git a/src/app/features/cart/components/cart-item/cart-item.component.html b/src/app/features/cart/components/cart-item/cart-item.component.html
+new file mode 100644
+index 0000000..4933689
+--- /dev/null
++++ b/src/app/features/cart/components/cart-item/cart-item.component.html
+@@ -0,0 +1,39 @@
++<div class="cart-item">
++  <img 
++    [src]="'/api' + item.product.image" 
++    [alt]="item.product.name"
++    class="item-image"
++  />
++  
++  <div class="item-details">
++    <h3 class="item-name">{{ item.product.name }}</h3>
++    <p class="item-id">{{ item.product.id.toString().padStart(9, '0') }}</p>
++    <p class="item-price">{{ item.product.price | currency:item.product.currency:'symbol':'1.0-0':'fr' }}</p>
++  </div>
++  
++  <div class="item-quantity">
++    <label [for]="'quantity-' + item.product.id">Quantité</label>
++    <select 
++      [id]="'quantity-' + item.product.id"
++      class="form-select"
++      [ngModel]="item.quantity"
++      (ngModelChange)="onQuantityChange($event)"
++    >
++      <option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [value]="n">{{ n }}</option>
++    </select>
++  </div>
++  
++  <div class="item-total">
++    <p class="subtotal-label">Sous-total</p>
++    <p class="subtotal-price">{{ (item.product.price * item.quantity) | currency:item.product.currency:'symbol':'1.0-0':'fr' }}</p>
++  </div>
++  
++  <button 
++    class="btn-remove"
++    (click)="onRemove()"
++    title="Supprimer"
++  >
++    <i class="material-icons">delete_outline</i>
++  </button>
++</div>
++
+diff --git a/src/app/features/cart/components/cart-item/cart-item.component.scss b/src/app/features/cart/components/cart-item/cart-item.component.scss
+new file mode 100644
+index 0000000..74e1fa8
+--- /dev/null
++++ b/src/app/features/cart/components/cart-item/cart-item.component.scss
+@@ -0,0 +1,126 @@
++@import "vars";
++
++:host {
++  display: block;
++}
++
++.cart-item {
++  background: white;
++  border-radius: 8px;
++  padding: 1.5rem;
++  display: grid;
++  grid-template-columns: 120px 1fr auto auto auto;
++  gap: 1.5rem;
++  align-items: center;
++  
++  .item-image {
++    width: 120px;
++    height: 120px;
++    object-fit: cover;
++    border-radius: 8px;
++    border: 1px solid $border-light;
++  }
++  
++  .item-details {
++    .item-name {
++      font-size: 1.1rem;
++      font-weight: 600;
++      margin: 0 0 0.5rem 0;
++      color: $text-primary;
++    }
++    
++    .item-id {
++      font-size: 0.9rem;
++      color: $text-secondary;
++      margin: 0 0 0.5rem 0;
++      font-family: 'Courier New', monospace;
++    }
++    
++    .item-price {
++      font-size: 1rem;
++      font-weight: 600;
++      color: $primary-color;
++      margin: 0;
++    }
++  }
++  
++  .item-quantity {
++    display: flex;
++    flex-direction: column;
++    gap: 0.5rem;
++    
++    label {
++      font-size: 0.85rem;
++      color: $text-secondary;
++      margin: 0;
++    }
++    
++    .form-select {
++      width: 80px;
++      padding: 0.375rem 0.75rem;
++      border: 1px solid $border-light;
++      border-radius: 6px;
++    }
++  }
++  
++  .item-total {
++    text-align: right;
++    min-width: 120px;
++    
++    .subtotal-label {
++      font-size: 0.85rem;
++      color: $text-secondary;
++      margin: 0 0 0.25rem 0;
++    }
++    
++    .subtotal-price {
++      font-size: 1.1rem;
++      font-weight: 600;
++      color: $text-primary;
++      margin: 0;
++    }
++  }
++  
++  .btn-remove {
++    background: none;
++    border: none;
++    color: $text-secondary;
++    cursor: pointer;
++    padding: 0.5rem;
++    border-radius: 6px;
++    transition: all 0.2s ease;
++    
++    &:hover {
++      background: $hover-light;
++      color: $error;
++    }
++    
++    i {
++      font-size: 24px;
++    }
++  }
++}
++
++// Responsive
++@media (max-width: 768px) {
++  .cart-item {
++    grid-template-columns: 80px 1fr;
++    gap: 1rem;
++    
++    .item-image {
++      width: 80px;
++      height: 80px;
++    }
++    
++    .item-quantity,
++    .item-total {
++      grid-column: 2;
++    }
++    
++    .btn-remove {
++      grid-column: 2;
++      justify-self: end;
++    }
++  }
++}
++
+diff --git a/src/app/features/cart/components/cart-item/cart-item.component.ts b/src/app/features/cart/components/cart-item/cart-item.component.ts
+new file mode 100644
+index 0000000..7370c18
+--- /dev/null
++++ b/src/app/features/cart/components/cart-item/cart-item.component.ts
+@@ -0,0 +1,39 @@
++import {Component, EventEmitter, HostBinding, Input, Output, OnInit, inject} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {FormsModule} from '@angular/forms';
++import {CartItem} from '../../../../shared/models/cart-item.model';
++import {LoggerService} from '../../../../shared/services/logger.service';
++
++@Component({
++  selector: 'app-cart-item',
++  standalone: true,
++  imports: [CommonModule, FormsModule],
++  templateUrl: './cart-item.component.html',
++  styleUrl: './cart-item.component.scss'
++})
++export class CartItemComponent implements OnInit {
++  @HostBinding('class') class = 'app-cart-item';
++
++  private logger = inject(LoggerService);
++
++  @Input() item!: CartItem;
++  
++  @Output() quantityChange = new EventEmitter<number>();
++  @Output() remove = new EventEmitter<void>();
++
++  ngOnInit() {
++    this.logger.log('CartItem - Item reçu:', this.item);
++    this.logger.log('CartItem - Quantité:', this.item.quantity);
++    this.logger.log('CartItem - Type quantité:', typeof this.item.quantity);
++  }
++
++  onQuantityChange(quantity: number): void {
++    this.logger.log('CartItem - Changement quantité:', quantity);
++    this.quantityChange.emit(quantity);
++  }
++
++  onRemove(): void {
++    this.remove.emit();
++  }
++}
++
+diff --git a/src/app/features/catalog/catalog.component.html b/src/app/features/catalog/catalog.component.html
+index ebcba49..2170e07 100644
+--- a/src/app/features/catalog/catalog.component.html
++++ b/src/app/features/catalog/catalog.component.html
+@@ -1,5 +1,181 @@
+ <app-page-layout>
+-  <div class="p-6">
+-    <p>Welcome !</p>
++  <div class="container-fluid py-4">
++    <!-- Bandeau par défaut (filtres et vue) -->
++    <div *ngIf="selectedProducts.size === 0" class="default-banner mb-4">
++      <div class="filters-section">
++        <button class="filter-toggle-btn" [class.active]="showFilters" (click)="showFilters = !showFilters">
++          <i class="material-icons" [class.rotated]="showFilters">filter_list</i>
++          Filtres
++        </button>
++        
++        <!-- Barre de recherche -->
++        <div class="search-container">
++          <input 
++            type="text" 
++            class="search-input"
++            placeholder="Rechercher un produit..."
++            [(ngModel)]="searchTerm"
++            (ngModelChange)="applyFilters()"
++          />
++          <i class="material-icons search-icon">search</i>
++        </div>
++      </div>
++      
++      <div class="right-section">
++        <div class="product-count">
++          {{ filteredProducts.length }} produits
++        </div>
++        
++        <div class="view-toggle">
++          <button class="view-btn active" title="Vue grille">
++            <i class="material-icons">grid_view</i>
++          </button>
++          <button class="view-btn" title="Vue liste">
++            <i class="material-icons">list</i>
++          </button>
++        </div>
++      </div>
++    </div>
++
++    <!-- Panel de filtres -->
++    <div *ngIf="showFilters && selectedProducts.size === 0" class="filters-panel mb-4">
++      <div class="filters-content">
++        <div class="filter-group">
++          <label>Catégorie</label>
++          <select 
++            class="form-select" 
++            [(ngModel)]="selectedCategory"
++            (ngModelChange)="applyFilters()"
++          >
++            <option value="">Toutes les catégories</option>
++            <option *ngFor="let category of categories" [value]="category">
++              {{ category }}
++            </option>
++          </select>
++        </div>
++
++        <div class="filter-group">
++          <label>Marque</label>
++          <select 
++            class="form-select" 
++            [(ngModel)]="selectedBrand"
++            (ngModelChange)="applyFilters()"
++          >
++            <option value="">Toutes les marques</option>
++            <option *ngFor="let brand of brands" [value]="brand">
++              {{ brand }}
++            </option>
++          </select>
++        </div>
++
++        <div class="filter-group">
++          <label>Trier par prix</label>
++          <select 
++            class="form-select" 
++            [(ngModel)]="sortOrder"
++            (ngModelChange)="applyFilters()"
++          >
++            <option value="">Sans tri</option>
++            <option value="asc">Prix croissant</option>
++            <option value="desc">Prix décroissant</option>
++          </select>
++        </div>
++
++        <button class="clear-filters-btn" (click)="clearFilters()">
++          Reset
++        </button>
++      </div>
++    </div>
++
++    <!-- Bandeau de sélection -->
++    <div *ngIf="selectedProducts.size > 0" class="selection-banner mb-4">
++      <div class="selection-info">
++        <i class="material-icons selection-icon">remove</i>
++        <span class="selection-count">{{ selectedProducts.size }} selected</span>
++      </div>
++      
++      <app-button variant="primary" icon="add_shopping_cart" (click)="addSelectedToCart()">
++        Add to cart
++      </app-button>
++      
++      <app-button variant="primary" icon="star_border" (click)="addSelectedToFavorites()">
++        Add to favorite
++      </app-button>
++    </div>
++
++    <!-- Grille de skeletons pendant le chargement -->
++    <div *ngIf="isLoading" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
++      <div *ngFor="let item of skeletonItems" class="col">
++        <app-product-skeleton></app-product-skeleton>
++      </div>
++    </div>
++
++    <!-- Grille Bootstrap avec maximum 5 colonnes -->
++    <div *ngIf="!isLoading" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
++      <div *ngFor="let product of paginatedProducts" class="col">
++        <app-product-card
++          [product]="product"
++          [isSelected]="isProductSelected(product)"
++          [isFavorite]="isProductFavorite(product)"
++          (addToCart)="addToCart($event)"
++          (toggleFavorite)="toggleFavorite($event)"
++          (openDetails)="openProductDetails($event)"
++          (select)="selectProduct($event)"
++          (selectionChange)="onProductSelectionChange(product, $event)"
++        ></app-product-card>
++      </div>
++    </div>
++
++    <!-- Pagination -->
++    <div *ngIf="!isLoading && totalPages > 1" class="pagination-container mt-4">
++      <div class="pagination-wrapper">
++        <!-- Sélecteur d'éléments par page -->
++        <div class="rows-per-page">
++          <label for="itemsPerPageSelect">Rows per page:</label>
++          <select 
++            id="itemsPerPageSelect"
++            class="form-select" 
++            [value]="itemsPerPage"
++            (change)="onItemsPerPageChange($event)">
++            <option value="5">5</option>
++            <option value="10">10</option>
++            <option value="20">20</option>
++            <option value="50">50</option>
++          </select>
++        </div>
++
++        <!-- Indicateur de page -->
++        <div class="page-indicator">
++          Page {{ currentPage }} of {{ totalPages }}
++        </div>
++
++        <!-- Navigation -->
++        <div class="navigation-buttons">
++          <button 
++            class="nav-btn"
++            (click)="changePage(currentPage - 1)" 
++            [disabled]="currentPage === 1"
++            title="Page précédente">
++            <i class="material-icons">chevron_left</i>
++          </button>
++          <button 
++            class="nav-btn"
++            (click)="changePage(currentPage + 1)" 
++            [disabled]="currentPage === totalPages"
++            title="Page suivante">
++            <i class="material-icons">chevron_right</i>
++          </button>
++        </div>
++      </div>
++    </div>
+   </div>
++
++  <!-- Modal de détails produit -->
++  <app-product-detail-modal
++    [product]="selectedProduct"
++    [isOpen]="isModalOpen"
++    (close)="closeProductDetails()"
++    (addToCart)="addToCart($event)"
++    (toggleFavorite)="toggleFavorite($event)">
++  </app-product-detail-modal>
+ </app-page-layout>
+diff --git a/src/app/features/catalog/catalog.component.scss b/src/app/features/catalog/catalog.component.scss
+new file mode 100644
+index 0000000..70c5c51
+--- /dev/null
++++ b/src/app/features/catalog/catalog.component.scss
+@@ -0,0 +1,403 @@
++@import "vars";
++
++:host {
++  display: block;
++  background: $background-catalog;
++  min-height: 100vh;
++}
++
++.container-fluid {
++  max-width: 100%;
++  margin: 0 auto;
++  padding: 2rem;
++}
++
++.default-banner {
++  background: white;
++  border-radius: 8px;
++  padding: 1rem 1.5rem;
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
++  border: 1px solid $border-light;
++  
++  .filters-section {
++    display: flex;
++    align-items: center;
++    gap: 1rem;
++    flex: 1;
++  }
++  
++  .filter-toggle-btn {
++    background: $hover-light;
++    color: $text-secondary;
++    border: none;
++    border-radius: 6px;
++    padding: 0.5rem 1rem;
++    display: flex;
++    align-items: center;
++    gap: 0.5rem;
++    cursor: pointer;
++    transition: all 0.2s ease;
++    
++    &:hover {
++      background: $border-light;
++      color: $text-primary;
++    }
++    
++    &:active {
++      transform: scale(0.98);
++    }
++    
++    &.active {
++      background: $primary-color;
++      color: white;
++    }
++    
++    i {
++      font-size: 18px;
++      transition: transform 0.3s ease;
++      
++      &.rotated {
++        transform: rotate(180deg);
++      }
++    }
++  }
++  
++  .search-container {
++    position: relative;
++    flex: 1;
++    max-width: 400px;
++    
++    .search-input {
++      width: 100%;
++      padding: 0.5rem 2.5rem 0.5rem 1rem;
++      border: 1px solid $border-light;
++      border-radius: 6px;
++      font-size: 14px;
++      transition: all 0.2s ease;
++      
++      &:focus {
++        outline: none;
++        border-color: $primary-color;
++        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
++      }
++      
++      &::placeholder {
++        color: $text-secondary;
++      }
++    }
++    
++    .search-icon {
++      position: absolute;
++      right: 0.75rem;
++      top: 50%;
++      transform: translateY(-50%);
++      color: $text-secondary;
++      font-size: 18px;
++      pointer-events: none;
++    }
++  }
++  
++  .right-section {
++    display: flex;
++    align-items: center;
++    gap: 1rem;
++  }
++  
++  .product-count {
++    color: $text-secondary;
++    font-weight: 500;
++    font-size: 16px;
++  }
++  
++  .view-toggle {
++    display: flex;
++    gap: 0.25rem;
++    
++    .view-btn {
++      background: $hover-light;
++      color: $text-secondary;
++      border: none;
++      border-radius: 6px;
++      width: 40px;
++      height: 40px;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++      cursor: pointer;
++      transition: all 0.2s ease;
++      
++      &:hover {
++        background: $border-light;
++        color: $text-primary;
++      }
++      
++      &.active {
++        background: $primary-color;
++        color: white;
++      }
++      
++      i {
++        font-size: 18px;
++      }
++    }
++  }
++}
++
++// Panel de filtres
++.filters-panel {
++  background: white;
++  border-radius: 8px;
++  padding: 0;
++  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
++  border: 1px solid $border-light;
++  overflow: hidden;
++  
++  // Animation d'entrée
++  animation: slideDown 0.3s ease-out;
++  
++  @keyframes slideDown {
++    from {
++      opacity: 0;
++      transform: translateY(-10px);
++      max-height: 0;
++    }
++    to {
++      opacity: 1;
++      transform: translateY(0);
++      max-height: 500px;
++    }
++  }
++  
++  .filters-content {
++    display: grid;
++    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
++    gap: 1.5rem;
++    align-items: end;
++    padding: 1.5rem;
++  }
++  
++  .filter-group {
++    display: flex;
++    flex-direction: column;
++    gap: 0.5rem;
++    
++    label {
++      font-size: 0.9rem;
++      font-weight: 500;
++      color: $text-primary;
++    }
++    
++    .form-select {
++      padding: 0.5rem 0.75rem;
++      border: 1px solid $border-light;
++      border-radius: 6px;
++      font-size: 14px;
++      background: white;
++      color: $text-primary;
++      
++      &:focus {
++        outline: none;
++        border-color: $primary-color;
++        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
++      }
++    }
++  }
++  
++  
++  .clear-filters-btn {
++    background: $primary-color;
++    color: white;
++    border: none;
++    border-radius: 6px;
++    padding: 0.5rem 1.5rem;
++    cursor: pointer;
++    transition: all 0.2s ease;
++    font-size: 14px;
++    font-weight: 500;
++    
++    &:hover {
++      background: $primary-hover;
++    }
++  }
++}
++
++.selection-banner {
++  background: rgba($primary-color, 12%);
++  border-radius: 8px;
++  padding: 1rem 1.5rem;
++  display: flex;
++  align-items: center;
++  gap: 1rem;
++  
++  .selection-info {
++    display: flex;
++    align-items: center;
++    gap: 0.75rem;
++    flex: 1;
++    
++    .selection-icon {
++      background: white;
++      color: $primary-color;
++      border-radius: 4px;
++      font-size: 16px;
++      width: 20px;
++      height: 20px;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++    }
++    
++    .selection-count {
++      color: $primary-color;
++      font-weight: 500;
++      font-size: 16px;
++    }
++  }
++  
++  // Les boutons app-button s'affichent dans le bandeau
++  app-button {
++    flex-shrink: 0;
++  }
++}
++
++.pagination-info {
++  text-align: center;
++  color: $text-secondary;
++  font-size: 14px;
++}
++
++.pagination-container {
++  .pagination-wrapper {
++    background: white;
++    border-radius: 8px;
++    padding: 1rem 1.5rem;
++    display: flex;
++    align-items: center;
++    justify-content: flex-end;
++    gap: 1rem;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
++    border: 1px solid $border-light;
++    max-width: 100%;
++    margin: 0 auto;
++    
++    .rows-per-page {
++      display: flex;
++      align-items: center;
++      gap: 0.5rem;
++      
++      label {
++        font-size: 14px;
++        color: $text-secondary;
++        margin: 0;
++      }
++      
++      .form-select {
++        width: auto;
++        min-width: 60px;
++        padding: 0.375rem 0.75rem;
++        font-size: 14px;
++        border: 1px solid $border-light;
++        border-radius: 6px;
++        background-color: white;
++        color: $text-primary;
++        
++        &:focus {
++          border-color: $primary-color;
++          box-shadow: 0 0 0 0.2rem rgba(103, 58, 183, 0.25);
++        }
++      }
++    }
++    
++    .page-indicator {
++      font-size: 14px;
++      color: $text-secondary;
++      font-weight: 500;
++    }
++    
++    .navigation-buttons {
++      display: flex;
++      gap: 0;
++      
++      .nav-btn {
++        background: white;
++        border: 1px solid $border-light;
++        border-radius: 6px;
++        width: 40px;
++        height: 40px;
++        display: flex;
++        align-items: center;
++        justify-content: center;
++        cursor: pointer;
++        transition: all 0.2s ease;
++        
++        &:hover:not(:disabled) {
++          background-color: $hover-light;
++          border-color: $border-medium;
++        }
++        
++        &:disabled {
++          color: $text-secondary;
++          cursor: not-allowed;
++          opacity: 0.5;
++        }
++        
++        i {
++          font-size: 18px;
++          color: $text-secondary;
++        }
++        
++        &:hover:not(:disabled) i {
++          color: $primary-color;
++        }
++      }
++    }
++  }
++}
++
++// Responsive
++@media (max-width: 768px) {
++  .container-fluid {
++    padding: 1rem;
++  }
++  
++  .default-banner {
++    flex-direction: column;
++    gap: 1rem;
++    
++    .filters-section {
++      flex-direction: column;
++      gap: 1rem;
++      width: 100%;
++      
++      .search-container {
++        max-width: none;
++      }
++    }
++    
++    .right-section {
++      width: 100%;
++      justify-content: space-between;
++    }
++  }
++  
++  .filters-panel .filters-content {
++    grid-template-columns: 1fr;
++    gap: 1rem;
++  }
++  
++  .pagination-container .pagination-wrapper {
++    flex-direction: column;
++    gap: 1rem;
++    align-items: stretch;
++    
++    .rows-per-page,
++    .navigation-buttons {
++      justify-content: center;
++    }
++  }
++}
++
++
+diff --git a/src/app/features/catalog/catalog.component.ts b/src/app/features/catalog/catalog.component.ts
+index 93878c2..f754219 100644
+--- a/src/app/features/catalog/catalog.component.ts
++++ b/src/app/features/catalog/catalog.component.ts
+@@ -1,21 +1,293 @@
+-import {Component, HostBinding} from '@angular/core';
++import {Component, HostBinding, OnInit, inject, effect} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {FormsModule} from '@angular/forms';
+ import {UikAmModule} from "@visiativ/uik-am";
+ import {MatButtonModule} from "@angular/material/button";
+ import {MatCardModule} from "@angular/material/card";
++import {MatIconModule} from "@angular/material/icon";
++import {toSignal} from '@angular/core/rxjs-interop';
+ import {PageLayoutComponent} from '../../layout/page-layout/page-layout.component';
++import {ProductsService} from '../../shared/services/products.service';
++import {CartService} from '../../shared/services/cart.service';
++import {PageTitleService} from '../../shared/services/page-title.service';
++import {FavoritesService} from '../../shared/services/favorites.service';
++import {LoggerService} from '../../shared/services/logger.service';
++import {Product} from '../../shared/models/product.model';
++import {ProductCard} from './components/product-card/product-card';
++import {ProductDetailModal} from './components/product-detail-modal/product-detail-modal';
++import {Button} from '../../shared/components/button/button';
++import {ProductSkeletonComponent} from '../../shared/components/product-skeleton/product-skeleton.component';
++
++/**
++ * Interface pour l'événement d'ajout au panier
++ * Peut être soit un Product (depuis la carte), soit un objet avec product et quantity (depuis la modal)
++ */
++type AddToCartEvent = Product | { product: Product; quantity: number };
+ 
+ 
+ @Component({
+   selector: 'app-catalog',
+   imports: [
++    CommonModule,
++    FormsModule,
+     UikAmModule,
+     MatButtonModule,
+     MatCardModule,
++    MatIconModule,
+     PageLayoutComponent,
++    ProductCard,
++    ProductDetailModal,
++    Button,
++    ProductSkeletonComponent,
+   ],
+   templateUrl: './catalog.component.html',
+-  // styles are defined in src/theme/components/app/_catalog.scss
++  styleUrl: './catalog.component.scss'
+ })
+-export class CatalogComponent {
++export class CatalogComponent implements OnInit {
+   @HostBinding('class') class = 'app-catalog';
++
++  private productsService = inject(ProductsService);
++  private cartService = inject(CartService);
++  private pageTitleService = inject(PageTitleService);
++  private favoritesService = inject(FavoritesService);
++  private logger = inject(LoggerService);
++
++  products: Product[] = [];
++  filteredProducts: Product[] = [];
++  isLoading = true;
++  selectedProducts = new Set<number>();
++  favoriteProducts = new Set<number>();
++  
++  private favoriteItems = toSignal(this.favoritesService.getFavorites(), { initialValue: [] });
++  
++  skeletonItems = Array(10).fill(0);
++  
++  currentPage = 1;
++  itemsPerPage = 10;
++  totalPages = 0;
++
++  selectedProduct: Product | null = null;
++  isModalOpen = false;
++
++  searchTerm = '';
++  selectedCategory = '';
++  selectedBrand = '';
++  sortOrder = '';
++  showFilters = false;
++
++  categories: string[] = [];
++  brands: string[] = [];
++
++  constructor() {
++    effect(() => {
++      const favorites = this.favoriteItems();
++      this.favoriteProducts.clear();
++      favorites.forEach(product => {
++        this.favoriteProducts.add(product.id);
++      });
++    });
++  }
++
++  ngOnInit(): void {
++    this.pageTitleService.setTitle('Catalogue');
++    this.loadProducts();
++  }
++
++  /**
++   * Charge les produits depuis l'API
++   */
++  loadProducts(): void {
++    this.isLoading = true;
++    this.productsService.getProducts().subscribe({
++      next: (data) => {
++        this.products = data;
++        this.extractFilterOptions();
++        this.applyFilters();
++        this.isLoading = false;
++        this.logger.log('Produits chargés:', this.products.length);
++        this.logger.log('Premier produit:', this.products[0]);
++      },
++      error: (error) => {
++        this.logger.error('Erreur lors du chargement des produits:', error);
++        this.isLoading = false;
++      }
++    });
++  }
++
++  /**
++   * Extrait les options pour les filtres depuis les produits
++   */
++  extractFilterOptions(): void {
++    this.categories = [...new Set(this.products.map(p => p.category))].sort();
++    this.brands = [...new Set(this.products.map(p => p.brand))].sort();
++  }
++
++  /**
++   * Applique les filtres aux produits
++   */
++  applyFilters(): void {
++    let filtered = [...this.products];
++
++    if (this.searchTerm.trim()) {
++      filtered = filtered.filter(product =>
++        product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
++        product.description.toLowerCase().includes(this.searchTerm.toLowerCase())
++      );
++    }
++
++    if (this.selectedCategory) {
++      filtered = filtered.filter(product => product.category === this.selectedCategory);
++    }
++
++    if (this.selectedBrand) {
++      filtered = filtered.filter(product => product.brand === this.selectedBrand);
++    }
++
++    if (this.sortOrder === 'asc') {
++      filtered.sort((a, b) => a.price - b.price);
++    } else if (this.sortOrder === 'desc') {
++      filtered.sort((a, b) => b.price - a.price);
++    }
++
++    this.filteredProducts = filtered;
++    this.totalPages = Math.ceil(filtered.length / this.itemsPerPage);
++    this.currentPage = 1;
++  }
++
++  /**
++   * Réinitialise tous les filtres
++   */
++  clearFilters(): void {
++    this.searchTerm = '';
++    this.selectedCategory = '';
++    this.selectedBrand = '';
++    this.sortOrder = '';
++    this.applyFilters();
++  }
++
++  /**
++   * Retourne les produits de la page actuelle
++   */
++  get paginatedProducts(): Product[] {
++    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
++    const endIndex = startIndex + this.itemsPerPage;
++    return this.filteredProducts.slice(startIndex, endIndex);
++  }
++
++  /**
++   * Change de page
++   */
++  changePage(page: number): void {
++    if (page >= 1 && page <= this.totalPages) {
++      this.currentPage = page;
++      window.scrollTo({ top: 0, behavior: 'smooth' });
++    }
++  }
++
++  /**
++   * Retourne un tableau de numéros de pages pour l'affichage
++   */
++  get pageNumbers(): number[] {
++    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
++  }
++
++  /**
++   * Gère le changement du nombre d'éléments par page
++   */
++  onItemsPerPageChange(event: Event): void {
++    const target = event.target as HTMLSelectElement;
++    this.itemsPerPage = parseInt(target.value);
++    this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
++    this.currentPage = 1;
++  }
++
++  /**
++   * Ajoute un produit au panier
++   */
++  addToCart(event: AddToCartEvent): void {
++    if ('product' in event) {
++      this.cartService.addToCart(event.product, event.quantity);
++    } else {
++      this.cartService.addToCart(event, 1);
++    }
++  }
++
++  /**
++   * Bascule l'état favori d'un produit
++   */
++  toggleFavorite(product: Product): void {
++    this.favoritesService.toggleFavorite(product);
++  }
++
++  /**
++   * Ouvre les détails d'un produit
++   */
++  openProductDetails(product: Product): void {
++    this.selectedProduct = product;
++    this.isModalOpen = true;
++  }
++
++  /**
++   * Ferme la modal de détails
++   */
++  closeProductDetails(): void {
++    this.isModalOpen = false;
++    this.selectedProduct = null;
++  }
++
++  /**
++   * Sélectionne un produit
++   */
++  selectProduct(product: Product): void {
++    if (this.selectedProducts.has(product.id)) {
++      this.selectedProducts.delete(product.id);
++    } else {
++      this.selectedProducts.add(product.id);
++    }
++    this.logger.log('Produits sélectionnés:', this.selectedProducts.size);
++  }
++
++  /**
++   * Gère le changement de sélection d'un produit
++   */
++  onProductSelectionChange(product: Product, selected: boolean): void {
++    if (selected) {
++      this.selectedProducts.add(product.id);
++    } else {
++      this.selectedProducts.delete(product.id);
++    }
++    this.logger.log('Produits sélectionnés:', this.selectedProducts.size);
++  }
++
++  /**
++   * Vérifie si un produit est sélectionné
++   */
++  isProductSelected(product: Product): boolean {
++    return this.selectedProducts.has(product.id);
++  }
++
++  /**
++   * Vérifie si un produit est dans les favoris
++   */
++  isProductFavorite(product: Product): boolean {
++    return this.favoriteProducts.has(product.id);
++  }
++
++  /**
++   * Ajoute tous les produits sélectionnés au panier
++   */
++  addSelectedToCart(): void {
++    const selectedProductsList = this.products.filter(p => this.selectedProducts.has(p.id));
++    this.cartService.addMultipleToCart(selectedProductsList);
++    this.selectedProducts.clear();
++  }
++
++  /**
++   * Ajoute tous les produits sélectionnés aux favoris
++   */
++  addSelectedToFavorites(): void {
++    const selectedProductsList = this.products.filter(p => this.selectedProducts.has(p.id));
++    this.favoritesService.addMultipleToFavorites(selectedProductsList);
++    this.selectedProducts.clear();
++  }
+ }
+diff --git a/src/app/features/catalog/components/product-card/product-card.html b/src/app/features/catalog/components/product-card/product-card.html
+new file mode 100644
+index 0000000..d6423f7
+--- /dev/null
++++ b/src/app/features/catalog/components/product-card/product-card.html
+@@ -0,0 +1,105 @@
++<div class="position-relative">
++  <div class="position-absolute top-0 start-0 m-2" style="z-index: 10">
++    <input
++      class="form-check-input product-checkbox"
++      type="checkbox"
++      [id]="'product-' + product.id"
++      [checked]="isSelected"
++      [attr.aria-label]="'Sélectionner ' + product.name"
++      (change)="onCheckboxChange($event)"
++    />
++  </div>
++
++  <div class="product-image-container position-relative">
++    <img
++      [src]="'/api' + product.image"
++      [alt]="product.name"
++      class="product-image"
++      (click)="onOpenDetails()"
++    />
++
++    <div class="product-watermark">
++      <div class="watermark-logo">
++        <img
++          src="assets/uik-core/images/logo.svg"
++          alt="Visiativ"
++          class="uik-brand-logo"
++        />
++      </div>
++      <div class="watermark-demo">Demo</div>
++    </div>
++  </div>
++
++  <div class="product-content">
++    <h3 class="product-name">{{ product.name }}</h3>
++
++    <p class="product-id">{{ product.id.toString().padStart(9, '0') }}</p>
++
++    <div class="product-actions">
++      <button
++        class="btn-add-cart"
++        [attr.aria-label]="'Ajouter ' + product.name + ' au panier'"
++        (click)="onAddToCart()"
++      >
++        <i class="material-icons" aria-hidden="true">shopping_cart</i>
++        Add to cart
++      </button>
++
++      <button
++        class="btn-icon"
++        [class.is-favorite]="isFavorite"
++        (click)="onToggleFavorite()"
++        [attr.aria-label]="(isFavorite ? 'Retirer ' : 'Ajouter ') + product.name + ' des favoris'"
++        [attr.aria-pressed]="isFavorite"
++        type="button"
++      >
++        <i class="material-icons" aria-hidden="true"
++          >{{ isFavorite ? 'star' : 'star_border' }}</i
++        >
++      </button>
++
++      <button
++        class="btn-icon"
++        (click)="onOpenDetails()"
++        [attr.aria-label]="'Voir les détails de ' + product.name"
++        type="button"
++      >
++        <i class="material-icons" aria-hidden="true">info</i>
++      </button>
++
++      <div class="dropdown">
++        <button
++          class="btn-icon"
++          type="button"
++          data-bs-toggle="dropdown"
++          aria-expanded="false"
++          [attr.aria-label]="'Plus d\'options pour ' + product.name"
++        >
++          <i class="material-icons" aria-hidden="true">more_vert</i>
++        </button>
++        <ul class="dropdown-menu">
++          <li>
++            <a
++              class="dropdown-item"
++              href="#"
++              (click)="onOpenDetails(); $event.preventDefault()"
++            >
++              <i class="material-icons me-2">visibility</i>
++              View details
++            </a>
++          </li>
++          <li>
++            <a
++              class="dropdown-item"
++              href="#"
++              (click)="onSelect(); $event.preventDefault()"
++            >
++              <i class="material-icons me-2">check_box</i>
++              Select this product
++            </a>
++          </li>
++        </ul>
++      </div>
++    </div>
++  </div>
++</div>
+diff --git a/src/app/features/catalog/components/product-card/product-card.scss b/src/app/features/catalog/components/product-card/product-card.scss
+new file mode 100644
+index 0000000..58942d7
+--- /dev/null
++++ b/src/app/features/catalog/components/product-card/product-card.scss
+@@ -0,0 +1,194 @@
++@import "vars";
++
++:host {
++  display: block;
++  background: $background-card;
++  border-radius: 8px;
++  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
++  overflow: hidden;
++  transition: box-shadow 0.2s ease;
++  height: 100%;
++
++  &:hover {
++    box-shadow: 0 4px 12px $shadow-medium;
++  }
++}
++
++// Case à cocher violette
++.product-checkbox {
++  width: 18px;
++  height: 18px;
++  border-color: $primary-color !important;
++  border-radius: 3px;
++  
++  &:checked {
++    background-color: $primary-color !important;
++    border-color: $primary-color !important;
++  }
++}
++
++// Container de l'image
++.product-image-container {
++  height: 200px;
++  overflow: hidden;
++  background: white;
++
++  .product-image {
++    width: 100%;
++    height: 100%;
++    object-fit: cover;
++    cursor: pointer;
++    transition: transform 0.2s ease;
++
++    &:hover {
++      transform: scale(1.05);
++    }
++  }
++
++  // Watermark Visiativ
++  .product-watermark {
++    position: absolute;
++    top: 50%;
++    right: 0;
++    transform: translateY(-50%);
++    background: $watermark-bg;
++    color: $watermark-text;
++    padding: 12px 16px;
++    border-radius: 6px 0 0 6px;
++    text-align: center;
++    font-family: Arial, sans-serif;
++    width: 50%;
++
++    .uik-brand-logo {
++			width: 100px;
++			filter: invert(1);
++			top: -14px;
++			position: relative;
++    }
++
++    .watermark-logo {
++      font-size: 18px;
++      font-weight: bold;
++      margin-bottom: 4px;
++			height: 20px;
++    }
++
++    .watermark-text {
++      font-size: 12px;
++      font-weight: 500;
++      margin-bottom: 2px;
++    }
++
++    .watermark-demo {
++      font-size: 10px;
++      opacity: 0.8;
++    }
++  }
++}
++
++// Contenu de la carte
++.product-content {
++  padding: 16px;
++
++  .product-name {
++    font-size: 16px;
++    font-weight: 600;
++    margin: 0 0 8px 0;
++    color: $text-primary;
++    line-height: 1.3;
++  }
++
++  .product-id {
++    font-size: 14px;
++    color: $text-secondary;
++    margin: 0 0 16px 0;
++    font-family: 'Courier New', monospace;
++    letter-spacing: 0.5px;
++  }
++}
++
++// Actions en bas
++.product-actions {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 8px;
++  margin-top: auto;
++
++  .btn-add-cart {
++    color: $primary-color;
++    border: none;
++    border-radius: 6px;
++    padding: 0;
++    font-size: 14px;
++    font-weight: 500;
++    display: flex;
++    gap: 0.5rem;
++    cursor: pointer;
++    transition: all 0.2s ease;
++    flex-grow: 1;
++    background: none;
++
++
++    i {
++      font-size: 18px;
++    }
++  }
++
++    .btn-icon {
++      background: transparent;
++      border: none;
++      border-radius: 6px;
++      width: 32px;
++      height: 32px;
++      display: flex;
++      align-items: center;
++      justify-content: center;
++      cursor: pointer;
++      transition: all 0.2s ease;
++
++      &:hover {
++        background: $hover-light;
++        border-color: $border-medium;
++      }
++
++      i {
++        font-size: 24px;
++        color: $text-secondary;
++        transition: color 0.2s ease;
++      }
++
++      &.is-favorite i {
++        color: #FFD700; // Couleur dorée pour l'étoile favorite
++      }
++    }
++
++  .dropdown {
++    .btn-icon {
++      border: none;
++    }
++
++    .dropdown-menu {
++      min-width: 160px;
++      border: 1px solid $border-light;
++      border-radius: 8px;
++      box-shadow: 0 4px 12px $shadow-medium;
++
++      .dropdown-item {
++        padding: 8px 16px;
++        font-size: 14px;
++        display: flex;
++        align-items: center;
++        gap: 8px;
++
++        &:hover {
++          background: $hover-light;
++        }
++
++        i {
++          font-size: 18px;
++        }
++      }
++    }
++  }
++}
+diff --git a/src/app/features/catalog/components/product-card/product-card.ts b/src/app/features/catalog/components/product-card/product-card.ts
+new file mode 100644
+index 0000000..764e396
+--- /dev/null
++++ b/src/app/features/catalog/components/product-card/product-card.ts
+@@ -0,0 +1,44 @@
++import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {Product} from '../../../../shared/models/product.model';
++
++@Component({
++  selector: 'app-product-card',
++  imports: [CommonModule],
++  templateUrl: './product-card.html',
++  styleUrl: './product-card.scss'
++})
++export class ProductCard {
++  @HostBinding('class') class = 'product-card';
++  
++  @Input() product!: Product;
++  @Input() isSelected: boolean = false;
++  @Input() isFavorite: boolean = false;
++
++  @Output() addToCart = new EventEmitter<Product>();
++  @Output() toggleFavorite = new EventEmitter<Product>();
++  @Output() openDetails = new EventEmitter<Product>();
++  @Output() select = new EventEmitter<Product>();
++  @Output() selectionChange = new EventEmitter<boolean>();
++
++  onAddToCart(): void {
++    this.addToCart.emit(this.product);
++  }
++
++  onToggleFavorite(): void {
++    this.toggleFavorite.emit(this.product);
++  }
++
++  onOpenDetails(): void {
++    this.openDetails.emit(this.product);
++  }
++
++  onSelect(): void {
++    this.select.emit(this.product);
++  }
++
++  onCheckboxChange(event: Event): void {
++    const checked = (event.target as HTMLInputElement).checked;
++    this.selectionChange.emit(checked);
++  }
++}
+diff --git a/src/app/features/catalog/components/product-detail-modal/product-detail-modal.html b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.html
+new file mode 100644
+index 0000000..48622fc
+--- /dev/null
++++ b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.html
+@@ -0,0 +1,109 @@
++<div
++  *ngIf="isOpen && product"
++  class="modal-backdrop"
++  (click)="onBackdropClick($event)"
++>
++  <div
++    class="modal-container"
++    role="dialog"
++    aria-modal="true"
++    [attr.aria-labelledby]="'product-modal-title-' + product.id"
++  >
++    <div class="modal-content">
++      <div class="product-image-section">
++        <img
++          [src]="'/api' + product.image"
++          [alt]="product.name"
++          class="product-image"
++        />
++      </div>
++
++      <div class="product-info-section">
++        <div class="product-title-container">
++          <h2 class="product-title" [id]="'product-modal-title-' + product.id">
++            {{ product.name }}
++          </h2>
++          <button
++            class="close-btn"
++            (click)="onClose()"
++            aria-label="Fermer la fenêtre de détails"
++          >
++            <i class="material-icons" aria-hidden="true">close</i>
++          </button>
++        </div>
++
++        <div class="product-tags">
++          <span class="tag">{{ product.category }}</span>
++          <span class="tag">{{ product.brand }}</span>
++          <span class="tag">Green Range</span>
++        </div>
++
++        <div class="product-description">
++          <p>{{ product.description }}</p>
++          <p class="specs-disclaimer">
++            Les spécifications techniques sont données par le constructeur à
++            titre informatif et peuvent être modifiées. Les photos sont non
++            contractuelles.
++          </p>
++        </div>
++
++        <div class="product-specifications">
++          <div class="spec-item">
++            <span class="spec-label">Garantie:</span>
++            <span class="spec-value">{{ product.warranty }}</span>
++          </div>
++
++          <div *ngFor="let spec of product.specifications" class="spec-item">
++            <span class="spec-label">{{ spec.label }}:</span>
++            <span class="spec-value">{{ spec.value }}</span>
++          </div>
++
++          <div *ngIf="product.warning" class="spec-item">
++            <span class="spec-label">Avertissement:</span>
++            <span class="spec-value">{{ product.warning }}</span>
++          </div>
++        </div>
++
++        <div *ngIf="product.offer" class="limited-offer">
++          <button class="offer-badge">Offre limitée</button>
++        </div>
++
++        <div class="product-price">
++          <span *ngIf="product.discount" class="discount"
++            >-{{ product.discount }}</span
++          >
++          <span class="price"
++            >{{ product.price | currency:product.currency:'symbol':'1.0-0':'fr'
++            }}</span
++          >
++        </div>
++
++        <div class="purchase-section">
++          <div class="quantity-selector">
++            <label for="quantity">Quantité:</label>
++            <select
++              id="quantity"
++              class="form-select"
++              [value]="quantity"
++              (change)="onQuantityChange($event)"
++            >
++              <option value="1">1</option>
++              <option value="2">2</option>
++              <option value="3">3</option>
++              <option value="4">4</option>
++              <option value="5">5</option>
++            </select>
++          </div>
++
++          <app-button
++            variant="primary"
++            icon="shopping_cart"
++            (click)="onAddToCart()"
++          >
++            Add to cart
++          </app-button>
++        </div>
++      </div>
++    </div>
++  </div>
++</div>
+diff --git a/src/app/features/catalog/components/product-detail-modal/product-detail-modal.scss b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.scss
+new file mode 100644
+index 0000000..e80c2bb
+--- /dev/null
++++ b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.scss
+@@ -0,0 +1,255 @@
++@import "vars";
++
++.modal-backdrop {
++  position: fixed;
++  top: 0;
++  left: 0;
++  width: 100%;
++  height: 100%;
++  background: rgba(0, 0, 0, 0.5);
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  z-index: 1000;
++  padding: 2rem;
++  
++  // Animation du backdrop
++  animation: fadeIn 0.3s ease-out;
++  
++  @keyframes fadeIn {
++    from {
++      opacity: 0;
++    }
++    to {
++      opacity: 1;
++    }
++  }
++}
++
++.modal-container {
++  background: white;
++  border-radius: 12px;
++  max-width: 80vw;
++  width: 100%;
++  max-height: 90vh;
++  overflow-y: auto;
++  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
++  
++  // Animation du container
++  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
++  
++  @keyframes slideUp {
++    from {
++      opacity: 0;
++      transform: translateY(50px) scale(0.95);
++    }
++    to {
++      opacity: 1;
++      transform: translateY(0) scale(1);
++    }
++  }
++  
++  .product-title-container {
++    display: flex;
++    align-items: center;
++    justify-content: space-between;
++    button {
++      background: none;
++      border: none;
++      padding: 0;
++      cursor: pointer;
++      transition: background-color 0.2s ease;
++    }
++  }
++}
++
++
++.modal-content {
++  display: grid;
++  grid-template-columns: 1fr 1fr;
++  gap: 2rem;
++  padding: 2rem;
++}
++
++.product-image-section {
++  display: flex;
++  align-items: stretch;
++  max-height: calc(90vh - 4rem); // Hauteur max = hauteur popup - padding
++  
++  .product-image {
++    width: 100%;
++    height: 100%;
++    max-height: calc(90vh - 4rem);
++    object-fit: cover;
++    border-radius: 8px;
++    border: 1px solid $border-light;
++  }
++}
++
++.product-info-section {
++  display: flex;
++  flex-direction: column;
++  gap: 1.5rem;
++
++  .product-title {
++    font-size: 1.75rem;
++    font-weight: 700;
++    margin: 0;
++    color: $text-primary;
++  }
++
++  .product-tags {
++    display: flex;
++    gap: 0.5rem;
++    flex-wrap: wrap;
++
++    .tag {
++      background: $info-bg;
++      color: $info-text;
++      padding: 0.375rem 0.75rem;
++      border-radius: 6px;
++      font-size: 14px;
++      font-weight: 500;
++    }
++  }
++
++  .product-description {
++    p {
++      margin: 0 0 1rem 0;
++      color: $text-primary;
++      line-height: 1.6;
++    }
++
++    .specs-disclaimer {
++      font-size: 14px;
++      color: $text-secondary;
++      font-style: italic;
++    }
++  }
++
++  .product-specifications {
++    display: flex;
++    flex-direction: column;
++    gap: 0.75rem;
++
++    .spec-item {
++      display: flex;
++      gap: 0.5rem;
++
++      .spec-label {
++        font-weight: 600;
++        color: $text-primary;
++      }
++
++      .spec-value {
++        color: $text-primary;
++        flex: 1;
++        
++        &:first-child {
++          color: $primary-color;
++        }
++      }
++    }
++  }
++
++  .limited-offer {
++    .offer-badge {
++      background: $error;
++      color: white;
++      padding: 0.75rem 1.5rem;
++      border-radius: 8px;
++      font-size: 16px;
++      font-weight: 600;
++      border: none;
++      cursor: pointer;
++      transition: all 0.2s ease;
++      
++      &:hover {
++        background: darken($error, 10%);
++      }
++    }
++  }
++
++  .product-price {
++    display: flex;
++    align-items: baseline;
++    gap: 1rem;
++
++    .discount {
++      color: $error;
++      font-size: 1.2rem;
++      font-weight: 600;
++    }
++
++    .price {
++      font-size: 1.8rem;
++      font-weight: 700;
++      color: $text-primary;
++    }
++  }
++
++  .purchase-section {
++    display: flex;
++    align-items: end;
++    gap: 1rem;
++    margin-top: auto;
++
++    .quantity-selector {
++      display: flex;
++      flex-direction: column;
++      gap: 0.5rem;
++
++      label {
++        font-size: 14px;
++        font-weight: 500;
++        color: $text-primary;
++      }
++
++      .form-select {
++        padding: 0.5rem 0.75rem;
++        border: 1px solid $border-light;
++        border-radius: 6px;
++        background: white;
++        color: $text-primary;
++        min-width: 80px;
++
++        &:focus {
++          border-color: $primary-color;
++          box-shadow: 0 0 0 0.2rem rgba(103, 58, 183, 0.25);
++        }
++      }
++    }
++
++    .btn-add-to-cart {
++      flex: 1;
++    }
++  }
++}
++
++// Responsive
++@media (max-width: 768px) {
++  .modal-backdrop {
++    padding: 0.5rem; // Réduire le padding du backdrop sur mobile
++  }
++
++  .modal-container {
++    max-width: 95vw; // Prendre presque toute la largeur
++    max-height: 95vh;
++    border-radius: 8px; // Bordures un peu moins arrondies pour gagner de l'espace
++  }
++
++  .modal-content {
++    grid-template-columns: 1fr;
++    gap: 1.5rem;
++    padding: 1rem;
++  }
++
++  .purchase-section {
++    flex-direction: column;
++    align-items: stretch;
++
++    .btn-add-to-cart {
++      flex: none;
++    }
++  }
++}
+diff --git a/src/app/features/catalog/components/product-detail-modal/product-detail-modal.ts b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.ts
+new file mode 100644
+index 0000000..ae9cc3e
+--- /dev/null
++++ b/src/app/features/catalog/components/product-detail-modal/product-detail-modal.ts
+@@ -0,0 +1,68 @@
++import {Component, EventEmitter, HostBinding, Input, Output, OnChanges, inject} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {Product} from '../../../../shared/models/product.model';
++import {Button} from '../../../../shared/components/button/button';
++import {LoggerService} from '../../../../shared/services/logger.service';
++
++@Component({
++  selector: 'app-product-detail-modal',
++  imports: [CommonModule, Button],
++  templateUrl: './product-detail-modal.html',
++  styleUrl: './product-detail-modal.scss'
++})
++export class ProductDetailModal implements OnChanges {
++  @HostBinding('class') class = 'product-detail-modal';
++
++  private logger = inject(LoggerService);
++
++  @Input() product: Product | null = null;
++  @Input() isOpen: boolean = false;
++
++  ngOnChanges(): void {
++    if (this.product) {
++      this.logger.log('Produit sélectionné:', this.product);
++      this.logger.log('Spécifications:', this.product.specifications);
++    }
++  }
++  
++  @Output() close = new EventEmitter<void>();
++  @Output() addToCart = new EventEmitter<{product: Product, quantity: number}>();
++  @Output() toggleFavorite = new EventEmitter<Product>();
++
++  quantity: number = 1;
++
++  onClose(): void {
++    this.close.emit();
++  }
++
++  private isAddingToCart = false;
++
++  onAddToCart(): void {
++    if (this.product && !this.isAddingToCart) {
++      this.isAddingToCart = true;
++      this.addToCart.emit({product: this.product, quantity: this.quantity});
++      
++      setTimeout(() => {
++        this.onClose();
++        this.isAddingToCart = false;
++      }, 100);
++    }
++  }
++
++  onToggleFavorite(): void {
++    if (this.product) {
++      this.toggleFavorite.emit(this.product);
++    }
++  }
++
++  onQuantityChange(event: Event): void {
++    const target = event.target as HTMLInputElement;
++    this.quantity = parseInt(target.value) || 1;
++  }
++
++  onBackdropClick(event: Event): void {
++    if (event.target === event.currentTarget) {
++      this.onClose();
++    }
++  }
++}
+diff --git a/src/app/features/payment/components/payment-confirm-dialog/payment-confirm-dialog.component.ts b/src/app/features/payment/components/payment-confirm-dialog/payment-confirm-dialog.component.ts
+new file mode 100644
+index 0000000..dcdf8e5
+--- /dev/null
++++ b/src/app/features/payment/components/payment-confirm-dialog/payment-confirm-dialog.component.ts
+@@ -0,0 +1,70 @@
++import {Component, HostBinding} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {MatDialogModule} from '@angular/material/dialog';
++import {MatIconModule} from '@angular/material/icon';
++
++@Component({
++  selector: 'app-payment-confirm-dialog',
++  standalone: true,
++  imports: [CommonModule, MatDialogModule, MatIconModule],
++  template: `
++    <div class="dialog-content">
++      <div class="success-icon">
++        <mat-icon>check_circle</mat-icon>
++      </div>
++      <h2>Paiement accepté</h2>
++      <p>Votre commande a été validée avec succès</p>
++    </div>
++  `,
++  styles: [`
++    @import "vars";
++    
++    :host {
++      display: block;
++    }
++    
++    .dialog-content {
++      display: flex;
++      flex-direction: column;
++      align-items: center;
++      justify-content: center;
++      padding: 2rem;
++      text-align: center;
++      
++      .success-icon {
++        width: 80px;
++        height: 80px;
++        border-radius: 50%;
++        background: rgba($success, 0.1);
++        display: flex;
++        align-items: center;
++        justify-content: center;
++        margin-bottom: 1.5rem;
++        
++        mat-icon {
++          font-size: 48px;
++          width: 48px;
++          height: 48px;
++          color: $success;
++        }
++      }
++      
++      h2 {
++        font-size: 1.5rem;
++        font-weight: 600;
++        color: $text-primary;
++        margin: 0 0 0.5rem 0;
++      }
++      
++      p {
++        font-size: 1rem;
++        color: $text-secondary;
++        margin: 0;
++      }
++    }
++  `]
++})
++export class PaymentConfirmDialogComponent {
++  @HostBinding('class') class = 'app-payment-confirm-dialog';
++}
++
+diff --git a/src/app/features/payment/components/payment-process-dialog/payment-process-dialog.component.ts b/src/app/features/payment/components/payment-process-dialog/payment-process-dialog.component.ts
+new file mode 100644
+index 0000000..29ef2e7
+--- /dev/null
++++ b/src/app/features/payment/components/payment-process-dialog/payment-process-dialog.component.ts
+@@ -0,0 +1,58 @@
++import {Component, HostBinding} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {MatDialogModule} from '@angular/material/dialog';
++import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
++
++@Component({
++  selector: 'app-payment-process-dialog',
++  standalone: true,
++  imports: [CommonModule, MatDialogModule, MatProgressSpinnerModule],
++  template: `
++    <div class="dialog-content">
++      <mat-spinner diameter="60"></mat-spinner>
++      <h2>Paiement en cours...</h2>
++      <p>Veuillez patienter pendant que nous traitons votre paiement</p>
++    </div>
++  `,
++  styles: [`
++    @import "vars";
++    
++    :host {
++      display: block;
++    }
++    
++    .dialog-content {
++      display: flex;
++      flex-direction: column;
++      align-items: center;
++      justify-content: center;
++      padding: 2rem;
++      text-align: center;
++      
++      mat-spinner {
++        margin-bottom: 1.5rem;
++      }
++      
++      h2 {
++        font-size: 1.5rem;
++        font-weight: 600;
++        color: $text-primary;
++        margin: 0 0 0.5rem 0;
++      }
++      
++      p {
++        font-size: 1rem;
++        color: $text-secondary;
++        margin: 0;
++      }
++    }
++    
++    ::ng-deep .mat-mdc-progress-spinner circle {
++      stroke: $primary-color !important;
++    }
++  `]
++})
++export class PaymentProcessDialogComponent {
++  @HostBinding('class') class = 'app-payment-process-dialog';
++}
++
+diff --git a/src/app/features/payment/payment.component.html b/src/app/features/payment/payment.component.html
+new file mode 100644
+index 0000000..e352614
+--- /dev/null
++++ b/src/app/features/payment/payment.component.html
+@@ -0,0 +1,219 @@
++<app-page-layout>
++  <div class="payment-container">
++    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
++      <div class="form-section">
++        <h2 class="section-title">Name</h2>
++        
++        <div class="form-row">
++          <div class="form-group">
++            <input 
++              type="text" 
++              id="fullName" 
++              formControlName="fullName"
++              class="form-control"
++              placeholder="Full name *"
++              [class.is-invalid]="f['fullName'].invalid && f['fullName'].touched"
++              [attr.aria-describedby]="f['fullName'].invalid && f['fullName'].touched ? 'fullName-error' : null"
++              aria-required="true"
++            />
++            <div 
++              id="fullName-error" 
++              class="invalid-feedback" 
++              *ngIf="f['fullName'].invalid && f['fullName'].touched"
++              role="alert"
++            >
++              Full name is required (min. 2 characters)
++            </div>
++          </div>
++
++          <div class="form-group">
++            <div class="phone-input-container">
++              <select 
++                class="country-select" 
++                formControlName="countryCode"
++                aria-label="Code pays"
++              >
++                <option value="+33">🇫🇷 +33</option>
++                <option value="+1">🇺🇸 +1</option>
++                <option value="+44">🇬🇧 +44</option>
++                <option value="+49">🇩🇪 +49</option>
++              </select>
++              <input 
++                type="tel" 
++                id="phone" 
++                formControlName="phone"
++                class="form-control phone-input"
++                placeholder="Phone number *"
++                [class.is-invalid]="f['phone'].invalid && f['phone'].touched"
++                [attr.aria-describedby]="f['phone'].invalid && f['phone'].touched ? 'phone-error' : null"
++                aria-required="true"
++              />
++            </div>
++            <div 
++              id="phone-error" 
++              class="invalid-feedback" 
++              *ngIf="f['phone'].invalid && f['phone'].touched"
++              role="alert"
++            >
++              Valid phone number required
++            </div>
++          </div>
++        </div>
++
++        <div class="phone-example">Example: +33605040302 for a French number.</div>
++
++        <div class="form-group">
++          <input 
++            type="email" 
++            id="email" 
++            formControlName="email"
++            class="form-control"
++            placeholder="email *"
++            [class.is-invalid]="f['email'].invalid && f['email'].touched"
++          />
++          <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
++            Valid email required
++          </div>
++        </div>
++      </div>
++
++      <div class="form-section">
++        <h2 class="section-title">Delivery Adress</h2>
++        
++        <div class="form-group">
++          <input 
++            type="text" 
++            id="address" 
++            formControlName="address"
++            class="form-control"
++            placeholder="Adress *"
++            [class.is-invalid]="f['address'].invalid && f['address'].touched"
++          />
++          <div class="invalid-feedback" *ngIf="f['address'].invalid && f['address'].touched">
++            Address is required
++          </div>
++        </div>
++
++        <div class="form-row">
++          <div class="form-group">
++            <input 
++              type="text" 
++              id="city" 
++              formControlName="city"
++              class="form-control"
++              placeholder="City *"
++              [class.is-invalid]="f['city'].invalid && f['city'].touched"
++            />
++            <div class="invalid-feedback" *ngIf="f['city'].invalid && f['city'].touched">
++              City is required
++            </div>
++          </div>
++
++          <div class="form-group">
++            <input 
++              type="text" 
++              id="postalCode" 
++              formControlName="postalCode"
++              class="form-control"
++              placeholder="Zip *"
++              [class.is-invalid]="f['postalCode'].invalid && f['postalCode'].touched"
++            />
++            <div class="invalid-feedback" *ngIf="f['postalCode'].invalid && f['postalCode'].touched">
++              Valid zip code required (5 digits)
++            </div>
++          </div>
++        </div>
++
++        <div class="form-group">
++          <input 
++            type="text" 
++            id="country" 
++            formControlName="country"
++            class="form-control"
++            placeholder="Country *"
++            [class.is-invalid]="f['country'].invalid && f['country'].touched"
++          />
++          <div class="invalid-feedback" *ngIf="f['country'].invalid && f['country'].touched">
++            Country is required
++          </div>
++        </div>
++      </div>
++
++      <div class="form-section">
++        <h2 class="section-title">Payment</h2>
++        
++        <div class="form-group">
++          <input 
++            type="text" 
++            id="cardNumber" 
++            formControlName="cardNumber"
++            class="form-control"
++            placeholder="Card number *"
++            maxlength="16"
++            [class.is-invalid]="f['cardNumber'].invalid && f['cardNumber'].touched"
++          />
++          <div class="invalid-feedback" *ngIf="f['cardNumber'].invalid && f['cardNumber'].touched">
++            Valid card number required (16 digits)
++          </div>
++        </div>
++
++        <div class="form-row">
++          <div class="form-group expiry-group">
++            <input 
++              type="text" 
++              id="expiryDate" 
++              formControlName="expiryDate"
++              class="form-control"
++              placeholder="MM/YY *"
++              maxlength="5"
++              [class.is-invalid]="f['expiryDate'].invalid && f['expiryDate'].touched"
++            />
++            <div class="invalid-feedback" *ngIf="f['expiryDate'].invalid && f['expiryDate'].touched">
++              Format: MM/YY
++            </div>
++          </div>
++
++          <div class="form-group cvv-group">
++            <input 
++              type="text" 
++              id="cvv" 
++              formControlName="cvv"
++              class="form-control"
++              placeholder="CVV *"
++              maxlength="4"
++              [class.is-invalid]="f['cvv'].invalid && f['cvv'].touched"
++            />
++            <div class="invalid-feedback" *ngIf="f['cvv'].invalid && f['cvv'].touched">
++              Valid CVV required (3-4 digits)
++            </div>
++          </div>
++        </div>
++
++        <div class="form-group">
++          <input 
++            type="text" 
++            id="cardName" 
++            formControlName="cardName"
++            class="form-control"
++            placeholder="Full name *"
++            [class.is-invalid]="f['cardName'].invalid && f['cardName'].touched"
++          />
++          <div class="invalid-feedback" *ngIf="f['cardName'].invalid && f['cardName'].touched">
++            Full name on card is required
++          </div>
++        </div>
++      </div>
++
++      <div class="form-actions">
++        <app-button 
++          variant="primary" 
++          type="submit"
++          [disabled]="isProcessing"
++        >
++          Submit Payment
++        </app-button>
++      </div>
++    </form>
++  </div>
++</app-page-layout>
++
+diff --git a/src/app/features/payment/payment.component.scss b/src/app/features/payment/payment.component.scss
+new file mode 100644
+index 0000000..92453bd
+--- /dev/null
++++ b/src/app/features/payment/payment.component.scss
+@@ -0,0 +1,156 @@
++@import "vars";
++
++:host {
++  display: block;
++  background: $background-catalog;
++  min-height: 100vh;
++}
++
++.payment-container {
++  max-width: 625px;
++  margin: 0 auto;
++  padding: 2rem;
++}
++
++.payment-form {
++  background: white;
++  border-radius: 8px;
++  padding: 2rem;
++  box-shadow: 0 2px 8px $shadow-light;
++}
++
++.form-section {
++  margin-bottom: 2rem;
++  
++  &:last-of-type {
++    margin-bottom: 1.5rem;
++  }
++}
++
++.section-title {
++  font-size: 1.1rem;
++  font-weight: 700;
++  color: $text-primary;
++  margin-bottom: 1rem;
++}
++
++.form-row {
++  display: grid;
++  grid-template-columns: 1fr 1fr;
++  gap: 1rem;
++  margin-bottom: 1rem;
++  
++  &.single-row {
++    grid-template-columns: 1fr;
++  }
++}
++
++.form-group {
++  display: flex;
++  flex-direction: column;
++  margin-bottom: 1rem;
++  
++  .form-control {
++    padding: 0.75rem;
++    font-size: 1rem;
++    border: 1px solid $border-light;
++    border-radius: 4px;
++    transition: all 0.2s ease;
++    
++    &::placeholder {
++      color: $text-secondary;
++    }
++    
++    &:focus {
++      outline: none;
++      border-color: $primary-color;
++      box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
++    }
++    
++    &.is-invalid {
++      border-color: $error;
++      
++      &:focus {
++        box-shadow: 0 0 0 2px rgba($error, 0.1);
++      }
++    }
++  }
++  
++  .invalid-feedback {
++    color: $error;
++    font-size: 0.85rem;
++    margin-top: 0.25rem;
++  }
++}
++
++// Phone input container
++.phone-input-container {
++  display: flex;
++  gap: 0;
++  
++  .country-select {
++    padding: 0.75rem;
++    font-size: 1rem;
++    border: 1px solid $border-light;
++    border-right: none;
++    border-radius: 4px 0 0 4px;
++    background: white;
++    cursor: pointer;
++    
++    &:focus {
++      outline: none;
++      border-color: $primary-color;
++    }
++  }
++  
++  .phone-input {
++    border-radius: 0 4px 4px 0;
++    flex: 1;
++  }
++}
++
++.phone-example {
++  font-size: 0.8rem;
++  color: $text-secondary;
++  margin-top: 0.25rem;
++  margin-bottom: 1rem;
++}
++
++// Payment section specific styles
++.expiry-group {
++  flex: 2;
++}
++
++.cvv-group {
++  flex: 1;
++}
++
++.form-actions {
++  display: flex;
++  justify-content: flex-end;
++  margin-top: 1.5rem;
++}
++
++// Responsive
++@media (max-width: 768px) {
++  .payment-container {
++    padding: 1rem;
++  }
++  
++  .payment-form {
++    padding: 1.5rem;
++  }
++  
++  .form-row {
++    grid-template-columns: 1fr;
++  }
++  
++  .form-actions {
++    justify-content: stretch;
++    
++    .btn-submit {
++      width: 100%;
++    }
++  }
++}
++
+diff --git a/src/app/features/payment/payment.component.ts b/src/app/features/payment/payment.component.ts
+new file mode 100644
+index 0000000..d49493e
+--- /dev/null
++++ b/src/app/features/payment/payment.component.ts
+@@ -0,0 +1,106 @@
++import {Component, HostBinding, inject, OnInit} from '@angular/core';
++import {CommonModule} from '@angular/common';
++import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
++import {Router} from '@angular/router';
++import {MatDialog, MatDialogModule} from '@angular/material/dialog';
++import {PageLayoutComponent} from '../../layout/page-layout/page-layout.component';
++import {Button} from '../../shared/components/button/button';
++import {CartService} from '../../shared/services/cart.service';
++import {PageTitleService} from '../../shared/services/page-title.service';
++import {PaymentProcessDialogComponent} from './components/payment-process-dialog/payment-process-dialog.component';
++import {PaymentConfirmDialogComponent} from './components/payment-confirm-dialog/payment-confirm-dialog.component';
++
++@Component({
++  selector: 'app-payment',
++  standalone: true,
++  imports: [
++    CommonModule, 
++    ReactiveFormsModule, 
++    PageLayoutComponent, 
++    Button,
++    MatDialogModule
++  ],
++  templateUrl: './payment.component.html',
++  styleUrl: './payment.component.scss'
++})
++export class PaymentComponent implements OnInit {
++  @HostBinding('class') class = 'app-payment';
++
++  private fb = inject(FormBuilder);
++  private router = inject(Router);
++  private dialog = inject(MatDialog);
++  private cartService = inject(CartService);
++  private pageTitleService = inject(PageTitleService);
++
++  paymentForm!: FormGroup;
++  isProcessing = false;
++
++  ngOnInit(): void {
++    this.pageTitleService.setTitle('Paiement');
++    this.initForm();
++  }
++
++  initForm(): void {
++    this.paymentForm = this.fb.group({
++      fullName: ['', [Validators.required, Validators.minLength(2)]],
++      countryCode: ['+33', Validators.required],
++      phone: ['', [Validators.required, Validators.pattern(/^[0-9\s]{10,15}$/)]],
++      email: ['', [Validators.required, Validators.email]],
++      
++      address: ['', Validators.required],
++      city: ['', Validators.required],
++      postalCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
++      country: ['France', Validators.required],
++      
++      cardNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{16}$/)]],
++      expiryDate: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/[0-9]{2}$/)]],
++      cvv: ['', [Validators.required, Validators.pattern(/^[0-9]{3,4}$/)]],
++      cardName: ['', Validators.required],
++    });
++  }
++
++  onSubmit(): void {
++    if (this.paymentForm.valid && !this.isProcessing) {
++      this.isProcessing = true;
++      
++      const processDialogRef = this.dialog.open(PaymentProcessDialogComponent, {
++        disableClose: true,
++        width: '400px'
++      });
++
++      setTimeout(() => {
++        processDialogRef.close();
++        
++        const confirmDialogRef = this.dialog.open(PaymentConfirmDialogComponent, {
++          disableClose: true,
++          width: '400px'
++        });
++
++        setTimeout(() => {
++          confirmDialogRef.close();
++          this.cartService.clearCart();
++          this.router.navigate(['/home']);
++          this.isProcessing = false;
++        }, 2000);
++      }, 2000);
++    } else {
++      this.markFormGroupTouched(this.paymentForm);
++    }
++  }
++
++  private markFormGroupTouched(formGroup: FormGroup): void {
++    Object.keys(formGroup.controls).forEach(key => {
++      const control = formGroup.get(key);
++      control?.markAsTouched();
++    });
++  }
++
++  cancelPayment(): void {
++    this.router.navigate(['/cart']);
++  }
++
++  get f() {
++    return this.paymentForm.controls;
++  }
++}
++
+diff --git a/src/app/layout/main-layout/main-layout.component.html b/src/app/layout/main-layout/main-layout.component.html
+index e826975..eab0e01 100644
+--- a/src/app/layout/main-layout/main-layout.component.html
++++ b/src/app/layout/main-layout/main-layout.component.html
+@@ -8,9 +8,9 @@
+     </a>
+ 
+     <mat-nav-list>
+-      <a uikSidenavNavigationRoute routerLink="/catalog"
++      <a uikSidenavNavigationRoute routerLink="/home"
+          routerLinkActive="sidenav-item-selected"
+-         routeLabel="Catalog">
++         routeLabel="Catalogue">
+         <mat-icon>shopping_bag</mat-icon>
+       </a>
+       <mat-divider />
+diff --git a/src/app/layout/main-layout/main-layout.component.ts b/src/app/layout/main-layout/main-layout.component.ts
+index 5a76475..c247049 100644
+--- a/src/app/layout/main-layout/main-layout.component.ts
++++ b/src/app/layout/main-layout/main-layout.component.ts
+@@ -4,13 +4,13 @@ import {MatSidenav, MatSidenavModule} from "@angular/material/sidenav";
+ import {
+   UikAmModule,
+   UikLayoutBreakpointObserverService,
+-  UikSidenavLayout,
+   UikSidenavNavigationRouteComponent,
+   UikSidenavService
+ } from "@visiativ/uik-am";
+ import {MatDivider, MatNavList} from "@angular/material/list";
+ import {MatIcon} from "@angular/material/icon";
+-import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
++import {toSignal} from "@angular/core/rxjs-interop";
++import {SidenavPersistenceService} from '../../shared/services/sidenav-persistence.service';
+ 
+ @Component({
+   selector: 'app-main-layout',
+@@ -31,6 +31,7 @@ import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
+ export class MainLayoutComponent implements OnInit {
+   private readonly uikLayoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
+   private readonly uikSidenavService = inject(UikSidenavService);
++  private readonly sidenavPersistence = inject(SidenavPersistenceService);
+ 
+   @HostBinding('class') class = 'app-main-layout';
+ 
+@@ -38,15 +39,10 @@ export class MainLayoutComponent implements OnInit {
+   sidenavLayout = toSignal(this.uikSidenavService.sidenavLayout$);
+ 
+   constructor() {
+-    this.uikSidenavService.sidenavLayout$
+-      .pipe(takeUntilDestroyed())
+-      .subscribe((layout) => {
+-        localStorage.setItem('sidenavLayout', layout);
+-      });
++    this.sidenavPersistence.initializePersistence();
+   }
+ 
+   ngOnInit(): void {
+-    const layout: UikSidenavLayout = localStorage.getItem('sidenavLayout') as UikSidenavLayout ?? 'initial';
+-    this.uikSidenavService.changeSidenavLayout(layout);
++    this.sidenavPersistence.restoreLayout();
+   }
+ }
+diff --git a/src/app/layout/page-layout/page-layout.component.ts b/src/app/layout/page-layout/page-layout.component.ts
+index 1bf159a..5eb9037 100644
+--- a/src/app/layout/page-layout/page-layout.component.ts
++++ b/src/app/layout/page-layout/page-layout.component.ts
+@@ -1,9 +1,10 @@
+ import {Component, HostBinding, inject, OnInit} from '@angular/core';
+ import {MatSidenavModule} from "@angular/material/sidenav";
+-import {UikAmModule, UikSidenavLayout, UikSidenavService} from "@visiativ/uik-am";
+-import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
++import {UikAmModule, UikSidenavService} from "@visiativ/uik-am";
++import {toSignal} from "@angular/core/rxjs-interop";
+ import {MatBadgeModule} from '@angular/material/badge';
+ import {PageHeaderComponent} from '../../shared/components/page-header/page-header.component';
++import {SidenavPersistenceService} from '../../shared/services/sidenav-persistence.service';
+ 
+ @Component({
+   selector: 'app-page-layout',
+@@ -17,21 +18,17 @@ import {PageHeaderComponent} from '../../shared/components/page-header/page-head
+ })
+ export class PageLayoutComponent implements OnInit {
+   private readonly uikSidenavService = inject(UikSidenavService);
++  private readonly sidenavPersistence = inject(SidenavPersistenceService);
+ 
+-  @HostBinding('class') class = 'app-main-layout';
++  @HostBinding('class') class = 'app-page-layout';
+ 
+   sidenavLayout = toSignal(this.uikSidenavService.sidenavLayout$);
+ 
+   constructor() {
+-    this.uikSidenavService.sidenavLayout$
+-      .pipe(takeUntilDestroyed())
+-      .subscribe((layout) => {
+-        localStorage.setItem('sidenavLayout', layout);
+-      });
++    this.sidenavPersistence.initializePersistence();
+   }
+ 
+   ngOnInit(): void {
+-    const layout: UikSidenavLayout = localStorage.getItem('sidenavLayout') as UikSidenavLayout ?? 'initial';
+-    this.uikSidenavService.changeSidenavLayout(layout);
++    this.sidenavPersistence.restoreLayout();
+   }
+ }
+diff --git a/src/app/shared/components/button/button.html b/src/app/shared/components/button/button.html
+new file mode 100644
+index 0000000..39c2238
+--- /dev/null
++++ b/src/app/shared/components/button/button.html
+@@ -0,0 +1,8 @@
++<button 
++  [type]="type"
++  [disabled]="disabled"
++  [class]="'btn btn-' + variant"
++  (click)="onButtonClick($event)">
++  <i *ngIf="icon" class="material-icons">{{ icon }}</i>
++  <ng-content></ng-content>
++</button>
+diff --git a/src/app/shared/components/button/button.scss b/src/app/shared/components/button/button.scss
+new file mode 100644
+index 0000000..1c5664b
+--- /dev/null
++++ b/src/app/shared/components/button/button.scss
+@@ -0,0 +1,54 @@
++@import "vars";
++
++.btn {
++  border: none;
++  border-radius: 40px;
++  padding: 0.75rem 1.5rem;
++  font-weight: 600;
++  font-size: 16px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 0.5rem;
++  cursor: pointer;
++  transition: all 0.2s ease;
++  text-decoration: none;
++  
++  &:disabled {
++    opacity: 0.6;
++    cursor: not-allowed;
++  }
++  
++  i {
++    font-size: 18px;
++  }
++}
++
++.btn-primary {
++  background: $primary-color;
++  color: white;
++  
++  &:hover:not(:disabled) {
++    background: $primary-hover;
++    transform: translateY(-1px);
++  }
++  
++  &:active:not(:disabled) {
++    transform: translateY(0);
++  }
++}
++
++.btn-secondary {
++  background: transparent;
++  color: $primary-color;
++  border: 1px solid $primary-color;
++  
++  &:hover:not(:disabled) {
++    background: $primary-color;
++    color: white;
++  }
++  
++  &:active:not(:disabled) {
++    transform: translateY(0);
++  }
++}
+diff --git a/src/app/shared/components/button/button.ts b/src/app/shared/components/button/button.ts
+new file mode 100644
+index 0000000..bd1d473
+--- /dev/null
++++ b/src/app/shared/components/button/button.ts
+@@ -0,0 +1,25 @@
++import {Component, Input, Output, EventEmitter} from '@angular/core';
++import {CommonModule} from '@angular/common';
++
++export type ButtonVariant = 'primary' | 'secondary';
++
++@Component({
++  selector: 'app-button',
++  imports: [CommonModule],
++  templateUrl: './button.html',
++  styleUrl: './button.scss'
++})
++export class Button {
++  @Input() variant: ButtonVariant = 'primary';
++  @Input() disabled: boolean = false;
++  @Input() icon?: string;
++  @Input() type: 'button' | 'submit' | 'reset' = 'button';
++  
++  @Output() click = new EventEmitter<Event>();
++
++  onButtonClick(event: Event): void {
++    if (!this.disabled) {
++      this.click.emit(event);
++    }
++  }
++}
+diff --git a/src/app/shared/components/page-header/page-header.component.html b/src/app/shared/components/page-header/page-header.component.html
+index 010ec04..2c9f431 100644
+--- a/src/app/shared/components/page-header/page-header.component.html
++++ b/src/app/shared/components/page-header/page-header.component.html
+@@ -1,9 +1,50 @@
+ <mat-toolbar class="uik-header-large uik-color-white-bg uik-outlined-bottom">
+   @if (layoutMatchesSmallViewport()) {
+-    <button mat-icon-button (click)="toggleSidenav()" class="me-1">
+-      <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
+-    </button>
++  <button mat-icon-button (click)="toggleSidenav()" class="me-1">
++    <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
++  </button>
+   }
+-  Page title
+-</mat-toolbar>
++  <span class="page-title">{{ pageTitle() }}</span>
++
++  <span class="spacer"></span>
+ 
++  <!-- Icône favoris avec badge -->
++  <button
++    mat-icon-button
++    class="favorites-button"
++    [attr.aria-label]="
++      'Favoris (' +
++      favoritesCount() +
++      ' produit' +
++      (favoritesCount() > 1 ? 's' : '') +
++      ')'
++    "
++  >
++    <mat-icon
++      [matBadge]="favoritesCount()"
++      [matBadgeHidden]="favoritesCount() === 0"
++      matBadgeColor="accent"
++      aria-hidden="false"
++      >star</mat-icon
++    >
++  </button>
++
++  <!-- Icône panier avec badge -->
++  <button
++    mat-icon-button
++    [routerLink]="['/cart']"
++    class="cart-button"
++    [class.bump]="isBumping"
++    [attr.aria-label]="
++      'Panier (' + cartCount() + ' article' + (cartCount() > 1 ? 's' : '') + ')'
++    "
++  >
++    <mat-icon
++      [matBadge]="cartCount()"
++      [matBadgeHidden]="cartCount() === 0"
++      matBadgeColor="warn"
++      aria-hidden="false"
++      >shopping_cart</mat-icon
++    >
++  </button>
++</mat-toolbar>
+diff --git a/src/app/shared/components/page-header/page-header.component.scss b/src/app/shared/components/page-header/page-header.component.scss
+new file mode 100644
+index 0000000..c47d375
+--- /dev/null
++++ b/src/app/shared/components/page-header/page-header.component.scss
+@@ -0,0 +1,48 @@
++:host {
++  display: block;
++  position: sticky;
++  top: 0;
++  z-index: 100;
++}
++
++.spacer {
++  flex: 1 1 auto;
++}
++
++.page-title {
++  font-size: 1.25rem;
++  font-weight: 500;
++}
++
++.favorites-button {
++  margin-left: 0.5rem;
++  
++  ::ng-deep mat-icon {
++    color: #FFD700; // Couleur dorée pour l'étoile
++  }
++}
++
++.cart-button {
++  margin-left: 0.5rem;
++  
++  ::ng-deep .mat-badge-content {
++    animation: none;
++  }
++  
++  &.bump ::ng-deep .mat-badge-content {
++    animation: bump 0.3s ease-in-out;
++  }
++}
++
++@keyframes bump {
++  0% {
++    transform: scale(1);
++  }
++  50% {
++    transform: scale(1.3);
++  }
++  100% {
++    transform: scale(1);
++  }
++}
++
+diff --git a/src/app/shared/components/page-header/page-header.component.ts b/src/app/shared/components/page-header/page-header.component.ts
+index f75bcf4..d38df6b 100644
+--- a/src/app/shared/components/page-header/page-header.component.ts
++++ b/src/app/shared/components/page-header/page-header.component.ts
+@@ -1,11 +1,16 @@
+-import {Component, HostBinding, inject} from '@angular/core';
++import {Component, HostBinding, inject, Signal, computed, effect} from '@angular/core';
+ import {MatSidenavModule} from "@angular/material/sidenav";
+ import {UikAmModule, UikLayoutBreakpointObserverService, UikSidenavService} from "@visiativ/uik-am";
+ import {MatIcon} from "@angular/material/icon";
+ import {MatBadgeModule} from '@angular/material/badge';
+ import {MatToolbar} from '@angular/material/toolbar';
+ import {MatIconButton} from '@angular/material/button';
++import {RouterLink} from '@angular/router';
+ import {toSignal} from '@angular/core/rxjs-interop';
++import {CartService} from '../../services/cart.service';
++import {PageTitleService} from '../../services/page-title.service';
++import {FavoritesService} from '../../services/favorites.service';
++import {LoggerService} from '../../services/logger.service';
+ 
+ @Component({
+   selector: 'app-page-header',
+@@ -16,18 +21,63 @@ import {toSignal} from '@angular/core/rxjs-interop';
+     MatToolbar,
+     MatBadgeModule,
+     MatIconButton,
++    RouterLink,
+   ],
+-  templateUrl: './page-header.component.html'
++  templateUrl: './page-header.component.html',
++  styleUrl: './page-header.component.scss'
+ })
+ export class PageHeaderComponent {
+   @HostBinding('class') class = 'app-page-header';
+ 
+   private readonly layoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
+   private readonly sidenavService = inject(UikSidenavService);
++  private readonly cartService = inject(CartService);
++  private readonly pageTitleService = inject(PageTitleService);
++  private readonly favoritesService = inject(FavoritesService);
++  private readonly logger = inject(LoggerService);
+ 
+   layoutMatchesSmallViewport = toSignal(this.layoutBreakpointObserverService.matchesSmallViewport$);
++  pageTitle = this.pageTitleService.getTitle();
++  
++  cartItems = toSignal(this.cartService.getCartItems(), { initialValue: [] });
++  
++  cartCount = computed(() => {
++    const count = this.cartItems().reduce((sum, item) => sum + item.quantity, 0);
++    this.logger.log('Header - Nombre total articles panier:', count, 'Items:', this.cartItems());
++    return count;
++  });
++
++  favoriteItems = toSignal(this.favoritesService.getFavorites(), { initialValue: [] });
++  
++  favoritesCount = computed(() => {
++    const count = this.favoriteItems().length;
++    this.logger.log('Header - Nombre de favoris:', count, 'Items:', this.favoriteItems());
++    return count;
++  });
++
++  isBumping = false;
++  private previousCount = 0;
++
++  constructor() {
++    effect(() => {
++      const currentCount = this.cartCount();
++      
++      if (currentCount > this.previousCount && currentCount > 0) {
++        this.triggerBump();
++      }
++      
++      this.previousCount = currentCount;
++    });
++  }
+ 
+   toggleSidenav() {
+     this.sidenavService.toggleSidenav();
+   }
++
++  private triggerBump() {
++    this.isBumping = true;
++    setTimeout(() => {
++      this.isBumping = false;
++    }, 300);
++  }
+ }
+diff --git a/src/app/shared/components/product-skeleton/product-skeleton.component.html b/src/app/shared/components/product-skeleton/product-skeleton.component.html
+new file mode 100644
+index 0000000..32d4414
+--- /dev/null
++++ b/src/app/shared/components/product-skeleton/product-skeleton.component.html
+@@ -0,0 +1,25 @@
++<div class="skeleton-card">
++  <!-- Checkbox skeleton -->
++  <div class="skeleton-checkbox"></div>
++  
++  <!-- Image skeleton -->
++  <div class="skeleton-image"></div>
++  
++  <!-- Content skeleton -->
++  <div class="skeleton-content">
++    <!-- Title skeleton -->
++    <div class="skeleton-title"></div>
++    
++    <!-- ID skeleton -->
++    <div class="skeleton-id"></div>
++    
++    <!-- Actions skeleton -->
++    <div class="skeleton-actions">
++      <div class="skeleton-button skeleton-button-primary"></div>
++      <div class="skeleton-icon"></div>
++      <div class="skeleton-icon"></div>
++      <div class="skeleton-icon"></div>
++    </div>
++  </div>
++</div>
++
+diff --git a/src/app/shared/components/product-skeleton/product-skeleton.component.scss b/src/app/shared/components/product-skeleton/product-skeleton.component.scss
+new file mode 100644
+index 0000000..9572b85
+--- /dev/null
++++ b/src/app/shared/components/product-skeleton/product-skeleton.component.scss
+@@ -0,0 +1,107 @@
++@import "vars";
++
++:host {
++  display: block;
++  background: $background-card;
++  border-radius: 8px;
++  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
++  overflow: hidden;
++  height: 100%;
++}
++
++.skeleton-card {
++  position: relative;
++  width: 100%;
++  height: 100%;
++  animation: pulse 1.5s ease-in-out infinite;
++}
++
++// Animation de pulsation
++@keyframes pulse {
++  0%, 100% {
++    opacity: 1;
++  }
++  50% {
++    opacity: 0.7;
++  }
++}
++
++// Shimmer effect
++@keyframes shimmer {
++  0% {
++    background-position: -1000px 0;
++  }
++  100% {
++    background-position: 1000px 0;
++  }
++}
++
++.skeleton-checkbox {
++  position: absolute;
++  top: 0.5rem;
++  left: 0.5rem;
++  width: 18px;
++  height: 18px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++  border-radius: 3px;
++  z-index: 10;
++}
++
++.skeleton-image {
++  width: 100%;
++  height: 200px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++}
++
++.skeleton-content {
++  padding: 16px;
++}
++
++.skeleton-title {
++  width: 80%;
++  height: 20px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++  border-radius: 4px;
++  margin-bottom: 12px;
++}
++
++.skeleton-id {
++  width: 60%;
++  height: 16px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++  border-radius: 4px;
++  margin-bottom: 16px;
++}
++
++.skeleton-actions {
++  display: flex;
++  align-items: center;
++  gap: 8px;
++}
++
++.skeleton-button-primary {
++  flex: 1;
++  height: 32px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++  border-radius: 6px;
++}
++
++.skeleton-icon {
++  width: 32px;
++  height: 32px;
++  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
++  background-size: 1000px 100%;
++  animation: shimmer 2s infinite;
++  border-radius: 6px;
++}
++
+diff --git a/src/app/shared/components/product-skeleton/product-skeleton.component.ts b/src/app/shared/components/product-skeleton/product-skeleton.component.ts
+new file mode 100644
+index 0000000..0cb52e9
+--- /dev/null
++++ b/src/app/shared/components/product-skeleton/product-skeleton.component.ts
+@@ -0,0 +1,14 @@
++import {Component, HostBinding} from '@angular/core';
++import {CommonModule} from '@angular/common';
++
++@Component({
++  selector: 'app-product-skeleton',
++  standalone: true,
++  imports: [CommonModule],
++  templateUrl: './product-skeleton.component.html',
++  styleUrl: './product-skeleton.component.scss'
++})
++export class ProductSkeletonComponent {
++  @HostBinding('class') class = 'product-skeleton';
++}
++
+diff --git a/src/app/shared/models/cart-item.model.ts b/src/app/shared/models/cart-item.model.ts
+new file mode 100644
+index 0000000..ed73307
+--- /dev/null
++++ b/src/app/shared/models/cart-item.model.ts
+@@ -0,0 +1,7 @@
++import { Product } from './product.model';
++
++export interface CartItem {
++  product: Product;
++  quantity: number;
++}
++
+diff --git a/src/app/shared/models/product.model.ts b/src/app/shared/models/product.model.ts
+new file mode 100644
+index 0000000..9615b8a
+--- /dev/null
++++ b/src/app/shared/models/product.model.ts
+@@ -0,0 +1,22 @@
++export interface Product {
++  id: number;
++  name: string;
++  description: string;
++  brand: string;
++  warranty: string;
++  category: string;
++  tags: string[];
++  warning: string;
++  offer: string | null;
++  discount: string | null;
++  price: number;
++  currency: string;
++  image: string;
++  specifications: ProductSpecification[];
++}
++
++export interface ProductSpecification {
++  label: string;
++  value: string;
++}
++
+diff --git a/src/app/shared/services/cart.service.ts b/src/app/shared/services/cart.service.ts
+new file mode 100644
+index 0000000..f6a576c
+--- /dev/null
++++ b/src/app/shared/services/cart.service.ts
+@@ -0,0 +1,158 @@
++import { Injectable, inject } from '@angular/core';
++import { BehaviorSubject, Observable } from 'rxjs';
++import { map } from 'rxjs/operators';
++import { Product } from '../models/product.model';
++import { CartItem } from '../models/cart-item.model';
++import { LoggerService } from './logger.service';
++
++@Injectable({
++  providedIn: 'root'
++})
++export class CartService {
++  private logger = inject(LoggerService);
++  private cartItems = new BehaviorSubject<CartItem[]>([]);
++  public cartItems$ = this.cartItems.asObservable();
++
++  constructor() {
++    this.loadCartFromStorage();
++  }
++
++  /**
++   * Récupère tous les items du panier
++   */
++  getCartItems(): Observable<CartItem[]> {
++    return this.cartItems$;
++  }
++
++  /**
++   * Récupère le nombre total d'items dans le panier
++   */
++  getCartCount(): Observable<number> {
++    return this.cartItems$.pipe(
++      map(items => items.reduce((sum, item) => sum + item.quantity, 0))
++    );
++  }
++
++  /**
++   * Récupère le prix total du panier
++   */
++  getCartTotal(): Observable<number> {
++    return this.cartItems$.pipe(
++      map(items => items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0))
++    );
++  }
++
++  /**
++   * Ajoute un produit au panier
++   */
++  addToCart(product: Product, quantity: number = 1): void {
++    const productId = Number(product.id);
++
++    const currentItems = [...this.cartItems.value];
++    const existingItemIndex = currentItems.findIndex(item => Number(item.product.id) === productId);
++
++    if (existingItemIndex !== -1) {
++      currentItems[existingItemIndex] = {
++        ...currentItems[existingItemIndex],
++        quantity: currentItems[existingItemIndex].quantity + quantity
++      };
++      this.logger.log(`${product.name} - quantité mise à jour: ${currentItems[existingItemIndex].quantity}`);
++    } else {
++      const newItem: CartItem = { product, quantity };
++      currentItems.push(newItem);
++      this.logger.log(`${product.name} - nouveau produit ajouté (quantité: ${quantity})`);
++    }
++
++    this.cartItems.next(currentItems);
++    this.saveCartToStorage();
++    
++    this.logger.log('Panier actuel:', this.cartItems.value);
++    this.logger.log('Nombre total items:', this.cartItems.value.reduce((sum, item) => sum + item.quantity, 0));
++  }
++
++  /**
++   * Ajoute plusieurs produits au panier
++   */
++  addMultipleToCart(products: Product[], quantity: number = 1): void {
++    products.forEach(product => this.addToCart(product, quantity));
++  }
++
++  /**
++   * Supprime un produit du panier
++   */
++  removeFromCart(productId: number): void {
++    const currentItems = this.cartItems.value;
++    const updatedItems = currentItems.filter(item => item.product.id !== productId);
++    this.cartItems.next(updatedItems);
++    this.saveCartToStorage();
++    this.logger.log(`Produit ${productId} supprimé du panier`);
++  }
++
++  /**
++   * Met à jour la quantité d'un produit dans le panier
++   */
++  updateQuantity(productId: number, quantity: number): void {
++    if (quantity <= 0) {
++      this.removeFromCart(productId);
++      return;
++    }
++
++    const currentItems = this.cartItems.value;
++    const item = currentItems.find(item => item.product.id === productId);
++    
++    if (item) {
++      item.quantity = quantity;
++      this.cartItems.next([...currentItems]);
++      this.saveCartToStorage();
++      this.logger.log(`Quantité du produit ${productId} mise à jour: ${quantity}`);
++    }
++  }
++
++  /**
++   * Vide complètement le panier
++   */
++  clearCart(): void {
++    this.cartItems.next([]);
++    this.saveCartToStorage();
++    this.logger.log('Panier vidé');
++  }
++
++  /**
++   * Vérifie si un produit est dans le panier
++   */
++  isInCart(productId: number): boolean {
++    return this.cartItems.value.some(item => item.product.id === productId);
++  }
++
++  /**
++   * Sauvegarde le panier dans le localStorage
++   */
++  private saveCartToStorage(): void {
++    localStorage.setItem('cart', JSON.stringify(this.cartItems.value));
++  }
++
++  /**
++   * Charge le panier depuis le localStorage
++   */
++  private loadCartFromStorage(): void {
++    const savedCart = localStorage.getItem('cart');
++    if (savedCart) {
++      try {
++        const items = JSON.parse(savedCart);
++        this.logger.log('Panier chargé depuis localStorage:', items);
++        
++        const normalizedItems = items.map((item: any) => ({
++          ...item,
++          quantity: Number(item.quantity)
++        }));
++        
++        this.logger.log('Panier normalisé:', normalizedItems);
++        this.cartItems.next(normalizedItems);
++      } catch (error) {
++        this.logger.error('Erreur lors du chargement du panier:', error);
++        localStorage.removeItem('cart');
++      }
++    }
++  }
++}
++
+diff --git a/src/app/shared/services/favorites.service.ts b/src/app/shared/services/favorites.service.ts
+new file mode 100644
+index 0000000..063f001
+--- /dev/null
++++ b/src/app/shared/services/favorites.service.ts
+@@ -0,0 +1,127 @@
++import { Injectable, inject } from '@angular/core';
++import { BehaviorSubject, Observable } from 'rxjs';
++import { Product } from '../models/product.model';
++import { LoggerService } from './logger.service';
++
++@Injectable({
++  providedIn: 'root'
++})
++export class FavoritesService {
++  private logger = inject(LoggerService);
++  private favoritesSubject = new BehaviorSubject<Product[]>([]);
++  private favorites: Product[] = [];
++
++  constructor() {
++    this.loadFavoritesFromStorage();
++  }
++
++  /**
++   * Charge les favoris depuis le localStorage
++   */
++  private loadFavoritesFromStorage(): void {
++    const stored = localStorage.getItem('favorites');
++    if (stored) {
++      try {
++        this.favorites = JSON.parse(stored);
++        this.favoritesSubject.next(this.favorites);
++        this.logger.log('Favoris chargés depuis localStorage:', this.favorites);
++      } catch (error) {
++        this.logger.error('Erreur lors du chargement des favoris:', error);
++        localStorage.removeItem('favorites');
++      }
++    }
++  }
++
++  /**
++   * Sauvegarde les favoris dans le localStorage
++   */
++  private saveFavoritesToStorage(): void {
++    localStorage.setItem('favorites', JSON.stringify(this.favorites));
++  }
++
++  /**
++   * Retourne l'Observable des favoris
++   */
++  getFavorites(): Observable<Product[]> {
++    return this.favoritesSubject.asObservable();
++  }
++
++  /**
++   * Ajoute un produit aux favoris
++   */
++  addToFavorites(product: Product): void {
++    const exists = this.favorites.find(p => p.id === product.id);
++    if (!exists) {
++      this.favorites.push(product);
++      this.logger.log('Favoris après ajout:', this.favorites);
++      this.favoritesSubject.next([...this.favorites]);
++      this.saveFavoritesToStorage();
++      this.logger.log('Produit ajouté aux favoris:', product.name);
++    }
++  }
++
++  /**
++   * Retire un produit des favoris
++   */
++  removeFromFavorites(productId: number): void {
++    this.favorites = this.favorites.filter(p => p.id !== productId);
++    this.logger.log('Favoris après suppression:', this.favorites);
++    this.favoritesSubject.next([...this.favorites]);
++    this.saveFavoritesToStorage();
++    this.logger.log('Produit retiré des favoris');
++  }
++
++  /**
++   * Toggle un produit dans les favoris
++   */
++  toggleFavorite(product: Product): boolean {
++    const exists = this.favorites.find(p => p.id === product.id);
++    if (exists) {
++      this.removeFromFavorites(product.id);
++      return false;
++    } else {
++      this.addToFavorites(product);
++      return true;
++    }
++  }
++
++  /**
++   * Vérifie si un produit est dans les favoris
++   */
++  isFavorite(productId: number): boolean {
++    return this.favorites.some(p => p.id === productId);
++  }
++
++  /**
++   * Ajoute plusieurs produits aux favoris
++   */
++  addMultipleToFavorites(products: Product[]): void {
++    products.forEach(product => {
++      const exists = this.favorites.find(p => p.id === product.id);
++      if (!exists) {
++        this.favorites.push(product);
++      }
++    });
++    this.logger.log('Favoris après ajout multiple:', this.favorites);
++    this.favoritesSubject.next([...this.favorites]);
++    this.saveFavoritesToStorage();
++    this.logger.log(`${products.length} produits ajoutés aux favoris`);
++  }
++
++  /**
++   * Vide tous les favoris
++   */
++  clearFavorites(): void {
++    this.favorites = [];
++    this.favoritesSubject.next(this.favorites);
++    this.saveFavoritesToStorage();
++  }
++
++  /**
++   * Retourne le nombre de favoris
++   */
++  getFavoritesCount(): number {
++    return this.favorites.length;
++  }
++}
++
+diff --git a/src/app/shared/services/logger.service.ts b/src/app/shared/services/logger.service.ts
+new file mode 100644
+index 0000000..8d87040
+--- /dev/null
++++ b/src/app/shared/services/logger.service.ts
+@@ -0,0 +1,77 @@
++import { Injectable, isDevMode } from '@angular/core';
++
++/**
++ * Service de logging centralisé
++ * Tous les logs sont désactivés (masqués)
++ */
++@Injectable({
++  providedIn: 'root'
++})
++export class LoggerService {
++  private isDev = isDevMode();
++  private enabled = false; // Désactiver tous les logs
++
++  /**
++   * Log d'information (niveau debug) - DÉSACTIVÉ
++   */
++  log(message: string, ...data: any[]): void {
++    if (this.enabled && this.isDev) {
++      console.log(message, ...data);
++    }
++  }
++
++  /**
++   * Log d'erreur - DÉSACTIVÉ
++   */
++  error(message: string, ...data: any[]): void {
++    if (this.enabled) {
++      console.error(message, ...data);
++    }
++  }
++
++  /**
++   * Log d'avertissement - DÉSACTIVÉ
++   */
++  warn(message: string, ...data: any[]): void {
++    if (this.enabled && this.isDev) {
++      console.warn(message, ...data);
++    }
++  }
++
++  /**
++   * Log d'information - DÉSACTIVÉ
++   */
++  info(message: string, ...data: any[]): void {
++    if (this.enabled && this.isDev) {
++      console.info(message, ...data);
++    }
++  }
++
++  /**
++   * Groupe de logs - DÉSACTIVÉ
++   */
++  group(label: string): void {
++    if (this.enabled && this.isDev) {
++      console.group(label);
++    }
++  }
++
++  /**
++   * Fin de groupe de logs - DÉSACTIVÉ
++   */
++  groupEnd(): void {
++    if (this.enabled && this.isDev) {
++      console.groupEnd();
++    }
++  }
++
++  /**
++   * Table de logs - DÉSACTIVÉ
++   */
++  table(data: any): void {
++    if (this.enabled && this.isDev) {
++      console.table(data);
++    }
++  }
++}
++
+diff --git a/src/app/shared/services/page-title.service.ts b/src/app/shared/services/page-title.service.ts
+new file mode 100644
+index 0000000..b299833
+--- /dev/null
++++ b/src/app/shared/services/page-title.service.ts
+@@ -0,0 +1,16 @@
++import { Injectable, signal } from '@angular/core';
++
++@Injectable({
++  providedIn: 'root'
++})
++export class PageTitleService {
++  private titleSignal = signal<string>('Page title');
++
++  getTitle() {
++    return this.titleSignal.asReadonly();
++  }
++
++  setTitle(title: string) {
++    this.titleSignal.set(title);
++  }
++}
+diff --git a/src/app/shared/services/products.service.ts b/src/app/shared/services/products.service.ts
+new file mode 100644
+index 0000000..49858cd
+--- /dev/null
++++ b/src/app/shared/services/products.service.ts
+@@ -0,0 +1,28 @@
++import { Injectable } from '@angular/core';
++import { HttpClient } from '@angular/common/http';
++import { Observable } from 'rxjs';
++import { Product } from '../models/product.model';
++
++@Injectable({
++  providedIn: 'root'
++})
++export class ProductsService {
++  private apiUrl = '/api/products';
++
++  constructor(private http: HttpClient) {}
++
++  /**
++   * Récupère tous les produits depuis l'API
++   */
++  getProducts(): Observable<Product[]> {
++    return this.http.get<Product[]>(this.apiUrl);
++  }
++
++  /**
++   * Récupère un produit par son ID
++   */
++  getProductById(id: number): Observable<Product> {
++    return this.http.get<Product>(`${this.apiUrl}/${id}`);
++  }
++}
++
+diff --git a/src/app/shared/services/sidenav-persistence.service.ts b/src/app/shared/services/sidenav-persistence.service.ts
+new file mode 100644
+index 0000000..c59fd07
+--- /dev/null
++++ b/src/app/shared/services/sidenav-persistence.service.ts
+@@ -0,0 +1,51 @@
++import { Injectable, inject } from '@angular/core';
++import { UikSidenavLayout, UikSidenavService } from '@visiativ/uik-am';
++import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
++
++/**
++ * Service de persistance de l'état du sidenav
++ * Gère la sauvegarde et la restauration du layout dans le localStorage
++ */
++@Injectable({
++  providedIn: 'root'
++})
++export class SidenavPersistenceService {
++  private readonly STORAGE_KEY = 'sidenavLayout';
++  private readonly uikSidenavService = inject(UikSidenavService);
++
++  /**
++   * Initialise la persistance du sidenav
++   * À appeler dans le constructor du composant avec takeUntilDestroyed()
++   */
++  initializePersistence(): void {
++    this.uikSidenavService.sidenavLayout$
++      .pipe(takeUntilDestroyed())
++      .subscribe((layout) => {
++        this.saveLayout(layout);
++      });
++  }
++
++  /**
++   * Restaure le layout sauvegardé
++   * À appeler dans ngOnInit()
++   */
++  restoreLayout(): void {
++    const savedLayout = this.getLayout();
++    this.uikSidenavService.changeSidenavLayout(savedLayout);
++  }
++
++  /**
++   * Sauvegarde le layout dans le localStorage
++   */
++  private saveLayout(layout: UikSidenavLayout): void {
++    localStorage.setItem(this.STORAGE_KEY, layout);
++  }
++
++  /**
++   * Récupère le layout depuis le localStorage
++   */
++  private getLayout(): UikSidenavLayout {
++    return (localStorage.getItem(this.STORAGE_KEY) as UikSidenavLayout) ?? 'initial';
++  }
++}
++
+diff --git a/src/index.html b/src/index.html
+index 58b3331..493ad1e 100644
+--- a/src/index.html
++++ b/src/index.html
+@@ -11,5 +11,6 @@
+ </head>
+ <body>
+   <app-root></app-root>
++  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ </body>
+ </html>
+diff --git a/src/styles.scss b/src/styles.scss
+index b0ad80e..67fc2a2 100644
+--- a/src/styles.scss
++++ b/src/styles.scss
+@@ -1,2 +1,9 @@
++// UIK - @forward DOIT être avant @import
+ @forward "@visiativ/uik-core/theme";
+ @forward "@visiativ/uik-am/theme";
++
++// Thème de l'application (inclut _catalog.scss)
++@forward "theme";
++
++// Bootstrap - @import pour import global (nécessaire pour Bootstrap)
++@import "bootstrap/scss/bootstrap";
+diff --git a/src/theme/_vars.scss b/src/theme/_vars.scss
+new file mode 100644
+index 0000000..c59873c
+--- /dev/null
++++ b/src/theme/_vars.scss
+@@ -0,0 +1,43 @@
++// Variables de couleurs pour l'application
++// Centralisées pour maintenir la cohérence du design
++
++// Couleurs principales
++$primary-color: #951CFF;
++$primary-hover: #5e35b1;
++
++// Couleurs de fond
++$background-catalog: #F5F5F5;
++$background-card: white;
++
++// Couleurs de texte
++$text-primary: #333;
++$text-secondary: #666;
++$text-muted: rgba(0, 0, 0, 0.6);
++$text-light: rgba(0, 0, 0, 0.87);
++
++// Couleurs de bordure
++$border-light: #ddd;
++$border-medium: #bbb;
++$border-dark: #e0e0e0;
++
++// Couleurs d'état
++$success: #4caf50;
++$warning: #ff9800;
++$error: #f44336;
++$info: #2196f3;
++
++// Couleurs d'information
++$info-bg: rgba(#1182A6, 12%);
++$info-text: #0A4E64;
++
++// Couleurs d'ombre
++$shadow-light: rgba(0, 0, 0, 0.1);
++$shadow-medium: rgba(0, 0, 0, 0.15);
++
++// Couleurs de hover
++$hover-light: #f5f5f5;
++$hover-dropdown: #f8f9fa;
++
++// Watermark
++$watermark-bg: rgba(0, 0, 0, 0.7);
++$watermark-text: white;
+diff --git a/src/theme/components/app/_all.scss b/src/theme/components/app/_all.scss
+index e98b876..cd87a59 100644
+--- a/src/theme/components/app/_all.scss
++++ b/src/theme/components/app/_all.scss
+@@ -1,2 +1,3 @@
+ @forward "./main-layout";
+ @forward "./page-layout";
++@forward "./catalog";
+diff --git a/src/theme/components/app/_catalog.scss b/src/theme/components/app/_catalog.scss
+new file mode 100644
+index 0000000..1859ac2
+--- /dev/null
++++ b/src/theme/components/app/_catalog.scss
+@@ -0,0 +1,29 @@
++@use "../../vars" as vars;
++
++// Styles pour la page catalogue (pas pour les cartes de produit)
++.app-catalog {
++  background: vars.$background-catalog; // Fond gris clair derrière les cartes
++  min-height: 100vh;
++  
++  .catalog-container {
++    padding: 2rem;
++    max-width: 1200px;
++    margin: 0 auto;
++  }
++
++  .catalog-header {
++    margin-bottom: 2rem;
++
++    h1 {
++      font-size: 2rem;
++      font-weight: 500;
++      margin: 0 0 0.5rem 0;
++    }
++
++    p {
++      font-size: 1rem;
++      color: rgba(0, 0, 0, 0.6);
++      margin: 0;
++    }
++  }
++}
+\ No newline at end of file
+diff --git a/src/theme/components/app/_main-layout.scss b/src/theme/components/app/_main-layout.scss
+index 0658a2e..c2ca1b7 100644
+--- a/src/theme/components/app/_main-layout.scss
++++ b/src/theme/components/app/_main-layout.scss
+@@ -1,7 +1,8 @@
+ @use "@visiativ/uik-core/theme/variables/colors" as colors;
++@use "../../vars" as vars;
+ 
+ .app-main-layout {
+   .mat-drawer-container {
+-    --mat-sidenav-content-background-color: colors.$white-bg;
++    --mat-sidenav-content-background-color: vars.$background-catalog;
+   }
+ }
+diff --git a/src/theme/components/app/_page-layout.scss b/src/theme/components/app/_page-layout.scss
+index c283ee2..0e384aa 100644
+--- a/src/theme/components/app/_page-layout.scss
++++ b/src/theme/components/app/_page-layout.scss
+@@ -1,7 +1,8 @@
+ @use "@visiativ/uik-core/theme/variables/colors" as colors;
+ 
+ .app-page-layout {
+-
++  background: transparent;
++  
+   .app-doc-page-layout-header {
+     .mat-toolbar {
+       uik-toolbar-app-context .mat-h3 {
+-- 
+2.39.5 (Apple Git-154)
+
