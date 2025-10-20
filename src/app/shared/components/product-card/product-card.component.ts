@@ -19,8 +19,6 @@ import { Product } from "../../services/products.service";
 })
 
 export class ProductCardComponent {
-  // computed
-  // for pictures: http://localhost:3000/images/products/grinder1.jpg
   product = input<Product | undefined>();
   imageUrl = computed(() => `http://localhost:3000${this.product()?.image ? this.product()?.image : ""}`);
 
