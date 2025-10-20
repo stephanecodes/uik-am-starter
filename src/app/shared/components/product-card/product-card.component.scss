@@ -1,0 +1,11 @@
+
+// classes for cards
+
+.product-card {
+  width: 330px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}

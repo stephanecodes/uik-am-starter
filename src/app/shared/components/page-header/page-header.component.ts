@@ -1,11 +1,12 @@
 import {Component, HostBinding, inject} from '@angular/core';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {UikAmModule, UikLayoutBreakpointObserverService, UikSidenavService} from "@visiativ/uik-am";
+import {UikAmModule, UikLayoutBreakpointObserverService, UikSidenavService, UikAppContext} from "@visiativ/uik-am";
 import {MatIcon} from "@angular/material/icon";
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIconButton} from '@angular/material/button';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {MatBadge} from "@angular/material/badge";
 
 @Component({
   selector: 'app-page-header',
@@ -16,11 +17,18 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatToolbar,
     MatBadgeModule,
     MatIconButton,
+    MatBadge,
   ],
   templateUrl: './page-header.component.html'
 })
 export class PageHeaderComponent {
   @HostBinding('class') class = 'app-page-header';
+
+  headerContext: UikAppContext = {
+    applicationName: "ZBL App",
+    title: "ZBL Industries",
+    subtitle: "Product catalog",
+  }
 
   private readonly layoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
   private readonly sidenavService = inject(UikSidenavService);

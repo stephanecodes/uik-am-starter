@@ -1,5 +1,29 @@
-<app-page-layout>
-  <div class="p-6">
-    <p>Welcome !</p>
+<app-page-layout class="uik-color-white-bg">
+  <div class="uik-filter-input uik-color-white-bg uik-outlined flex-grow-1 d-flex align-items-center justify-content-space-between gap-1 w-100">
+    <mat-form-field appearance="outline" class="uik-filter-input uik-color-white-bg uik-outlined">
+      <mat-icon matPrefix>filter_list</mat-icon>
+      <input matInput [(ngModel)]="filterValue" placeholder="Filter by code, designation..." />
+      <mat-icon matSuffix
+                class="uik-cursor-pointer"
+                [class.uik-invisible]="!filterValue()">close</mat-icon>
+    </mat-form-field>
+    <span>{{products().length}} products</span>
   </div>
+  <div class="p-6 uik-color-white-bg">
+    @if (products()) {
+      <ul class="flexContainer catalog-container">
+        @for (product of paginatedProduct() ; track product.id) {
+          <product-card-component (click)="openLargeDialog(product.id)" [product]="product"/>
+        }
+      </ul>
+    }
+  </div>
+  <mat-paginator
+               [length]="products().length"
+               (page)="handlePaginationEvent($event)"
+               [pageSize]="10"
+               [pageSize]="pageSize()"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               aria-label="Select page">
+</mat-paginator>
 </app-page-layout>
