@@ -6,6 +6,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIconButton} from '@angular/material/button';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {UikAppContext} from '@visiativ/uik-am';
 
 @Component({
   selector: 'app-page-header',
@@ -15,12 +16,18 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatIcon,
     MatToolbar,
     MatBadgeModule,
-    MatIconButton,
+    MatIconButton
   ],
   templateUrl: './page-header.component.html'
 })
 export class PageHeaderComponent {
   @HostBinding('class') class = 'app-page-header';
+
+  exampleAppContext: UikAppContext = {
+    applicationName: "ZBL Industries",
+    title: "ZBL Industries",
+    subtitle: "Product catalog",
+  }
 
   private readonly layoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
   private readonly sidenavService = inject(UikSidenavService);
