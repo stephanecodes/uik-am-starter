@@ -1,5 +1,80 @@
 <app-page-layout>
   <div class="p-6">
-    <p>Welcome !</p>
+    <mat-card class="d-flex flex-row justify-content-between p-2 mat-elevation-z0">
+      <mat-form-field appearance="outline" class="uik-filter-input">
+        <mat-icon matPrefix>filter_list</mat-icon>
+        <input matInput placeholder="Filter" />
+      </mat-form-field>
+
+      <div class="d-flex flex-row align-items-center">
+        <p class="mb-0 me-2 fw-bold">12 produits</p>
+        <mat-button-toggle-group name="States" aria-label="Example of states">
+          <mat-button-toggle value="selected"><mat-icon>favorite</mat-icon></mat-button-toggle>
+          <mat-button-toggle value="enabled"><mat-icon>favorite</mat-icon></mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </mat-card>
+
+    <div class="py-2">
+      <div class="row row-cols-5">
+        <div class="col" *ngFor="let product of products | slice:0:5">
+          <mat-card class="mat-elevation-z0">
+            <div class="product-img">
+              <img mat-card-image [src]="'http://localhost:3000' + product.image" alt="{{ product.name }}" class="uik-color-mix-40-bg p-2">
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+              <mat-card-subtitle>129678001</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <button color="primary" mat-button><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
+              <span class="flex-grow-1"></span>
+              <button mat-icon-button>
+                <mat-icon>star</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="row row-cols-5 pt-2">
+        <div class="col" *ngFor="let product of products | slice:5:10">
+          <mat-card class="mat-elevation-z0">
+            <img mat-card-image [src]="'http://localhost:3000' + product.image" alt="Image from design system" class="product-img uik-color-mix-40-bg p-2">
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+              <mat-card-subtitle>129678001</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <button color="primary" mat-button><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
+              <span class="flex-grow-1"></span>
+              <button mat-icon-button>
+                <mat-icon>star</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <mat-card class="px-1 mat-elevation-z0 rounded-2">
+      <mat-paginator [length]="2"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+    </mat-card>
   </div>
 </app-page-layout>
