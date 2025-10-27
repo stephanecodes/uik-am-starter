@@ -34,19 +34,6 @@ export class BasketService {
     return this.items;
   }
 
-  increaseQuantity(index: number) {
-    this.items[index].quantity++;
-    this.updateCount();
-  }
-
-  decreaseQuantity(index: number) {
-    if (this.items[index].quantity > 1) {
-      this.items[index].quantity--;
-    } else {
-      this.removeItem(index);
-    }
-  }
-
   removeItem(index: number) {
     this.items.splice(index, 1);
     this.updateCount();
@@ -54,5 +41,7 @@ export class BasketService {
 
   clearBasket() {
     this.items = [];
+
+    this.updateCount();
   }
 }

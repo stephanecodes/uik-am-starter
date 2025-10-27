@@ -8,7 +8,7 @@ import {
   UikSidenavNavigationRouteComponent,
   UikSidenavService
 } from "@visiativ/uik-am";
-import {MatDivider, MatNavList} from "@angular/material/list";
+import {MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
 import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
 
@@ -23,8 +23,7 @@ import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
     MatIcon,
     UikSidenavNavigationRouteComponent,
     RouterLink,
-    RouterLinkActive,
-    MatDivider,
+    RouterLinkActive
   ],
   templateUrl: './main-layout.component.html'
 })

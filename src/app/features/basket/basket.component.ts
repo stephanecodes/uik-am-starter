@@ -30,14 +30,6 @@ export class BasketComponent {
         return this.basketService.getBasket();
     }
 
-    increaseQuantity(i: number) {
-        this.basketService.increaseQuantity(i);
-    }
-
-    decreaseQuantity(i: number) {
-        this.basketService.decreaseQuantity(i);
-    }
-
     remove(i: number) {
         this.basketService.removeItem(i);
     }

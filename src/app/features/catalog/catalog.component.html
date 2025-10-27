@@ -16,29 +16,43 @@
     </mat-card>
 
     <div class="py-2">
-      <div class="row row-cols-5">
-        <div class="col" *ngFor="let product of pagedProducts" (click)="openProduct(product)">
-          <mat-card class="mat-elevation-z0">
-            <div class="product-img">
-              <img mat-card-image [src]="'http://localhost:3000' + product.image" alt="{{ product.name }}" class="uik-color-mix-40-bg p-2">
-            </div>
-
-            <mat-card-header>
-              <div class="mat-mdc-card-header-text mw-100">
-                <mat-card-title class="text-truncate">{{ product.name }}</mat-card-title>
-                <mat-card-subtitle>129678001</mat-card-subtitle>
+      <div class="row row-cols-5 g-3">
+        <ng-container *ngIf="isLoading; else productsList">
+          <div class="col" *ngFor="let ghost of [1,2,3,4,5,6,7,8,9,10]">
+            <mat-card class="mat-elevation-z0 p-2">
+              <div class="product-img mb-2">
+                <uik-ghost height="160px" width="100%"></uik-ghost>
               </div>
-            </mat-card-header>
+              <uik-ghost width="80%" height="16px" class="mb-1"></uik-ghost>
+              <uik-ghost width="60%" height="14px"></uik-ghost>
+            </mat-card>
+          </div>
+        </ng-container>
 
-            <mat-card-actions>
-              <button color="primary" mat-button><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
-              <span class="flex-grow-1"></span>
-              <button mat-icon-button><mat-icon>star</mat-icon></button>
-              <button mat-icon-button><mat-icon>info</mat-icon></button>
-              <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+        <ng-template #productsList>
+          <div class="col" *ngFor="let product of pagedProducts" (click)="openProduct(product)">
+            <mat-card class="mat-elevation-z0 overflow-hidden">
+              <div class="product-img d-flex align-items-center">
+                <img mat-card-image [src]="'http://localhost:3000' + product.image" alt="{{ product.name }}" class="w-100 mh-100 object-fit-cover">
+              </div>
+  
+              <mat-card-header>
+                <div class="mat-mdc-card-header-text mw-100">
+                  <mat-card-title class="text-truncate">{{ product.name }}</mat-card-title>
+                  <mat-card-subtitle>129678001</mat-card-subtitle>
+                </div>
+              </mat-card-header>
+  
+              <mat-card-actions>
+                <button color="primary" mat-button><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
+                <span class="flex-grow-1"></span>
+                <button mat-icon-button><mat-icon>star</mat-icon></button>
+                <button mat-icon-button><mat-icon>info</mat-icon></button>
+                <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-template>
       </div>
     </div>
 

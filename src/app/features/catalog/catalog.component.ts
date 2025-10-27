@@ -52,14 +52,26 @@ export class CatalogComponent implements OnInit {
   pageSize = 10;
   currentPage = 0;
 
+  isLoading = true;
+
   constructor(private http: HttpClient, private dialog: MatDialog, private basketService: BasketService) {}
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.http.get<any[]>('http://localhost:3000/products')
-      .subscribe(data => {
-        this.allProducts = data.slice(0, 12);
-        this.products = [...this.allProducts];
-        this.updatePage();
+      .subscribe({
+        next: (data) => {
+          this.allProducts = data.slice(0, 12);
+          this.products = [...this.allProducts];
+          this.updatePage();
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement des produits', err);
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
       });
   }
 

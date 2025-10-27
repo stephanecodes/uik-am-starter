@@ -10,6 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Router, RouterModule } from "@angular/router";
+import { BasketService } from "../basket/basket.service";
 
 @Component({
     selector: 'app-payment',
@@ -40,7 +41,11 @@ export class PaymentComponent {
 
     private paymentCompleteDialogRef!: MatDialogRef<any>;
 
-    constructor(private dialog: MatDialog, private router: Router) {
+    constructor(
+        private dialog: MatDialog, 
+        private router: Router,
+        private basketService: BasketService
+    ) {
         this.telControl = new FormControl('+33 605-040-302', {
             validators: [UikValidators.telNumberValidator()],
             updateOn: 'blur'
@@ -66,11 +71,13 @@ export class PaymentComponent {
                 width: '400px',
                 height: '200px'
             });
-        }, 3000);
+        }, 2000);
     }
 
     backToHome() {
         this.paymentCompleteDialogRef.close();
+
+        this.basketService.clearBasket();
 
         this.router.navigate(['/home']);
     }
