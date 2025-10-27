@@ -1,0 +1,44 @@
+<app-page-layout>
+    <div class="p-5">
+        <mat-card *ngFor="let item of items; let i = index" [ngClass]="{'mt-3': i > 0}" class="basket-item d-flex flex-row p-3 mat-elevation-z0">
+            <div class="d-flex align-items-center" style="max-width: 359px;">
+                <img [src]="'http://localhost:3000' + item.product?.image" class="img-fluid w-100">
+            </div>
+    
+            <div class="w-100 ps-3">
+                <mat-card-header class="p-0 mb-3">
+                    <strong>{{ item.product.name }}</strong>
+                </mat-card-header>
+
+                <mat-chip-listbox class="mb-3">
+                    <mat-chip color="cat-peacock" class="uik-categorical-chip uik-small-chip" *ngFor="let tag of item.product?.tags">{{ tag }}</mat-chip>
+                </mat-chip-listbox>
+
+                <p>{{ item.product?.description }}</p>
+
+                <p class="mb-3">FREE Delivery October 11, 2024</p>
+
+                <mat-chip *ngIf="item.product?.offer" color="error" class="mb-3 uik-semantic-chip">{{ item.product?.offer }}</mat-chip>
+
+                <h4 class="mb-2"><span class="uik-color-error fw-normal">{{ item.product?.discount }}</span> {{ item.product?.price }} {{ item.product?.currency === 'EUR' ? '€' : '' }}</h4>
+    
+                <mat-card-actions class="justify-content-between p-0">
+                    <div>
+                        <button mat-button class="uik-quick-filter uik-rounded-square">
+                            1
+                            <mat-icon class="uik-button-icon-after">arrow_drop_down</mat-icon>
+                        </button>
+    
+                        <button mat-icon-button (click)="remove(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+    
+                    <button class="ms-2" mat-raised-button color="primary">
+                        Place the order
+                    </button>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </div>
+</app-page-layout>

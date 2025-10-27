@@ -7,3 +7,15 @@
         object-fit: cover;
     }
 }
+
+.list-unstyled li::marker {
+    content: ''!important;
+}
+
+.text-truncate {
+    display: block;
+    max-width: 100%;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

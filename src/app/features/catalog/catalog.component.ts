@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,6 +12,11 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { PageLayoutComponent } from '../../layout/page-layout/page-layout.component';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+
+import { BasketService } from '../basket/basket.service';
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-catalog',
@@ -26,22 +31,28 @@ import { PageLayoutComponent } from '../../layout/page-layout/page-layout.compon
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatChipListbox,
+    MatSelectModule
   ],
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
   @HostBinding('class') class = 'app-catalog';
+  @ViewChild('productDialog') productDialog!: TemplateRef<any>;
 
-  allProducts: any[] = [];   // Tous les produits
-  products: any[] = [];      // Produits filtrés
+  allProducts: any[] = [];
+  products: any[] = [];
   pagedProducts: any[] = [];
+  selectedProduct: any = null;
 
   pageSize = 10;
   currentPage = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog, private basketService: BasketService) {}
 
   ngOnInit() {
     this.http.get<any[]>('http://localhost:3000/products')
@@ -61,6 +72,17 @@ export class CatalogComponent implements OnInit {
 
     this.currentPage = 0;
     this.updatePage();
+  }
+
+  openProduct(product: any) {
+    this.selectedProduct = product;
+    this.dialog.open(this.productDialog);
+  }
+
+  addToBasket() {
+    if (this.selectedProduct) {
+      this.basketService.addToBasket(this.selectedProduct);
+    }
   }
 
   onPageChange(event: PageEvent) {
