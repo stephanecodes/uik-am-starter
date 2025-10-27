@@ -9,9 +9,15 @@
     <uik-toolbar-app-context [appContext]="exampleAppContext" />
   </div>
 
-  <mat-icon class="me-2">star</mat-icon>
-  <mat-icon [routerLink]="'/basket'" [matBadge]="basketCount$ | async" class="me-2">shopping_basket</mat-icon>
-  <mat-icon class="me-2">help</mat-icon>
+  <a class="uik-color-neutral me-2">
+    <mat-icon>star</mat-icon>
+  </a>
+  <a class="uik-color-neutral me-2" [routerLink]="'/basket'">
+    <mat-icon [matBadge]="basketCount$ | async">shopping_basket</mat-icon>
+  </a>
+  <a class="uik-color-neutral me-2">
+    <mat-icon>help</mat-icon>
+  </a>
 
   <uik-user-profile-button fullName="Marcus Stanley"></uik-user-profile-button>
 </mat-toolbar>

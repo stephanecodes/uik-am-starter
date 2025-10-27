@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatChip, MatChipListbox } from "@angular/material/chips";
+import { RouterModule } from "@angular/router";
 
 @Component({
     selector: 'app-basket',
@@ -17,7 +18,8 @@ import { MatChip, MatChipListbox } from "@angular/material/chips";
         MatButtonModule,
         MatCardModule,
         MatChipListbox,
-        MatChip
+        MatChip,
+        RouterModule
     ],
     templateUrl: './basket.component.html'
 })
