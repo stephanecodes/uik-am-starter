@@ -38,7 +38,7 @@
   
               <mat-card-header>
                 <div class="mat-mdc-card-header-text mw-100">
-                  <mat-card-title class="text-truncate">{{ product.name }}</mat-card-title>
+                  <h6 class="text-truncate uik-h6">{{ product.name }}</h6>
                   <mat-card-subtitle>129678001</mat-card-subtitle>
                 </div>
               </mat-card-header>
@@ -74,7 +74,7 @@
       
       <div class="w-50">
         <div class="d-flex justify-content-between align-items-center">
-          <p mat-dialog-title>{{ selectedProduct?.name }}</p>
+          <h4 mat-dialog-title class="fw-medium">{{ selectedProduct?.name }}</h4>
           <button mat-button mat-dialog-close>
             <mat-icon>close</mat-icon>
           </button>
