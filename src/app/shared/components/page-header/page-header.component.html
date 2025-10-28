@@ -1,9 +1,23 @@
-<mat-toolbar class="uik-header-large uik-color-white-bg uik-outlined-bottom">
+<mat-toolbar class="uik-header-medium uik-color-white-bg uik-outlined-bottom">
   @if (layoutMatchesSmallViewport()) {
     <button mat-icon-button (click)="toggleSidenav()" class="me-1">
       <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
     </button>
   }
-  Page title
-</mat-toolbar>
 
+  <div class="flex-grow-1">
+    <uik-toolbar-app-context [appContext]="exampleAppContext" />
+  </div>
+
+  <a class="uik-color-neutral me-2">
+    <mat-icon>star</mat-icon>
+  </a>
+  <a class="uik-color-neutral me-2" [routerLink]="'/basket'">
+    <mat-icon [matBadge]="basketCount$ | async">shopping_basket</mat-icon>
+  </a>
+  <a class="uik-color-neutral me-2">
+    <mat-icon>help</mat-icon>
+  </a>
+
+  <uik-user-profile-button fullName="Marcus Stanley"></uik-user-profile-button>
+</mat-toolbar>

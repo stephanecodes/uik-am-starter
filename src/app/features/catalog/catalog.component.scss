@@ -1,0 +1,16 @@
+.product-img {
+    width: 100%;
+    height: 256px;
+}
+
+.list-unstyled li::marker {
+    content: ''!important;
+}
+
+.text-truncate {
+    display: block;
+    max-width: 100%;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

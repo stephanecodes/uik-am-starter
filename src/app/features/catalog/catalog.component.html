@@ -1,5 +1,117 @@
 <app-page-layout>
   <div class="p-6">
-    <p>Welcome !</p>
+    <mat-card class="d-flex flex-row justify-content-between p-2 mat-elevation-z0">
+      <mat-form-field appearance="outline" class="uik-filter-input">
+        <mat-icon matPrefix>filter_list</mat-icon>
+        <input matInput placeholder="Filter" (input)="filterProducts($event)" />
+      </mat-form-field>
+
+      <div class="d-flex flex-row align-items-center">
+        <p class="mb-0 me-2 fw-bold">{{ products.length }} {{ products.length == 1 ? 'produit' : 'produits' }}</p>
+        <mat-button-toggle-group name="States" aria-label="Example of states">
+          <mat-button-toggle value="selected"><mat-icon>view_cozy</mat-icon></mat-button-toggle>
+          <mat-button-toggle value="enabled"><mat-icon>list</mat-icon></mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </mat-card>
+
+    <div class="py-2">
+      <div class="row row-cols-5 g-3">
+        <ng-container *ngIf="isLoading; else productsList">
+          <div class="col" *ngFor="let ghost of [1,2,3,4,5,6,7,8,9,10]">
+            <mat-card class="mat-elevation-z0 p-2">
+              <div class="product-img mb-2">
+                <uik-ghost height="160px" width="100%"></uik-ghost>
+              </div>
+              <uik-ghost width="80%" height="16px" class="mb-1"></uik-ghost>
+              <uik-ghost width="60%" height="14px"></uik-ghost>
+            </mat-card>
+          </div>
+        </ng-container>
+
+        <ng-template #productsList>
+          <div class="col" *ngFor="let product of pagedProducts" (click)="openProduct(product)">
+            <mat-card class="mat-elevation-z0 overflow-hidden">
+              <div class="product-img d-flex align-items-center">
+                <img mat-card-image [src]="'http://localhost:3000' + product.image" alt="{{ product.name }}" class="w-100 mh-100 object-fit-cover">
+              </div>
+  
+              <mat-card-header>
+                <div class="mat-mdc-card-header-text mw-100">
+                  <h6 class="text-truncate uik-h6">{{ product.name }}</h6>
+                  <mat-card-subtitle>129678001</mat-card-subtitle>
+                </div>
+              </mat-card-header>
+  
+              <mat-card-actions>
+                <button color="primary" mat-button><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
+                <span class="flex-grow-1"></span>
+                <button mat-icon-button><mat-icon>star</mat-icon></button>
+                <button mat-icon-button><mat-icon>info</mat-icon></button>
+                <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <mat-card class="px-1 mat-elevation-z0 rounded-2">
+      <mat-paginator [length]="products.length"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10]"
+        (page)="onPageChange($event)"
+        aria-label="Select page">
+      </mat-paginator>
+    </mat-card>
   </div>
+
+  <ng-template #productDialog>
+    <div class="d-flex p-3">
+      <div class="w-50 d-flex align-items-center">
+        <img class="w-100" [src]="'http://localhost:3000' + selectedProduct?.image" alt="{{ selectedProduct?.name }}">
+      </div>
+      
+      <div class="w-50">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 mat-dialog-title class="fw-medium">{{ selectedProduct?.name }}</h4>
+          <button mat-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-dialog-content>
+          <mat-chip-listbox class="mb-3">
+            <mat-chip color="cat-peacock" class="uik-categorical-chip uik-small-chip" *ngFor="let tag of selectedProduct?.tags">{{ tag }}</mat-chip>
+          </mat-chip-listbox>
+
+          <p>{{ selectedProduct?.description }}</p>
+          <p>The technical specifications are those of the manufacturer published for informational purposes and are subject to change. Non-contractual photos.</p>
+
+          <p class="uik-color-primary"><strong>Warranty: {{ selectedProduct?.warranty }}</strong></p>
+
+          <ul class="list-unstyled p-0 mb-3">
+            <li><strong>{{ selectedProduct?.specifications[0]?.label }}</strong>: {{ selectedProduct?.specifications[0]?.value }}</li>
+            <li><strong>Warning</strong>: {{ selectedProduct?.warning }}</li>
+            <li><strong>{{ selectedProduct?.specifications[1]?.label }}</strong>: {{ selectedProduct?.specifications[1]?.value }}</li>
+          </ul>
+
+          <mat-chip *ngIf="selectedProduct?.offer" color="error" class="mb-3 uik-semantic-chip">{{ selectedProduct?.offer }}</mat-chip>
+
+          <h4><span class="uik-color-error fw-normal">{{ selectedProduct?.discount }}</span> {{ selectedProduct?.price }} {{ selectedProduct?.currency === 'EUR' ? '€' : '' }}</h4>
+        </mat-dialog-content>
+    
+        <mat-dialog-actions class="justify-content-start">
+          <button mat-button class="uik-quick-filter uik-rounded-square">
+            Quantity
+            <mat-icon class="uik-button-icon-after">arrow_drop_down</mat-icon>
+          </button>
+
+          <button class="ms-2" mat-raised-button color="primary" (click)="addToBasket()">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Add to cart
+          </button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </ng-template>
 </app-page-layout>
