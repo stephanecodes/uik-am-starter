@@ -1,12 +1,16 @@
-import {Component, HostBinding, inject} from '@angular/core';
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {UikAmModule, UikLayoutBreakpointObserverService, UikSidenavService} from "@visiativ/uik-am";
-import {MatIcon} from "@angular/material/icon";
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatToolbar} from '@angular/material/toolbar';
-import {MatIconButton} from '@angular/material/button';
-import {toSignal} from '@angular/core/rxjs-interop';
-
+import { Component, HostBinding, inject, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  UikAmModule,
+  UikLayoutBreakpointObserverService,
+  UikSidenavService,
+} from '@visiativ/uik-am';
+import { MatIcon } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-page-header',
   imports: [
@@ -16,16 +20,21 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatToolbar,
     MatBadgeModule,
     MatIconButton,
+    RouterLink,
   ],
-  templateUrl: './page-header.component.html'
+  templateUrl: './page-header.component.html',
 })
 export class PageHeaderComponent {
   @HostBinding('class') class = 'app-page-header';
 
-  private readonly layoutBreakpointObserverService = inject(UikLayoutBreakpointObserverService);
+  private readonly layoutBreakpointObserverService = inject(
+    UikLayoutBreakpointObserverService
+  );
   private readonly sidenavService = inject(UikSidenavService);
 
-  layoutMatchesSmallViewport = toSignal(this.layoutBreakpointObserverService.matchesSmallViewport$);
+  layoutMatchesSmallViewport = toSignal(
+    this.layoutBreakpointObserverService.matchesSmallViewport$
+  );
 
   toggleSidenav() {
     this.sidenavService.toggleSidenav();
