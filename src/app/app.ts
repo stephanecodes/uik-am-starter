@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
   selector: 'app-root',
   imports: [RouterOutlet, UikAmModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
 })
 export class App implements OnInit, OnDestroy {
   protected title = 'Visiativ Test App';
