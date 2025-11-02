@@ -38,6 +38,7 @@ export interface ProductsResponse {
 }
 
 export interface CartItem {
+  id: string;
   product: Product;
   quantity: number;
 }

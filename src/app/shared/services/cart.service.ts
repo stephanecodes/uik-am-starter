@@ -19,17 +19,10 @@ export class CartService {
       throw new Error('Quantity must be greater than 0');
     }
 
-    return this.http
-      .post<CartItem>(this.apiUrl, {
-        product,
-        quantity,
-      })
-      .pipe(
-        catchError(error => {
-          console.error('Failed to add item to cart:', error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.post<CartItem>(this.apiUrl, {
+      product,
+      quantity,
+    });
   }
 
   /**
@@ -47,8 +40,31 @@ export class CartService {
    * Get all items in cart
    */
   getItemsInCart(): Observable<CartItem[]> {
-    return this.http
-      .get<ApiCartResponse>(`${this.apiUrl}`)
-      .pipe(map(response => response.data));
+    return this.http.get<CartItem[]>(`${this.apiUrl}`);
+  }
+
+  /**
+   * Remove item from cart by cart item ID
+   */
+  deleteFromCart(cartItemId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${cartItemId}`);
+  }
+
+  /**
+   * Update item quantity in cart by cart item ID
+   */
+  updateCartItemQuantity(
+    cartItemId: string,
+    product: Product,
+    quantity: number
+  ): Observable<CartItem> {
+    if (quantity <= 0) {
+      throw new Error('Quantity must be greater than 0');
+    }
+
+    return this.http.put<CartItem>(`${this.apiUrl}/${cartItemId}`, {
+      product,
+      quantity,
+    });
   }
 }

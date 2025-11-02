@@ -1,0 +1,68 @@
+@if (product) {
+  <div
+    class="p-3 d-flex align-items-stretch flex-column flex-md-row gap-4 uik-color-white-bg rounded-3"
+  >
+    <!-- Product Image Column -->
+    <img
+      [src]="'/api' + product.image"
+      [alt]="product.name"
+      class="product-image"
+    />
+
+    <!-- Product Info Column -->
+    <div class="flex-grow-1 d-flex flex-column align-items-start gap-2">
+      <h4>{{ product.name }}</h4>
+
+      @if (product.tags && product.tags.length > 0) {
+        <mat-chip-set>
+          @for (tag of product.tags; track tag) {
+            <mat-chip class="uik-small-chip">{{ tag }}</mat-chip>
+          }
+        </mat-chip-set>
+      }
+
+      <p>{{ product.description }}</p>
+
+      <!-- Offer -->
+      @if (product.offer) {
+        <div class="offer">
+          {{ product.offer }}
+        </div>
+      }
+
+      <!-- Price -->
+      <h4>
+        @if (product.discount) {
+          <span class="uik-color-error me-1">{{ product.discount }}</span>
+        }
+        <span class="fw-bold">
+          {{
+            getTotalPrice()
+              | currency: product.currency : 'symbol-narrow' : '1.0-0' : 'fr-FR'
+          }}
+        </span>
+      </h4>
+
+      <!-- Actions -->
+      <div
+        class="d-flex gap-3 align-items-center justify-content-start flex-wrap"
+      >
+        <mat-label>Quantity:</mat-label>
+        <mat-form-field appearance="outline" style="width: 100px">
+          <mat-select
+            [value]="quantity()"
+            (selectionChange)="onQuantityChange($event.value)"
+          >
+            @for (option of quantityOptions; track option) {
+              <mat-option [value]="option">{{ option }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="secondary" (click)="onRemoveFromCart()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+}

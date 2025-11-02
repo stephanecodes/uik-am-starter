@@ -1,0 +1,9 @@
+// Basket Component Styles
+.app-basket {
+  .offer {
+    background-color: var(--uik-color-error);
+    color: var(--uik-color-text-white);
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+}
