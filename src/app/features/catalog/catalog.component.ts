@@ -13,15 +13,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 
 import { PageLayoutComponent } from '../../layout/page-layout/page-layout.component';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import {
+  ProductCardComponent,
+  ProductDetailDialogComponent,
+} from '../../shared/components';
 import {
   ProductService,
   PaginationParams,
   ProductFilters,
-} from '../../shared/services/product.service';
+  CartService,
+} from '../../shared/services';
 import { Product } from '../../shared/types/product.types';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -56,6 +62,9 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
   private readonly uikAppContextHandler = inject(UikAppContextHandler);
   private readonly productService = inject(ProductService);
+  private readonly cartService = inject(CartService);
+  private readonly dialog = inject(MatDialog);
+  private readonly snackBar = inject(MatSnackBar);
   private debounceTimer?: ReturnType<typeof setTimeout>;
 
   products = signal<Product[]>([]);
@@ -141,5 +150,27 @@ export class CatalogComponent implements OnInit, OnDestroy {
   // Clear search filter
   resetFilter(): void {
     this.filterValue.set('');
+  }
+
+  // Open product detail dialog
+  onProductClick(product: Product): void {
+    const dialogRef = this.dialog.open(ProductDetailDialogComponent, {
+      data: product,
+      width: '80vw',
+      maxWidth: '1200px',
+      maxHeight: '90vh',
+      autoFocus: false,
+    });
+  }
+
+  // Quick add to cart from product card
+  onAddToCartClick(product: Product): void {
+    this.cartService.addToCart(product, 1);
+
+    this.snackBar.open(`${product.name} added to cart`, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
   }
 }

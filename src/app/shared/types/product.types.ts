@@ -36,3 +36,8 @@ export interface ProductsResponse {
   page: number;
   pageSize: number;
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}

@@ -1,4 +1,10 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 import {
   MatCard,
@@ -31,4 +37,19 @@ export class ProductCardComponent {
   @HostBinding('class') class = 'app-product-card';
 
   @Input() product?: Product;
+  @Output() productClick = new EventEmitter<Product>();
+  @Output() addToCartClick = new EventEmitter<Product>();
+
+  onProductClick(): void {
+    if (this.product) {
+      this.productClick.emit(this.product);
+    }
+  }
+
+  onAddToCartClick(event: Event): void {
+    event.stopPropagation(); // Prevent triggering product click
+    if (this.product) {
+      this.addToCartClick.emit(this.product);
+    }
+  }
 }

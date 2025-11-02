@@ -1,5 +1,10 @@
 @if (product) {
-  <mat-card appearance="filled" class="rounded-3">
+  <mat-card
+    appearance="filled"
+    class="rounded-3"
+    (click)="onProductClick()"
+    role="button"
+  >
     <img
       mat-card-image
       [src]="'/api' + product.image"
@@ -11,18 +16,30 @@
       <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-      <button color="primary" mat-button extended>
+      <button
+        color="primary"
+        mat-button
+        extended
+        (click)="onAddToCartClick($event)"
+      >
         <mat-icon>add_shopping_cart</mat-icon>
         Add to cart
       </button>
       <span class="flex-grow-1"></span>
-      <button mat-icon-button>
+      <button mat-icon-button (click)="$event.stopPropagation()">
         <mat-icon>star_outline</mat-icon>
       </button>
-      <button mat-icon-button>
+      <button
+        mat-icon-button
+        (click)="$event.stopPropagation(); onProductClick()"
+      >
         <mat-icon>info</mat-icon>
       </button>
-      <button mat-icon-button aria-label="Link to help page">
+      <button
+        mat-icon-button
+        aria-label="Link to help page"
+        (click)="$event.stopPropagation()"
+      >
         <mat-icon>more_vert</mat-icon>
       </button>
     </mat-card-actions>

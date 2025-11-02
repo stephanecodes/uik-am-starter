@@ -1,0 +1,30 @@
+.app-product-detail-dialog {
+  .product-image {
+    object-fit: cover;
+    overflow: hidden;
+    border: 1px solid var(--uik-color-border);
+    flex: 1;
+    aspect-ratio: 1 / 1;
+  }
+  .product-info {
+    flex: 1;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .offer {
+    background-color: var(--uik-color-error);
+    color: var(--uik-color-text-white);
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .product-image {
+      margin-top: 50px;
+      aspect-ratio: 2 / 1;
+    }
+  }
+}
