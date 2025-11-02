@@ -165,7 +165,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
   // Quick add to cart from product card
   onAddToCartClick(product: Product): void {
-    this.cartService.addToCart(product, 1);
+    this.cartService.addToCart(product, 1).subscribe();
 
     this.snackBar.open(`${product.name} added to cart`, 'Close', {
       duration: 2000,

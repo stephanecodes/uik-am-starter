@@ -45,7 +45,7 @@ export class ProductDetailDialogComponent {
   quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   onAddToCart(): void {
-    this.cartService.addToCart(this.product, this.quantity());
+    this.cartService.addToCart(this.product, this.quantity()).subscribe();
 
     this.snackBar.open(
       `${this.product.name} (x${this.quantity()}) added to cart`,

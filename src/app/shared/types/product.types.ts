@@ -41,3 +41,8 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface ApiCartResponse {
+  items: number;
+  data: CartItem[];
+}

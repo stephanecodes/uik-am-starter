@@ -42,7 +42,6 @@ export class ProductService {
       })
       .pipe(
         map(response => {
-          console.log('API Response:', response);
           return {
             products: response.data || [],
             total: response.items || 0,
