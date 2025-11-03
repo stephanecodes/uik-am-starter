@@ -16,7 +16,11 @@
       aria-label="Link to the basket page"
       routerLink="/basket"
     >
-      <mat-icon>shopping_basket</mat-icon>
+      <mat-icon
+        [matBadge]="cartItemCount()"
+        [matBadgeHidden]="cartItemCount() === 0"
+        >shopping_basket</mat-icon
+      >
     </button>
     <button mat-icon-button aria-label="Link to help page">
       <mat-icon>help_outline</mat-icon>

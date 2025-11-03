@@ -169,7 +169,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.snackBar.open(`${product.name} added to cart`, 'Close', {
       duration: 2000,
       horizontalPosition: 'right',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 }

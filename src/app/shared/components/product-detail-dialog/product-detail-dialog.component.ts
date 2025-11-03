@@ -53,7 +53,7 @@ export class ProductDetailDialogComponent {
       {
         duration: 3000,
         horizontalPosition: 'right',
-        verticalPosition: 'top',
+        verticalPosition: 'bottom',
       }
     );
 

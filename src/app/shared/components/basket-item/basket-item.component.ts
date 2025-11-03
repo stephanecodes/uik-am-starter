@@ -69,7 +69,7 @@ export class BasketItemComponent {
             {
               duration: 2000,
               horizontalPosition: 'right',
-              verticalPosition: 'top',
+              verticalPosition: 'bottom',
             }
           );
           this.itemUpdated.emit();
@@ -80,7 +80,7 @@ export class BasketItemComponent {
           this.snackBar.open('Failed to update quantity', 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
           });
         },
       });
@@ -95,7 +95,7 @@ export class BasketItemComponent {
           {
             duration: 3000,
             horizontalPosition: 'right',
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
           }
         );
         this.itemUpdated.emit();
@@ -104,7 +104,7 @@ export class BasketItemComponent {
         this.snackBar.open('Failed to remove item from cart', 'Close', {
           duration: 3000,
           horizontalPosition: 'right',
-          verticalPosition: 'top',
+          verticalPosition: 'bottom',
         });
       },
     });
