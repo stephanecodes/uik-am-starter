@@ -1,0 +1,25 @@
+.app-catalog {
+  --standard-gap: 24px;
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: calc(50% - var(--standard-gap) / 2);
+    gap: var(--standard-gap);
+    overflow: auto;
+    flex: 1;
+    padding-bottom: var(--standard-gap);
+  }
+
+  .product-grid-item {
+    height: 100%;
+
+    mat-checkbox {
+      z-index: 1;
+    }
+    mat-card {
+      display: flex;
+      height: 100%;
+    }
+  }
+}

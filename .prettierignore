@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+dist/
+
+# IDE
+.vscode/
+
+# Angular specific
+.angular/s

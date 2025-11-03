@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+.mat-mdc-chip-set {
+  .mat-mdc-chip {
+    background: rgba(17, 130, 166, 0.12) !important;
+    border-radius: 7px !important;
+
+    .mat-mdc-chip-action-label {
+      color: #0a4e64 !important;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="payment-dialog-content p-2">
+  <!-- Processing State -->
+  @if (data.state === 'processing') {
+    <div class="d-flex flex-column align-items-center">
+      <uik-spinner></uik-spinner>
+      <h3 class="mb-0">Payment in Process</h3>
+    </div>
+  }
+
+  <!-- Success State -->
+  @else if (data.state === 'success') {
+    <div class="d-flex flex-column align-items-center gap-2">
+      <mat-icon class="success-icon"> check_circle </mat-icon>
+      <h3 class="mb-0 text-success">Payment Accepted</h3>
+      <button
+        mat-flat-button
+        color="primary"
+        size="large"
+        (click)="backToCatalog()"
+      >
+        Back to Catalog
+      </button>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (data.state === 'error') {
+    <div class="d-flex flex-column align-items-center gap-2">
+      <mat-icon class="error-icon"> error </mat-icon>
+      <h3 class="mb-0 text-danger">Payment Failed</h3>
+      <button mat-flat-button color="primary" (click)="closeDialog()">
+        Try Again
+      </button>
+    </div>
+  }
+</div>

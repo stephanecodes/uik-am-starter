@@ -1,0 +1,92 @@
+<div class="p-3 d-flex align-items-stretch flex-column flex-md-row gap-4">
+  <!-- Close Button -->
+  <button
+    mat-icon-button
+    (click)="onClose()"
+    aria-label="Close dialog"
+    class="position-absolute top-0 end-0 m-2"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <!-- Product Image Column -->
+  <img
+    [src]="'/api' + product.image"
+    [alt]="product.name"
+    class="product-image"
+  />
+
+  <!-- Product Info Column -->
+  <div class="product-info">
+    <h3>{{ product.name }}</h3>
+
+    @if (product.tags && product.tags.length > 0) {
+      <mat-chip-set>
+        @for (tag of product.tags; track tag) {
+          <mat-chip class="uik-small-chip">{{ tag }}</mat-chip>
+        }
+      </mat-chip-set>
+    }
+
+    <!-- Main content -->
+    <div class="overflow-x">
+      <p>{{ product.description }}</p>
+
+      @if (product.warranty) {
+        <p class="fw-bold uik-color-primary">
+          Warranty : {{ product.warranty }}
+        </p>
+      }
+
+      @if (product.specifications && product.specifications.length > 0) {
+        <div class="">
+          @for (spec of product.specifications; track spec.label) {
+            <div class="d-flex align-items-center gap-1">
+              <span class="fw-medium">{{ spec.label }}:</span>
+              <span>{{ spec.value }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Offer -->
+    @if (product.offer) {
+      <div class="offer uik-color-error-background">
+        {{ product.offer }}
+      </div>
+    }
+
+    <!-- Price -->
+    <h4 class="">
+      @if (product.discount) {
+        <span class="uik-color-error me-1"> {{ product.discount }} </span>
+      }
+      <span class="fw-bold">
+        {{ product.price | currency: product.currency }}
+      </span>
+    </h4>
+
+    <!-- Actions -->
+    <div
+      class="d-flex gap-3 align-items-center justify-content-start flex-wrap"
+    >
+      <mat-label>Quantity:</mat-label>
+      <mat-form-field appearance="outline" style="width: 100px">
+        <mat-select
+          [value]="quantity()"
+          (selectionChange)="quantity.set($event.value)"
+        >
+          @for (option of quantityOptions; track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button extended color="primary" (click)="onAddToCart()">
+        <mat-icon>add_shopping_cart</mat-icon>
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>

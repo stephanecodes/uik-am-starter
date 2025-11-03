@@ -1,5 +1,120 @@
-<app-page-layout>
-  <div class="p-6">
-    <p>Welcome !</p>
+<app-page-layout
+  pageTitle="Product Catalog"
+  class="d-flex flex-column w-100 h-100"
+>
+  <div
+    class="container-fluid p-4 uik-color-grey-bg d-flex flex-column flex-fill overflow-auto"
+  >
+    <!-- Search Filter -->
+    <div
+      class="mb-3 uik-color-white-bg p-2 rounded-3 d-flex align-items-center justify-content-between"
+    >
+      <mat-form-field appearance="outline" class="uik-filter-input">
+        <mat-icon matPrefix>filter_list</mat-icon>
+        <input
+          matInput
+          [(ngModel)]="filterValue"
+          placeholder="Filter by name"
+        />
+        <mat-icon
+          matSuffix
+          (click)="resetFilter()"
+          class="uik-cursor-pointer"
+          [class.uik-invisible]="!filterValue()"
+          >close</mat-icon
+        >
+      </mat-form-field>
+      <mat-button-toggle-group
+        name="States"
+        [(ngModel)]="displayMode"
+        aria-label="display mode"
+        [hideSingleSelectionIndicator]="true"
+      >
+        <mat-button-toggle value="grid">
+          <mat-icon aria-describedby="display-grid">grid_view</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="row">
+          <mat-icon aria-describedby="display-row">list</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <uik-ghosts
+        animation="shimmer"
+        class="products-grid overflow-hidden rounded"
+      >
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+        <uik-ghost width="100%" height="100%" class="rounded-3" />
+      </uik-ghosts>
+    }
+
+    <!-- Error State -->
+    @if (error() && !loading()) {
+      <div
+        class="flex-grow-1 flex-column justify-content-center d-flex align-items-center gap-3"
+        role="alert"
+      >
+        <div class="d-flex align-items-center gap-2">
+          <mat-icon>error</mat-icon>
+          {{ error() }}
+        </div>
+
+        <button mat-flat-button color="secondary" (click)="loadProducts()">
+          <mat-icon>refresh</mat-icon>
+          Try Again
+        </button>
+      </div>
+    }
+
+    <!-- Products Grid -->
+    @if (!loading() && !error() && products().length > 0) {
+      <div class="products-grid">
+        @for (product of products(); track product.id) {
+          <div class="product-grid-item">
+            <app-product-card
+              [product]="product"
+              (productClick)="onProductClick($event)"
+              (addToCartClick)="onAddToCartClick($event)"
+            >
+            </app-product-card>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!loading() && !error() && products().length === 0) {
+      <div
+        class="text-center py-5 flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+      >
+        <mat-icon class="fs-1 mb-3">search_off</mat-icon>
+        <h3 class="mb-2">No products found</h3>
+        @if (filterValue()) {
+          <p class="mb-3">
+            No products match your search "{{ filterValue() }}"
+          </p>
+        }
+      </div>
+    }
+
+    <mat-paginator
+      class="rounded-3 z-1"
+      [length]="totalItems()"
+      [pageIndex]="currentPage()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)"
+      aria-label="Select page"
+    />
   </div>
 </app-page-layout>

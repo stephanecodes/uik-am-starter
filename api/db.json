@@ -665,5 +665,7 @@
         { "label": "Engine power", "value": "563kW" }
       ]
     }
-  ]
+  ],
+  "cart": [],
+  "payments": []
 }

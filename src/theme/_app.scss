@@ -1,18 +1,15 @@
-@use "@visiativ/uik-core/theme/variables/colors" as colors;
+@use '@visiativ/uik-core/theme/variables/colors' as colors;
 
 .mat-typography {
-
   h2 {
     margin-top: 2rem;
   }
 
   h3 {
-    margin-top:1.5rem;
+    margin-top: 1.5rem;
   }
 
   h4 {
     margin-top: 1rem;
   }
 }
-
-

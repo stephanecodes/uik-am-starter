@@ -4,6 +4,29 @@
       <mat-icon aria-label="Toggle sidenav">menu</mat-icon>
     </button>
   }
-  Page title
-</mat-toolbar>
+  <uik-toolbar-app-context />
+  <div class="toolbar-spacer"></div>
 
+  <div class="d-flex gap-2 align-items-center">
+    <button mat-icon-button aria-label="Link to favorites page">
+      <mat-icon>star</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Link to the basket page"
+      routerLink="/basket"
+    >
+      <mat-icon
+        [matBadge]="cartItemCount()"
+        [matBadgeHidden]="cartItemCount() === 0"
+        >shopping_basket</mat-icon
+      >
+    </button>
+    <button mat-icon-button aria-label="Link to help page">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+    <uik-user-profile-button
+      fullName="Marcus Stanley"
+    ></uik-user-profile-button>
+  </div>
+</mat-toolbar>
