@@ -1,16 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { ProductsResponse, ApiProductsResponse } from '../types/product.types';
-
-export interface PaginationParams {
-  page: number;
-  pageSize: number;
-}
-
-export interface ProductFilters {
-  name?: string;
-}
+import {
+  ProductsResponse,
+  ApiProductsResponse,
+  PaginationParams,
+  ProductFilters,
+} from '../types/product.types';
 
 @Injectable({
   providedIn: 'root',

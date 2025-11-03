@@ -22,13 +22,12 @@ import {
   ProductCardComponent,
   ProductDetailDialogComponent,
 } from '../../shared/components';
+import { ProductService, CartService } from '../../shared/services';
 import {
-  ProductService,
   PaginationParams,
+  Product,
   ProductFilters,
-  CartService,
-} from '../../shared/services';
-import { Product } from '../../shared/types/product.types';
+} from '../../shared/types/product.types';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {

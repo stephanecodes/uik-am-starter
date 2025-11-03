@@ -4,7 +4,11 @@
   >
     <!-- Payment Form View -->
     @if (showPaymentForm()) {
-      <app-payment-form (backToBasket)="onBackToBasket()"></app-payment-form>
+      <app-payment-form
+        [totalAmount]="getTotalPrice()"
+        [cartItems]="data() || []"
+        (backToBasket)="onBackToBasket()"
+      ></app-payment-form>
     }
 
     <!-- Basket View -->

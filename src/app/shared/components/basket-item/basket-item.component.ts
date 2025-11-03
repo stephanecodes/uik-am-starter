@@ -14,9 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-
-import { CartItem } from '../../types/product.types';
-import { CartService } from '../../services/cart.service';
+import { CartService } from '../../services';
+import { CartItem } from '../../types';
 
 @Component({
   selector: 'app-basket-item',

@@ -8,8 +8,8 @@ import { PageLayoutComponent } from '../../layout/page-layout/page-layout.compon
 import { BasketItemComponent } from '../../shared/components/basket-item/basket-item.component';
 import { PaymentFormComponent } from '../../shared/components/payment-form/payment-form.component';
 import { UikAppContextHandler, UikAmModule } from '@visiativ/uik-am';
-import { CartService } from '../../shared/services/cart.service';
-import { CartItem } from '../../shared/types/product.types';
+import { CartService } from '../../shared/services';
+import { CartItem } from '../../shared/types';
 
 @Component({
   selector: 'app-basket',

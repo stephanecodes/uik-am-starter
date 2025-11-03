@@ -14,7 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { Product } from '../../types/product.types';
-import { CartService } from '../../services/cart.service';
+import { CartService } from '../../services';
 
 @Component({
   selector: 'app-product-detail-dialog',

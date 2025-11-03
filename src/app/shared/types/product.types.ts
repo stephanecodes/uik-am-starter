@@ -37,13 +37,11 @@ export interface ProductsResponse {
   pageSize: number;
 }
 
-export interface CartItem {
-  id: string;
-  product: Product;
-  quantity: number;
+export interface PaginationParams {
+  page: number;
+  pageSize: number;
 }
 
-export interface ApiCartResponse {
-  items: number;
-  data: CartItem[];
+export interface ProductFilters {
+  name?: string;
 }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, output, inject } from '@angular/core';
+import { Component, HostBinding, output, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -10,7 +10,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { UikIntlTelInputComponent, UikValidators } from '@visiativ/uik-am';
+import { PaymentRequest } from '../../types';
+import {
+  PaymentDialogComponent,
+  PaymentDialogData,
+} from '../payment-dialog/payment-dialog.component';
+import { PaymentService, CartService } from '../../services';
 
 @Component({
   selector: 'app-payment-form',
@@ -31,14 +38,20 @@ export class PaymentFormComponent {
   @HostBinding('class') class = 'app-payment-form';
 
   // Modern dependency injection
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
+  private readonly paymentService = inject(PaymentService);
+  private readonly cartService = inject(CartService);
+  private readonly dialog = inject(MatDialog);
 
+  // Inputs and outputs
+  totalAmount = input.required<number>();
+  cartItems = input.required<any[]>();
   backToBasket = output<void>();
 
   paymentForm: FormGroup;
 
   constructor() {
-    this.paymentForm = this.formBuilder.group({
+    this.paymentForm = this.fb.group({
       // Name section
       fullName: ['', [Validators.required, Validators.minLength(2)]],
       phoneNumber: [
@@ -62,7 +75,7 @@ export class PaymentFormComponent {
         '',
         [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)],
       ],
-      ccv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      ccv: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
       cardholderName: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
@@ -73,12 +86,53 @@ export class PaymentFormComponent {
 
   onSubmitPayment(): void {
     if (this.paymentForm.valid) {
-      // TODO: Implement payment submission in the future
-      console.log('Payment form submitted:', this.paymentForm.value);
+      // Prepare payment data
+      const formValue = this.paymentForm.value;
+      const paymentData: PaymentRequest = {
+        ...formValue,
+        totalAmount: this.totalAmount(),
+        items: this.cartItems(),
+      };
+
+      // Show processing dialog
+      const dialogData: PaymentDialogData = { state: 'processing' };
+      const dialogRef = this.dialog.open(PaymentDialogComponent, {
+        data: dialogData,
+        disableClose: true,
+        width: '400px',
+      });
+
+      // Process payment
+      this.paymentService.addPayment(paymentData).subscribe({
+        next: response => {
+          if (response.success) {
+            dialogRef.componentInstance.updateState('success');
+            this.clearCart();
+          } else {
+            dialogRef.componentInstance.updateState('error');
+          }
+        },
+        error: () => {
+          dialogRef.componentInstance.updateState('error');
+        },
+      });
     } else {
       // Mark all fields as touched to show validation errors
       this.paymentForm.markAllAsTouched();
     }
+  }
+
+  /**
+   * Clear the cart after successful payment
+   */
+  private clearCart(): void {
+    this.cartService.getItemsInCart().subscribe({
+      next: cartItems => {
+        cartItems.forEach(item => {
+          this.cartService.deleteFromCart(item.id).subscribe();
+        });
+      },
+    });
   }
 
   // Helper method to check if a field has errors
@@ -115,7 +169,7 @@ export class PaymentFormComponent {
         return 'Please enter a valid 16-digit card number';
       if (fieldName === 'expiryDate')
         return 'Please enter date in MM/YY format';
-      if (fieldName === 'ccv') return 'Please enter a valid 3-4 digit CCV';
+      if (fieldName === 'ccv') return 'Please enter a valid 3 digit CCV';
     }
 
     return 'Invalid input';

@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiCartResponse, CartItem, Product } from '../types/product.types';
-import { catchError, Observable, throwError, map } from 'rxjs';
+import { Product } from '../types/product.types';
+import { Observable, map } from 'rxjs';
+import { CartItem } from '../types';
 
 @Injectable({
   providedIn: 'root',
