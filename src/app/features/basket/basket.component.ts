@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PageLayoutComponent } from '../../layout/page-layout/page-layout.component';
 import { BasketItemComponent } from '../../shared/components/basket-item/basket-item.component';
+import { PaymentFormComponent } from '../../shared/components/payment-form/payment-form.component';
 import { UikAppContextHandler, UikAmModule } from '@visiativ/uik-am';
 import { CartService } from '../../shared/services/cart.service';
 import { CartItem } from '../../shared/types/product.types';
@@ -18,6 +19,7 @@ import { CartItem } from '../../shared/types/product.types';
     RouterModule,
     PageLayoutComponent,
     BasketItemComponent,
+    PaymentFormComponent,
     MatProgressSpinnerModule,
     MatButtonModule,
     MatIconModule,
@@ -34,6 +36,7 @@ export class BasketComponent implements OnInit {
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
   data = signal<CartItem[] | null>(null);
+  showPaymentForm = signal<boolean>(false);
 
   ngOnInit(): void {
     // Update the whole appContext
@@ -63,6 +66,14 @@ export class BasketComponent implements OnInit {
 
   onItemUpdated(): void {
     this.loadCartItems();
+  }
+
+  onPlaceOrder(): void {
+    this.showPaymentForm.set(true);
+  }
+
+  onBackToBasket(): void {
+    this.showPaymentForm.set(false);
   }
 
   getTotalPrice(): number {
